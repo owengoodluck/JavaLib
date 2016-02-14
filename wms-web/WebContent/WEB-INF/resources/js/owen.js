@@ -82,5 +82,11 @@ function submitFormAndGoTo(tabName){
 	if(tabName !=null && tabName.length > 0){
 		$("#tabName").val(tabName);
 	}
+	if(nullCheck('.itemSkuClass') ){
+		return;
+	}
+	if(nullCheck('.notNullClass') ){
+		return;
+	}
 	$("#productsForm").submit();
 }

@@ -23,7 +23,7 @@ public class KeywordsUtilTest {
 		prodList.add(new JewelryEntity());
 		prodList.add(new JewelryEntity());
 		prodList.add(new JewelryEntity());
-		ExcelKeywrodsUtil.setKeywords(prodList , keywordsExcel, 5);
+		ExcelKeywrodsUtil.setKeywords(prodList , keywordsExcel, 5,1);
 		for(JewelryEntity e : prodList){
 			System.out.println(e.getGenericKeywords1());
 			System.out.println(e.getGenericKeywords2());

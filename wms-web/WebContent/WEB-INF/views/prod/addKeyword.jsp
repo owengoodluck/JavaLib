@@ -70,13 +70,21 @@ function submitForm(preOrNext){
 						<input type="text" name="keywordsExcelFilePath" size="80" value="${keywordsExcelFilePath}"></input>
 					</c:if>
 					&nbsp;&nbsp;&nbsp;
-					起始行数
+					关键字起始数
 					<c:if test="${keywordsExcelStartIndex ==null}">
 						<input type="text" name="keywordsExcelStartIndex" size="10" value="1"></input>
 					</c:if>
 					<c:if test="${keywordsExcelFilePath !=null}">
 						<input type="text" name="keywordsExcelStartIndex" size="10" value="${keywordsExcelStartIndex}"></input>
 					</c:if>
+					产品序号起始值
+					<c:if test="${prodStartIndex ==null}">
+						<input type="text" name="prodStartIndex" size="10" value="1"></input>
+					</c:if>
+					<c:if test="${prodStartIndex !=null}">
+						<input type="text" name="prodStartIndex" size="10" value="${prodStartIndex}"></input>
+					</c:if>
+					
 					<c:if test="${errorMsg !=null}">
 						<span class="label label-danger">${errorMsg}</span>
 					</c:if>
@@ -84,6 +92,7 @@ function submitForm(preOrNext){
 				</caption>
 				<thead>
 					<tr>
+						<th>产品序号</th> 
 						<th>SKU</th> 
 						<th>缩略图</th> 
 						<th>关键字</th>
@@ -93,8 +102,10 @@ function submitForm(preOrNext){
 					<c:if test="${productsForm.list != null }">
 						<c:forEach items="${productsForm.list}" var="prod" varStatus="status">
 							<tr>
+								
 								<input type="hidden" id="list${status.index}.itemSku" name='list[${status.index}].itemSku'  value="${prod.itemSku}"/>
 								<input type="hidden" id="list${status.index}.mainImageUrl" name='list[${status.index}].mainImageUrl'  value="${prod.mainImageUrl}"/>
+								<td width="6%">${ status.index + 1}</td>  
 								<td width="10%"><b>${prod.itemSku}</b></td>
 								<td width="8%">
 									<c:if test="${ prod.getLocalImagePath() !=null }">

@@ -97,10 +97,11 @@ public class AmazonProductController {
 	public String loadKeywords(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
 		String keywordsExcelFilePath = request.getParameter("keywordsExcelFilePath");
 		String keywordsExcelStartIndex = request.getParameter("keywordsExcelStartIndex");
+		String prodStartIndex = request.getParameter("prodStartIndex");
 		
 		File excelKeywordFile = new File(keywordsExcelFilePath);
 		if(excelKeywordFile.exists()){
-			ExcelKeywrodsUtil.setKeywords(productsForm.getList(), excelKeywordFile, Integer.valueOf(keywordsExcelStartIndex));
+			ExcelKeywrodsUtil.setKeywords(productsForm.getList(), excelKeywordFile, Integer.valueOf(keywordsExcelStartIndex),Integer.valueOf(prodStartIndex));
 		}else{
 			this.log.error(keywordsExcelFilePath+" file does not exist !");
 			model.addAttribute("errorMsg",keywordsExcelFilePath+" file does not exist !");
@@ -109,6 +110,7 @@ public class AmazonProductController {
 		model.addAttribute("currentMenu", "prod");
 		model.addAttribute("keywordsExcelFilePath", keywordsExcelFilePath);
 		model.addAttribute("keywordsExcelStartIndex", keywordsExcelStartIndex);
+		model.addAttribute("prodStartIndex", prodStartIndex);
 		return "prod/addKeyword";
 	}
 	@RequestMapping(value = "/edit/{sku}", method = RequestMethod.GET)

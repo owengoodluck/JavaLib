@@ -34,12 +34,12 @@ public class ExcelKeywrodsUtil {
 		}
 	}
 	
-	public static void setKeywords(ArrayList<JewelryEntity> prodList,File excelKeywordFile,int groupStartIndex){
+	public static void setKeywords(ArrayList<JewelryEntity> prodList,File excelKeywordFile,int groupStartIndex,int prodStartIndex){
 		List<String[]> list = ExcelUtil.readExcel(excelKeywordFile, 0, 1, 1);
 		StringBuffer buf = new StringBuffer();
 		int index =0;
 		int groupIndex=0;
-		int prodIndex=0;
+		int prodIndex=prodStartIndex-1;
 		for(String[] strArray : list){
 			if(buf.length()>= 50){
 				index ++;
