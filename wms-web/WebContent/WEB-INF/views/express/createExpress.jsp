@@ -22,17 +22,17 @@ $(document).ready(function(){
 function setNameOfEnglish(){
 	var nameCh = $('#nameChinese').val();
 	var nameEn = '';
-	if ( nameCh == '不锈钢饰品配件-吊坠'){
+	if ( nameCh == '不锈钢首饰-吊坠'){
 		nameEn = 'Stainless Steel Accessories Necklace Pendant';
-	}else if ( nameCh == '不锈钢饰品配件-手链'){
+	}else if ( nameCh == '不锈钢首饰-手链'){
 		nameEn = 'Stainless Steel Accessories Bracelet';
-	}else if ( nameCh == '不锈钢饰品配件-指环'){
+	}else if ( nameCh == '不锈钢首饰-指环'){
 		nameEn = 'Stainless Steel Accessories Rings';
-	}else if ( nameCh == '时尚饰品配件-吊坠'){
+	}else if ( nameCh == '时尚首饰-吊坠'){
 		nameEn = 'Fashion Accessories Necklace Pendant';
-	}else if ( nameCh == '时尚饰品配件-手链'){
+	}else if ( nameCh == '时尚首饰-手链'){
 		nameEn = 'Fashion Accessories Bracelet';
-	}else if ( nameCh == '时尚饰品配件-指环'){
+	}else if ( nameCh == '时尚首饰-指环'){
 		nameEn = 'Fashion Accessories Rings';
 	}
 	$('#nameEnglish').val(nameEn);
@@ -93,10 +93,10 @@ function submitForm(){
 					<td> 
 						<form:select path="channel">
 								<form:option value=""></form:option>
-								<form:option value="中邮北京平邮小包">中邮北京平邮小包</form:option>
 								<form:option value="中邮北京E邮宝(线下)">中邮北京E邮宝(线下)</form:option>
-								<form:option value="中邮北京挂号小包">中邮北京挂号小包</form:option>
+								<form:option value="中邮北京平邮小包">中邮北京平邮小包</form:option>
 								<form:option value="中邮上海E邮宝(线下)">中邮上海E邮宝(线下)</form:option>
+								<form:option value="中邮北京挂号小包">中邮北京挂号小包</form:option>
 						</form:select>
 					</td>
 				</tr>
@@ -117,12 +117,12 @@ function submitForm(){
 					<td> 
 						<form:select path="nameChinese">
 								<%-- <form:option value=""></form:option> --%>
-								<form:option value="不锈钢饰品配件-吊坠">不锈钢饰品配件-吊坠</form:option>
-								<form:option value="不锈钢饰品配件-手链">不锈钢饰品配件-手链</form:option>
-								<form:option value="不锈钢饰品配件-指环">不锈钢饰品配件-指环</form:option>
-								<form:option value="时尚饰品配件-吊坠">时尚饰品配件-吊坠</form:option>
-								<form:option value="时尚饰品配件-手链">时尚饰品配件-手链</form:option>
-								<form:option value="时尚饰品配件-指环">时尚饰品配件-指环</form:option>
+								<form:option value="不锈钢首饰-吊坠">不锈钢首饰-吊坠</form:option>
+								<form:option value="不锈钢首饰-手链">不锈钢首饰-手链</form:option>
+								<form:option value="不锈钢首饰-指环">不锈钢首饰-指环</form:option>
+								<form:option value="时尚首饰-吊坠">时尚首饰-吊坠</form:option>
+								<form:option value="时尚首饰-手链">时尚首饰-手链</form:option>
+								<form:option value="时尚首饰-指环">时尚首饰-指环</form:option>
 						</form:select>
 					</td>
 				</tr>
