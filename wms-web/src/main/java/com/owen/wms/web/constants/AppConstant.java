@@ -1,6 +1,8 @@
 package com.owen.wms.web.constants;
 
 public class AppConstant {
+	public final static String picDownloadPath = "C:/Users/owen/Desktop/tmp_pic/";  
+	
 	public final static Double ShippingFeeEarnPerShip = 2.9;  //USD
 	public final static Double ShippingFeeEarnPerItem = 1.95;  //USD
 	public final static Double USDRate = 6.4;  

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.owen.htmlparser.service.PictureDownloadService;
 import com.owen.htmlparser.service.impl.AlibabaGroupPictureDownloadServiceImpl;
 import com.owen.htmlparser.service.impl.AmazonPictureDownloadServiceImpl;
+import com.owen.wms.web.constants.AppConstant;
 import com.owen.wms.web.form.PictureDownloadPackage;
 import com.owen.wms.web.form.URLString;
 
@@ -24,7 +25,7 @@ public class PictureProcessController {
 	@RequestMapping(value="/download", method = RequestMethod.GET)
 	public String getDownload(Model model) {
 		PictureDownloadPackage picPackage = new PictureDownloadPackage();
-		picPackage.setDownloadPath("C:/Users/owen/Desktop/tmp/");
+		picPackage.setDownloadPath(AppConstant.picDownloadPath);
 		model.addAttribute("picPackage", picPackage);
 		model.addAttribute("currentMenu", "pic");
 		return "downloadPicture";

@@ -177,6 +177,7 @@ public class AmazonProductController {
 					case "pendant-necklaces":e.setFeedProductType("FashionNecklaceBraceletAnklet");break;
 					case "link-bracelets":e.setFeedProductType("FashionNecklaceBraceletAnklet");break;
 					case "rings":e.setFeedProductType("FashionRing");break;
+					case "earrings":e.setFeedProductType("FashionEarring");break;
 					default:;//TODO TBC
 					}
 				}
@@ -224,6 +225,7 @@ public class AmazonProductController {
 					case "pendant-necklaces":e.setFeedProductType("FashionNecklaceBraceletAnklet");break;
 					case "link-bracelets":e.setFeedProductType("FashionNecklaceBraceletAnklet");break;
 					case "rings":e.setFeedProductType("FashionRing");break;
+					case "earrings":e.setFeedProductType("FashionEarring");break;
 					default:;//TODO TBC
 					}
 				}

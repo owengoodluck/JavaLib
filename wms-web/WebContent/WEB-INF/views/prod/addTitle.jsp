@@ -171,6 +171,7 @@ function submitForm(preOrNext){
 												<option value="" <c:if test="${ prod.itemType == '' || prod.itemType == null}" >selected="true"</c:if> ></option>
 												<option value ="pendant-necklaces" <c:if test="${ prod.itemType == 'pendant-necklaces' }" >selected="true"</c:if> >项链/吊坠</option>
 												<option value ="link-bracelets" <c:if test="${ prod.itemType == 'link-bracelets' }" >selected="true"</c:if> >手链</option>
+												<option value ="earrings" <c:if test="${ prod.itemType == 'earrings' }" >selected="true"</c:if> >耳环/耳坠</option>
 												<option value="rings" <c:if test="${ prod.itemType == 'rings' }" >selected="true"</c:if> >戒指</option>
 										</select>
 									</td>
@@ -228,6 +229,7 @@ function submitForm(preOrNext){
 												<option value="" <c:if test="${ prod.itemType == '' || prod.itemType == null}" >selected="true"</c:if> ></option>
 												<option value ="pendant-necklaces" <c:if test="${ prod.itemType == 'pendant-necklaces' }" >selected="true"</c:if> >项链/吊坠</option>
 												<option value ="link-bracelets" <c:if test="${ prod.itemType == 'link-bracelets' }" >selected="true"</c:if> >手链</option>
+												<option value ="earrings" <c:if test="${ prod.itemType == 'earrings' }" >selected="true"</c:if> >耳环/耳坠</option>
 												<option value="rings" <c:if test="${ prod.itemType == 'rings' }" >selected="true"</c:if> >戒指</option>
 										</select>
 									</td>
