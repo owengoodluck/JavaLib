@@ -36,7 +36,9 @@ public class AmazonOrder implements java.io.Serializable{
 				double standPrice = prod.getStandardPrice()==null ? 0 : prod.getStandardPrice();
 				double amazonFee = prod.getAmazonFee();
 				profit += (standPrice - amazonFee);
-				purchasePriceAll += i.getSellerSKU().getPurchasePrice();
+				if(i.getSellerSKU().getPurchasePrice()!=null){
+					purchasePriceAll += i.getSellerSKU().getPurchasePrice();
+				}
 			}
 		}
 		

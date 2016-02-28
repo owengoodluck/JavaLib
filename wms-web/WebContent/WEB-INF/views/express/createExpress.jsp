@@ -34,6 +34,8 @@ function setNameOfEnglish(){
 		nameEn = 'Fashion Accessories Bracelet';
 	}else if ( nameCh == '时尚首饰-指环'){
 		nameEn = 'Fashion Accessories Rings';
+	}else if ( nameCh == '时尚首饰-耳环'){
+		nameEn = 'Fashion Accessories Earrings';
 	}
 	$('#nameEnglish').val(nameEn);
 }
@@ -92,7 +94,6 @@ function submitForm(){
 					<td>发货方式</td> 
 					<td> 
 						<form:select path="channel">
-								<form:option value=""></form:option>
 								<form:option value="中邮北京E邮宝(线下)">中邮北京E邮宝(线下)</form:option>
 								<form:option value="中邮北京平邮小包">中邮北京平邮小包</form:option>
 								<form:option value="中邮上海E邮宝(线下)">中邮上海E邮宝(线下)</form:option>
@@ -123,6 +124,7 @@ function submitForm(){
 								<form:option value="时尚首饰-吊坠">时尚首饰-吊坠</form:option>
 								<form:option value="时尚首饰-手链">时尚首饰-手链</form:option>
 								<form:option value="时尚首饰-指环">时尚首饰-指环</form:option>
+								<form:option value="时尚首饰-耳环">时尚首饰-耳环</form:option>
 						</form:select>
 					</td>
 				</tr>
