@@ -10,7 +10,11 @@ import com.owen.wms.lekani.entity.GetBrandListResp;
 import com.owen.wms.lekani.entity.GetBrandResp;
 import com.owen.wms.lekani.entity.GetCategoryModelListResp;
 import com.owen.wms.lekani.entity.GetCategoryModelResp;
+import com.owen.wms.lekani.entity.GetIsOnSaleResp;
+import com.owen.wms.lekani.entity.GetProductModelListPackage;
+import com.owen.wms.lekani.entity.GetProductModelListResp;
 import com.owen.wms.lekani.entity.GetProductModelResp;
+import com.owen.wms.lekani.entity.GetStockResp;
 import com.owen.wms.lekani.entity.LKNBasicResp;
 import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.util.JsonUtil;
@@ -90,13 +94,17 @@ public class LKNService {
     	return obj ==null ? null : (CategoryModel) obj;
     }
     
-    public static void getProductList(int pageIndex,int categoryID,int brandID){
+    public static GetProductModelListPackage getProductList(int pageIndex,int categoryID,int brandID){
         log.info("Invoking getPRODUCTENLIST...");
         String _getPRODUCTENLIST_shopBeginTime = null;
         String _getPRODUCTENLIST_shopEndTime = null;
         String _getPRODUCTENLIST_skus = null;
         String _getPRODUCTENLIST__return = port.getPRODUCTENLIST(key, pageIndex, categoryID, brandID, _getPRODUCTENLIST_shopBeginTime, _getPRODUCTENLIST_shopEndTime, _getPRODUCTENLIST_skus);
         log.info("getPRODUCTENLIST.result=" + _getPRODUCTENLIST__return);
+        _getPRODUCTENLIST__return = specialHandle4Attribute(_getPRODUCTENLIST__return);
+        GetProductModelListResp resp = JsonUtil.convertJson2Object(_getPRODUCTENLIST__return, GetProductModelListResp.class);
+    	Object obj = getFinalObject(resp);
+    	return obj ==null ? null : (GetProductModelListPackage) obj;
     }
 
     /**
@@ -146,36 +154,61 @@ public class LKNService {
         String resp = port.getPRODUCTENINFO(key, prodcutID, sku);
         log.info("getPRODUCTENINFO.result=" + resp);
         //special handle for attributes
-        {
-        	//1. get Attributes string and remove all \
-        	String token ="\"Attributes\":\"";
-        	int index1 = resp.indexOf(token);
-        	int index2 = resp.indexOf("]\"," ,index1);
-        	resp = resp.substring(0,index1) + resp.substring(index1,index2).replaceAll("\\\\", "") +resp.substring(index2);
-        	
-        	//2. remove quote around [ ] for "Attributes"
-        	int index = resp.indexOf(token);
-        	if(index>-1){
-        		StringBuffer buf = new StringBuffer(resp);
-        		buf.deleteCharAt(index+token.length()-1);
-        		index = buf.indexOf("]",index);
-        		buf.deleteCharAt(index+1);
-        		resp =buf.toString();
-        	}
-        }
+        resp = specialHandle4Attribute(resp);
+        
         GetProductModelResp getProductModelResp = JsonUtil.convertJson2Object(resp, GetProductModelResp.class);
     	Object obj = getFinalObject(getProductModelResp);
     	return obj ==null ? null : (ProductModel) obj;
     }
-//
-//    public static void getXXX(LekaniStandardWebServiceSoap port ){
-//    	
-//    }
-//
-//    public static void getXXX(LekaniStandardWebServiceSoap port ){
-//    	
-//    }
-//
+    
+    private static String specialHandle4Attribute(String input){
+    	int index0=0,index1=0,index2=0;
+    	String token1 = "\"Attributes\":\"[";
+    	String token2 ="]\",\"Images";
+    	
+    	StringBuffer result = new StringBuffer();
+    	while(  (index1 = input.indexOf(token1,index2)) > -1 ){
+    		index2 = input.indexOf(token2, index1);
+    		
+    		result.append(input.substring(index0, index1));
+    		String tmp = input.substring(index1, index2+1);
+    		tmp = "\"Attributes\":[" + tmp.substring(token1.length());
+    		tmp = tmp.replaceAll("\\\\", "");
+    		
+    		result.append(tmp);
+    		index0= index2 +2;
+    	}
+    	result.append(input.substring(index0));
+    	return result.toString();
+    }
+    
+
+    public static boolean getIsOnSale(String sku){
+        System.out.println("Invoking getISOFFSHELVES...");
+        java.lang.String _getISOFFSHELVES__return = port.getISOFFSHELVES(key, sku);
+        System.out.println("getISOFFSHELVES.result=" + _getISOFFSHELVES__return);
+
+        GetIsOnSaleResp resp = JsonUtil.convertJson2Object(_getISOFFSHELVES__return, GetIsOnSaleResp.class);
+    	if(resp!=null && "1".equals(resp.getRetValue())){
+    		return true;
+    	}else{
+    		return false;
+    	}
+    }
+
+    public static Integer getStock(String sku){
+        System.out.println("Invoking getSTOCK...");
+        java.lang.String _getSTOCK__return = port.getSTOCK(key, sku);
+        System.out.println("getSTOCK.result=" + _getSTOCK__return);
+        
+        GetStockResp resp = JsonUtil.convertJson2Object(_getSTOCK__return, GetStockResp.class);
+    	if(resp!=null ){
+    		return resp.getRetValue();
+    	}else{
+    		return 0;
+    	}
+    }
+
 //    public static void getXXX(LekaniStandardWebServiceSoap port ){
 //    	
 //    }

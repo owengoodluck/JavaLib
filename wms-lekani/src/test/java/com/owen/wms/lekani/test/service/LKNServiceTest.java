@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.owen.wms.lekani.entity.AttributeModel;
 import com.owen.wms.lekani.entity.BrandModel;
 import com.owen.wms.lekani.entity.CategoryModel;
+import com.owen.wms.lekani.entity.GetProductModelListPackage;
 import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.service.LKNService;
 
@@ -49,8 +50,16 @@ public class LKNServiceTest {
 		int categoryID = 216;
 		int brandID = 10;
 		int pageIndex = 1 ;
-		LKNService.getProductList(pageIndex , categoryID, brandID);
-		
+		GetProductModelListPackage resp = LKNService.getProductList(pageIndex , categoryID, brandID);
+		System.out.println("getPageSize = "+resp.getPageSize() +"---getPageTotal=" +resp.getPageTotal()+"---getRecordTotal="+resp.getRecordTotal());
+		List<ProductModel> list = resp.getProductList();
+		for(ProductModel p :list){
+			System.out.println(p.getBrandName() +"-------" + p.getCatName()+"-------" + p.getName());
+			List<AttributeModel> as = p.getAttributes();
+			for(AttributeModel a : as){
+				System.out.println(a.getAttrName()+"--"+a.getAttrValue());
+			}
+		}
 	}
 	
 	@Test
@@ -58,10 +67,24 @@ public class LKNServiceTest {
 		String sku = "";
 		int prodId = 102421;
 		ProductModel prod = LKNService.getProdInfo(prodId, sku);
-		System.out.println("getDescription =  "+prod.getDescription());
+		System.out.println(prod.getSKU() +" ---,getDescription =  "+prod.getDescription());
 		List<AttributeModel> attrs = prod.getAttributes();
 		for(AttributeModel ab : attrs){
 			System.out.println(ab.getAttrName()+"---"+ab.getAttrValue());
 		}
+	}
+	
+	@Test
+	public void getIsOnSale(){
+		String sku = "LKNSPCN132-16";
+		boolean resp = LKNService.getIsOnSale( sku);
+		System.out.println(sku +" is on sale ? "+resp);
+	}
+	
+	@Test
+	public void getStock(){
+		String sku = "LKNSPCN132-16";
+		Integer resp = LKNService.getStock( sku);
+		System.out.println(sku +" stock = "+resp);
 	}
 }
