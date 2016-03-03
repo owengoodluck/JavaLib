@@ -101,7 +101,7 @@ public class LKNService {
         String _getPRODUCTENLIST_skus = null;
         String _getPRODUCTENLIST__return = port.getPRODUCTENLIST(key, pageIndex, categoryID, brandID, _getPRODUCTENLIST_shopBeginTime, _getPRODUCTENLIST_shopEndTime, _getPRODUCTENLIST_skus);
         log.info("getPRODUCTENLIST.result=" + _getPRODUCTENLIST__return);
-        _getPRODUCTENLIST__return = specialHandle4Attribute(_getPRODUCTENLIST__return);
+        _getPRODUCTENLIST__return = specialHandle4Attribute2(_getPRODUCTENLIST__return);
         GetProductModelListResp resp = JsonUtil.convertJson2Object(_getPRODUCTENLIST__return, GetProductModelListResp.class);
     	Object obj = getFinalObject(resp);
     	return obj ==null ? null : (GetProductModelListPackage) obj;
@@ -154,14 +154,14 @@ public class LKNService {
         String resp = port.getPRODUCTENINFO(key, prodcutID, sku);
         log.info("getPRODUCTENINFO.result=" + resp);
         //special handle for attributes
-        resp = specialHandle4Attribute(resp);
+        resp = specialHandle4Attribute2(resp);
         
         GetProductModelResp getProductModelResp = JsonUtil.convertJson2Object(resp, GetProductModelResp.class);
     	Object obj = getFinalObject(getProductModelResp);
     	return obj ==null ? null : (ProductModel) obj;
     }
     
-    private static String specialHandle4Attribute(String input){
+    private static String specialHandle4Attribute1(String input){
     	int index0=0,index1=0,index2=0;
     	String token1 = "\"Attributes\":\"[";
     	String token2 ="]\",\"Images";
@@ -181,7 +181,29 @@ public class LKNService {
     	result.append(input.substring(index0));
     	return result.toString();
     }
-    
+    private static String specialHandle4Attribute2(String input){
+    	int index0=0,index1=0,index2=0;
+    	String token1 = "\"Attributes\":\"[";
+    	String token2 ="]\",\"Images";
+    	
+    	StringBuffer result = new StringBuffer();
+    	while(  (index1 = input.indexOf(token1,index2)) > -1 ){
+    		index2 = input.indexOf(token2, index1);
+    		
+    		result.append(input.substring(index0, index1));
+    		String s = input.substring(index1, index2+1);
+    		s = "\"Attributes\":[" + s.substring(token1.length());
+        	s = s.replaceAll("\\\\\"AttrID\\\\\":\\\\", "\"AttrID\":");
+        	s = s.replaceAll("\\\\\",\\\\\"AttrName\\\\\":\\\\", "\",\"AttrName\":");
+        	s = s.replaceAll("\\\\\",\\\\\"AttrValue\\\\\":\\\\", "\",\"AttrValue\":");
+        	s = s.replaceAll("\\\\\",\\\\\"IsSKU\\\\\":\\\\\"0\\\\", "\",\"IsSKU\":\"0");
+        	s = s.replaceAll("\\\\\",\\\\\"IsSKU\\\\\":\\\\\"1\\\\", "\",\"IsSKU\":\"1");
+    		result.append(s);
+    		index0= index2 +2;
+    	}
+    	result.append(input.substring(index0));
+    	return result.toString();
+    }
 
     public static boolean getIsOnSale(String sku){
         System.out.println("Invoking getISOFFSHELVES...");

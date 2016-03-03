@@ -17,6 +17,12 @@
         <dependent-module archiveName="wms-priv-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wms-priv/wms-priv">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="wms-lekani-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wms-lekani/wms-lekani">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="wms-common-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wms-common/wms-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="wms-web"/>
         <property name="java-output-path" value="/wms-web/target/classes"/>
     </wb-module>

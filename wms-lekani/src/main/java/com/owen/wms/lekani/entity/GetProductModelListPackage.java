@@ -7,49 +7,49 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GetProductModelListPackage {
 	
 	@JsonProperty("PageIndex")
-	private String pageIndex;
+	private int pageIndex;
 	
 	@JsonProperty("PageTotal")
-	private String pageTotal;
+	private int pageTotal;
 	
 	@JsonProperty("PageSize")
-	private String pageSize;
+	private int pageSize;
 	
 	@JsonProperty("RecordTotal")
-	private String recordTotal;
+	private int recordTotal;
 	
 	@JsonProperty("ProductList")  
 	private List<ProductModel> productList;
 
-	public String getPageIndex() {
+	public int getPageIndex() {
 		return pageIndex;
 	}
 
-	public void setPageIndex(String pageIndex) {
+	public void setPageIndex(int pageIndex) {
 		this.pageIndex = pageIndex;
 	}
 
-	public String getPageTotal() {
+	public int getPageTotal() {
 		return pageTotal;
 	}
 
-	public void setPageTotal(String pageTotal) {
+	public void setPageTotal(int pageTotal) {
 		this.pageTotal = pageTotal;
 	}
 
-	public String getPageSize() {
+	public int getPageSize() {
 		return pageSize;
 	}
 
-	public void setPageSize(String pageSize) {
+	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
 
-	public String getRecordTotal() {
+	public int getRecordTotal() {
 		return recordTotal;
 	}
 
-	public void setRecordTotal(String recordTotal) {
+	public void setRecordTotal(int recordTotal) {
 		this.recordTotal = recordTotal;
 	}
 

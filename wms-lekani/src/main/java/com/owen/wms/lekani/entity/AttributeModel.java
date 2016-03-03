@@ -1,9 +1,25 @@
 package com.owen.wms.lekani.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Entity
+@Table(name="AttributeModel")
 public class AttributeModel {
-	@JsonProperty("AttrID")  
+	
+	@Id
+	private String attributeModelID;
+	
+	@ManyToOne
+	@JoinColumn(name="productID")
+	private ProductModel product;//foreign key
+	
+	@JsonProperty("AttrID")
 	private String attrID;
 
 	@JsonProperty("AttrName")  
@@ -45,6 +61,22 @@ public class AttributeModel {
 
 	public void setIsSKU(String isSKU) {
 		this.isSKU = isSKU;
+	}
+
+	public String getAttributeModelID() {
+		return attributeModelID;
+	}
+
+	public void setAttributeModelID(String attributeModelID) {
+		this.attributeModelID = attributeModelID;
+	}
+
+	public ProductModel getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductModel product) {
+		this.product = product;
 	}
 	
 	

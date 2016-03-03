@@ -17,9 +17,13 @@ public class LKNServiceTest {
 	public void getBrandList(){
 		List<BrandModel> list = LKNService.getBrandList();
 		if(list!=null){
+			int i =0;
 			for(BrandModel b : list){
-				System.out.println(b.getBrandID() + "----" + b.getBrandName());
+				i++;
+//				System.out.println(b.getBrandID() + "----" + b.getBrandName());
+				System.out.println("<form:option value=\""+b.getBrandID()+"\">"+b.getBrandName()+"</form:option>");
 			}
+			System.out.println(i);
 		}
 	}
 	
@@ -34,7 +38,8 @@ public class LKNServiceTest {
 		 List<CategoryModel> list = LKNService.getCategoryList();
 		if(list!=null){
 			for(CategoryModel b : list){
-				System.out.println(b.getCatID() + "----" + b.getCatName());
+//				System.out.println(b.getCatID() + "----" + b.getCatName());
+				System.out.println("<form:option value=\""+b.getCatID()+"\">"+b.getCatName()+"</form:option>");
 			}
 		}
 	}
@@ -83,7 +88,7 @@ public class LKNServiceTest {
 	
 	@Test
 	public void getStock(){
-		String sku = "LKNSPCN132-16";
+		String sku = "LKN18KRGPN772";
 		Integer resp = LKNService.getStock( sku);
 		System.out.println(sku +" stock = "+resp);
 	}

@@ -6,8 +6,11 @@ import java.util.List;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.owen.wms.common.util.FileUtil;
 import com.owen.wms.lekani.entity.BrandModel;
 import com.owen.wms.lekani.entity.GetBrandListResp;
+import com.owen.wms.lekani.entity.GetProductModelListResp;
+import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.util.JsonUtil;
 
 public class JsonUtilTest {
@@ -26,8 +29,73 @@ public class JsonUtilTest {
 	
 	@Test
 	public void test1(){
-//		String s = "{\"RetValue\":{\"ProductID\":102421,\"SKU\":\"LKNSPCN132-16\",\"BarCode\":\"7000000238819\",\"Name\":\"N132-16 hot brand new fashion popular chain necklace jewelry\",\"Price\":4.00,\"Stock\":1210,\"IsPackage\":1,\"Weight\":7.50,\"GrossWeight\":22.00,\"PackageHeight\":10.00,\"PackageLength\":10.00,\"PackageWidth\":8.00,\"ShopTime\":\"2014-07-22T13:09:15.74\",\"KeyWords\":\"fashion popular chain necklace jewelry\",\"CatID\":216,\"CatName\":\"Necklaces\",\"BrandID\":10,\"BrandName\":\"YUEYIN\",\"Attributes\":\"[{\\"AttrID\\":\\"3\\",\\"AttrName\\":\\"Model Number\\",\\"AttrValue\\":\\"N132-16\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"10\\",\\"AttrName\\":\\"Material\\",\\"AttrValue\\":\\"None\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"284\\",\\"AttrName\\":\\"Gender\\",\\"AttrValue\\":\\"Unisex\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"326\\",\\"AttrName\\":\\"Style\\",\\"AttrValue\\":\\"Classic\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"100005859\\",\\"AttrName\\":\\"Metals Type\\",\\"AttrValue\\":\\"Silver Plated\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"200000171\\",\\"AttrName\\":\\"Chain Type\\",\\"AttrValue\\":\\"Snake Chain\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"200000221\\",\\"AttrName\\":\\"Necklace Type\\",\\"AttrValue\\":\\"Chains Necklaces\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"200000639\\",\\"AttrName\\":\\"Length\\",\\"AttrValue\\":\\"16inches*4MM\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"200000640\\",\\"AttrName\\":\\"Pendant Size\\",\\"AttrValue\\":\\"None\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"200000784\\",\\"AttrName\\":\\"Shape\\pattern\\",\\"AttrValue\\":\\"Animal\\",\\"IsSKU\\":\\"0\\"},{\\"AttrID\\":\\"200001034\\",\\"AttrName\\":\\"Metal Color\\",\\"AttrValue\\":\\"Champagne Gold\\",\\"IsSKU\\":\\"1\\"}]\",\"Images\":\"http://img.pfhoo.com/pro/b/20140715/278dfa46-7bc3-44a6-8fd4-77a42e7736d5.jpg,http://img.pfhoo.com/pro/b/20140715/3b18478b-b2e7-48f3-b964-051de88e3cfc.jpg,http://img.pfhoo.com/pro/b/20140715/785ddfb6-0fca-4acf-8445-8bbba27f092b.jpg\",\"Description\":\"<img src=\\"http://img.inalis.com/InfoImg/20140715/f7be8f40-787f-4838-9916-64d3c4e3b119.jpg\\" alt=\\"\\" /><img src=\\"http://img.inalis.com/InfoImg/20140715/ab86aa6c-5528-4ec7-bda9-af4446c6ce5e.jpg\\" alt=\\"\\" /><img src=\\"http://img.inalis.com/InfoImg/20140715/a36c869d-42bf-4213-bc5c-ac106c3bba42.jpg\\" alt=\\"\\" />\"},\"StatusCode\":0,\"ErrorMessage\":null}";
+			String input = FileUtil.readFile2String("C:/Users/owen/git/wms-lekani/src/test/resources/prodList.json");
+			input = specialHandle4Attribute2(input);
+	        GetProductModelListResp resp = JsonUtil.convertJson2Object(input, GetProductModelListResp.class);
+	    	List<ProductModel> list = resp.getRetValue().getProductList();
+	    	System.out.println("prod list size = "+list.size());
 	}
 
+    
+    private static String specialHandle4Attribute(String input){
+    	int index0=0,index1=0,index2=0;
+    	String token1 = "\"Attributes\":\"[";
+    	String token2 ="]\",\"Images";
+    	
+    	StringBuffer result = new StringBuffer();
+    	while(  (index1 = input.indexOf(token1,index2)) > -1 ){
+    		index2 = input.indexOf(token2, index1);
+    		
+    		result.append(input.substring(index0, index1));
+    		String tmp = input.substring(index1, index2+1);
+    		tmp = "\"Attributes\":[" + tmp.substring(token1.length());
+    		tmp = tmp.replaceAll("\\\\", "");
+    		
+    		result.append(tmp);
+    		index0= index2 +2;
+    	}
+    	result.append(input.substring(index0));
+    	return result.toString();
+    }
+    
+    private static String specialHandle4Attribute2(String input){
+    	int index0=0,index1=0,index2=0;
+    	String token1 = "\"Attributes\":\"[";
+    	String token2 ="]\",\"Images";
+    	
+    	StringBuffer result = new StringBuffer();
+    	while(  (index1 = input.indexOf(token1,index2)) > -1 ){
+    		index2 = input.indexOf(token2, index1);
+    		
+    		result.append(input.substring(index0, index1));
+    		String s = input.substring(index1, index2+1);
+    		s = "\"Attributes\":[" + s.substring(token1.length());
+        	s = s.replaceAll("\\\\\"AttrID\\\\\":\\\\", "\"AttrID\":");
+        	s = s.replaceAll("\\\\\",\\\\\"AttrName\\\\\":\\\\", "\",\"AttrName\":");
+        	s = s.replaceAll("\\\\\",\\\\\"AttrValue\\\\\":\\\\", "\",\"AttrValue\":");
+        	s = s.replaceAll("\\\\\",\\\\\"IsSKU\\\\\":\\\\\"0\\\\", "\",\"IsSKU\":\"0");
+        	s = s.replaceAll("\\\\\",\\\\\"IsSKU\\\\\":\\\\\"1\\\\", "\",\"IsSKU\":\"1");
+    		result.append(s);
+    		index0= index2 +2;
+    	}
+    	result.append(input.substring(index0));
+    	return result.toString();
+    }
 	
+    @Test
+    public void testReplace(){
+    	String  s= "{\\\"AttrID\\\":\\\"3\\\",\\\"AttrName\\\":\\\"Model Number\\\",\\\"AttrValue\\\":\\\"N011-20\\\" N011-24\\\",\\\"IsSKU\\\":\\\"0\\\"},";
+    	System.out.println(s);
+//    	s = s.replaceAll("\\\\", "");
+    	s = s.replaceAll("\\\\\"AttrID\\\\\":\\\\", "\"AttrID\":");
+    	System.out.println(s);
+    	s = s.replaceAll("\\\\\",\\\\\"AttrName\\\\\":\\\\", "\",\"AttrName\":");
+    	System.out.println(s);
+    	s = s.replaceAll("\\\\\",\\\\\"AttrValue\\\\\":\\\\", "\",\"AttrValue\":");
+    	System.out.println(s);
+    	s = s.replaceAll("\\\\\",\\\\\"IsSKU\\\\\":\\\\\"0\\\\", "\",\"IsSKU\":\"0");
+    	System.out.println(s);
+    	s = s.replaceAll("\\\\\",\\\\\"IsSKU\\\\\":\\\\\"1\\\\", "\",\"IsSKU\":\"1");
+    	System.out.println(s);
+    }
 }

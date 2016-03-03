@@ -2,10 +2,22 @@ package com.owen.wms.lekani.entity;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Entity
+@Table(name="ProductModel")
 public class ProductModel {
 
+	@Id
 	@JsonProperty("ProductID")  
 	private String productID;
 	
@@ -60,6 +72,8 @@ public class ProductModel {
 	@JsonProperty("Images")  
 	private String images;
 
+	private String mainImage;
+	
 	@JsonProperty("Description")  
 	private String description;
 
@@ -71,6 +85,8 @@ public class ProductModel {
 	//2.remove quote around [ ] for "Attributes"
 	//"Attributes":"[{"AttrID":"200000784","AttrName":"Shapepattern","AttrValue":"Animal","IsSKU":"0"},{"AttrID":"200001034","AttrName":"Metal Color","AttrValue":"Champagne Gold","IsSKU":"1"}]"
 	@JsonProperty("Attributes")  
+	@OneToMany(mappedBy="product",fetch=FetchType.EAGER)
+	@Cascade({CascadeType.SAVE_UPDATE,CascadeType.DELETE_ORPHAN}) 
 	private List<AttributeModel> attributes;
 
 	public String getProductID() {
@@ -199,6 +215,10 @@ public class ProductModel {
 
 	public void setImages(String images) {
 		this.images = images;
+		if(images!=null){
+			String[] imageList = images.split(",");
+			this.mainImage = imageList[0];
+		}
 	}
 
 	public String getDescription() {
@@ -239,6 +259,14 @@ public class ProductModel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getMainImage() {
+		return mainImage;
+	}
+
+	public void setMainImage(String mainImage) {
+		this.mainImage = mainImage;
 	}
 
 	

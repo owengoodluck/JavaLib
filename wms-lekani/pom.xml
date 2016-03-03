@@ -3,10 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>owen.wms</groupId>
+	<groupId>com.owen.wms</groupId>
 	<artifactId>wms-lekani</artifactId>
 	<version>1.0</version>
-	<name>Lekani</name>
+	<name>wms-lekani</name>
+	
 	<!-- Parent -->
 	<parent>
 		<groupId>com.owen.wms</groupId>
@@ -14,7 +15,22 @@
 		<version>1.0</version>
 		<relativePath>../wms-parent</relativePath>
 	</parent>
+	
+	<!-- properties -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>4.1.2.RELEASE</spring.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<jackson.version>2.5.0</jackson.version>
+	</properties>
+
 	<dependencies>
+		<dependency>
+			<groupId>com.owen.wms</groupId>
+			<artifactId>wms-common</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -29,6 +45,13 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.6.5</version>
+		</dependency>
+		
+		<!-- hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
 		</dependency>
 	</dependencies>
 </project>

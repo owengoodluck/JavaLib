@@ -16,6 +16,7 @@
 		<module>../wms-feeds</module>
 		<module>../wms-web</module>
 		<module>../wms-mf</module>
+		<module>../wms-lekani</module>
 	</modules>
 	
 	<!-- properties -->
