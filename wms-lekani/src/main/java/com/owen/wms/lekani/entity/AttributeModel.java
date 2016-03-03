@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="AttributeModel")
+@Table(name="Attribute_Model")
 public class AttributeModel {
 	
 	@Id

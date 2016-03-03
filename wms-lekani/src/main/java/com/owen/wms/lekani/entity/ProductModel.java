@@ -2,6 +2,7 @@ package com.owen.wms.lekani.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,7 +15,7 @@ import org.hibernate.annotations.CascadeType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="ProductModel")
+@Table(name="Product_Model")
 public class ProductModel {
 
 	@Id
@@ -70,11 +71,13 @@ public class ProductModel {
 	private String keyWords;
 
 	@JsonProperty("Images")  
+	@Column(length=1000)
 	private String images;
 
 	private String mainImage;
 	
 	@JsonProperty("Description")  
+	@Column(length=1000)
 	private String description;
 
 	@JsonProperty("Name")  
