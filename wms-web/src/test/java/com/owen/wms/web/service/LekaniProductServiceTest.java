@@ -15,7 +15,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.service.LKNService;
+import com.owen.wms.web.dao.AmazonJewelryDao;
+import com.owen.wms.web.entity.JewelryEntity;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration("classpath:test_config.xml")
@@ -23,12 +26,17 @@ import com.owen.wms.lekani.service.LKNService;
 @Transactional
 public class LekaniProductServiceTest {
 
+	
+	@Autowired
+	@Qualifier("amazonJewelryDao")
+	private AmazonJewelryDao amazonJewelryDao;
+	
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
 	private Map<Integer,String> categoryMap = new HashMap<Integer,String>();
 	private Map<Integer,String> brandMap = new HashMap<Integer,String>();
 	{
-		brandMap.put(29,"潘多拉系列");
+//		brandMap.put(29,"潘多拉系列");
 //		brandMap.put(37,"钛钢系列");
 //		brandMap.put(27,"婚饰系列");
 //		brandMap.put(13,"古玛雅");
@@ -42,7 +50,7 @@ public class LekaniProductServiceTest {
 //		brandMap.put(38,"包包系列");
 //		brandMap.put(33,"天然石系列");
 //		brandMap.put(18,"品牌A");
-		brandMap.put(10,"又一银");
+//		brandMap.put(10,"又一银");
 //		brandMap.put(20,"K金锆石类");
 //		brandMap.put(31,"爆款品类");
 //		brandMap.put(30,"韩风");
@@ -55,20 +63,12 @@ public class LekaniProductServiceTest {
 		categoryMap.put(201,"戒指");
 		categoryMap.put(210,"耳钉");
 		categoryMap.put(216,"项链");
-//		categoryMap.put(225,"钥匙扣");
-//		categoryMap.put(226,"钱夹");
-//		categoryMap.put(245,"太阳镜");
-//		categoryMap.put(247,"阅读镜");
-//		categoryMap.put(248,"眼镜盒");
-//		categoryMap.put(243,"手提/单肩/斜跨包");
-//		categoryMap.put(242,"钱包");
 		categoryMap.put(217,"吊坠");
 		categoryMap.put(211,"耳圈");
 		categoryMap.put(202,"耳饰");
 		categoryMap.put(212,"耳钩&耳坠");
 		categoryMap.put(218,"长款项链");
 		categoryMap.put(205,"项链&吊坠");
-//		categoryMap.put(249,"双肩背包");
 		categoryMap.put(207,"手链");
 		categoryMap.put(219,"链条配链");
 		categoryMap.put(213,"耳夹&耳扣");
@@ -77,13 +77,21 @@ public class LekaniProductServiceTest {
 		categoryMap.put(215,"耳饰花托");
 		categoryMap.put(204,"饰品套装");
 		categoryMap.put(222,"胸针");
-//		categoryMap.put(241,"时尚包包");
 		categoryMap.put(244,"时尚眼镜");
-//		categoryMap.put(221,"领带夹&袖扣");
 		categoryMap.put(224,"钥匙扣&钱夹");
 		categoryMap.put(223,"头饰、发饰");
-//		categoryMap.put(54,"包装&展件");
 		categoryMap.put(104,"LEKANI 纯银首饰");
+//		categoryMap.put(54,"包装&展件");
+//		categoryMap.put(249,"双肩背包");
+//		categoryMap.put(225,"钥匙扣");
+//		categoryMap.put(226,"钱夹");
+//		categoryMap.put(245,"太阳镜");
+//		categoryMap.put(247,"阅读镜");
+//		categoryMap.put(248,"眼镜盒");
+//		categoryMap.put(243,"手提/单肩/斜跨包");
+//		categoryMap.put(242,"钱包");
+//		categoryMap.put(241,"时尚包包");
+//		categoryMap.put(221,"领带夹&袖扣");
 	}
 	@Autowired
 	@Qualifier("lekaniProductService")
@@ -109,5 +117,17 @@ public class LekaniProductServiceTest {
 		}
 	}
 
-	
+	@Test
+	public void testConvet(){
+		String prodID = "100700";
+		ProductModel pm = lekaniProductService.getProductModelByID(prodID.trim());
+		JewelryEntity jew = this.lekaniProductService.convert2AmazonJewelry(pm);
+		System.out.println(jew.getItemName());
+		System.out.println(jew.getBulletPoint4());
+		System.out.println(jew.getBulletPoint5());
+		System.out.println(jew.getStandardPrice());
+		System.out.println(jew.getListPrice());
+		
+		this.amazonJewelryDao.saveOrUpdate(jew);
+	}
 }

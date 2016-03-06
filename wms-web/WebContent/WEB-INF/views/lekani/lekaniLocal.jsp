@@ -19,6 +19,7 @@ $(function() {
     $( "#sendDateTo" ).datepicker({"dateFormat":"yy-mm-dd"});
 });
 function submitForm(num){
+	//getjson() ;
 	var currentPage = $('#currentPage').val();
 	if(0==num){
 		$('#currentPage').val(1);
@@ -27,6 +28,17 @@ function submitForm(num){
 	}
 	$('#queryForm').submit();
 }
+
+function getjson() {  
+    $.ajax( {  
+        type : "get",  
+        url : "/wms-web/lekani/getBrandListByCategoryID",  
+        dataType:"json",  
+        success : function(msg) {  
+            alert("Data Saved: " + msg);
+        }  
+    });  
+}  
 
 function cleanForm(){
 	$('#prodID').val(null);
@@ -64,13 +76,6 @@ function cleanForm(){
 						<form:option value="205">项链&吊坠</form:option>
 						<form:option value="219">链条配链</form:option>
 						<form:option value="210">耳钉</form:option>
-						<form:option value="225">钥匙扣</form:option>
-						<form:option value="226">钱夹</form:option>
-						<form:option value="242">手拿包</form:option>
-						<form:option value="243">单肩包</form:option>
-						<%-- <form:option value="245">太阳镜</form:option>
-						<form:option value="247">偏光镜</form:option>
-						<form:option value="248">眼镜盒</form:option> --%>
 						<form:option value="211">耳圈</form:option>
 						<form:option value="202">耳饰</form:option>
 						<form:option value="212">耳钩&耳坠</form:option>
@@ -78,14 +83,23 @@ function cleanForm(){
 						<form:option value="208">手镯</form:option>
 						<form:option value="220">脚链</form:option>
 						<form:option value="215">耳饰花托</form:option>
-						<form:option value="204">饰品套装</form:option>
 						<form:option value="222">胸针</form:option>
-						<%-- <form:option value="244">时尚眼镜</form:option>
-						<form:option value="241">时尚包包</form:option> --%>
+						<%-- 
+						<form:option value="204">饰品套装</form:option>
+						<form:option value="244">时尚眼镜</form:option>
+						<form:option value="225">钥匙扣</form:option>
+						<form:option value="226">钱夹</form:option>
+						<form:option value="242">手拿包</form:option>
+						<form:option value="243">单肩包</form:option>
+						<form:option value="245">太阳镜</form:option>
+						<form:option value="247">偏光镜</form:option>
+						<form:option value="248">眼镜盒</form:option>
+						<form:option value="241">时尚包包</form:option>
 						<form:option value="221">领带夹&袖扣</form:option>
 						<form:option value="224">钥匙扣&钱夹</form:option>
-						<%-- <form:option value="223">头饰、发饰</form:option>
-						<form:option value="54">包装&展件</form:option> --%>
+						<form:option value="223">头饰、发饰</form:option>
+						<form:option value="54">包装&展件</form:option> 
+						--%>
 			      	</form:select>
 			      	品牌列表:
 			      	<form:select path="brandID" onchange="submitForm(0)">
@@ -129,6 +143,7 @@ function cleanForm(){
 					<th>序号</th>
 					<th>图片</th>
 					<th>ID</th>
+					<th>官网链接</th>
 					<th>SKU</th>
 					<th>分类</th>
 					<th>品牌</th>
@@ -148,7 +163,10 @@ function cleanForm(){
 							</c:if>
 						</td>
 						<td>
-							<a href='<c:url value="/lekani/prodDetail/${prod.productID}" />' target="_blank" >${prod.productID}</a>
+							<a href='<c:url value="/lekani/prodDetail/${prod.productID}" />' target="_blank" >产品详情</a>
+						</td>
+						<td>
+							<a href='<c:url value="http://www.pfhoo.com/p/${prod.productID}.html" />' target="_blank" >pfhoo.com</a>
 						</td>
 						<td>${prod.SKU}</td>
 						<td>${prod.catName}</td>
@@ -163,5 +181,10 @@ function cleanForm(){
 			</tbody>
 		</table>
 	</section>
+	
+	 <div class="row">
+     	<input type="button" value="上一页" class="btn btn-primary" <c:if test='${!page.hasPrePage }'>disabled="disabled"</c:if> onclick="submitForm(-1)"/>
+		<input type="button" value="下一页" class="btn btn-primary" <c:if test='${!page.hasNextPage }'>disabled="disabled"</c:if> onclick="submitForm(1)"/>
+	 </div>
 </body>
 </html>

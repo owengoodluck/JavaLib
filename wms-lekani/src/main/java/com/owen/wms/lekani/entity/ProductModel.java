@@ -24,6 +24,8 @@ public class ProductModel {
 
 	private boolean onSale;
 	
+	private String status;//discard,convert
+	
 	@JsonProperty("CatID")  
 	private String catID;
 	
@@ -280,5 +282,13 @@ public class ProductModel {
 
 	public void setOnSale(boolean onSale) {
 		this.onSale = onSale;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

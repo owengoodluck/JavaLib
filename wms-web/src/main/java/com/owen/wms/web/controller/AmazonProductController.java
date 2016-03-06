@@ -30,6 +30,7 @@ import com.owen.wms.web.form.ProdQueryForm;
 import com.owen.wms.web.service.AmazonProductService;
 import com.owen.wms.web.thread.PictureDownLoadThread;
 import com.owen.wms.web.utils.ExcelKeywrodsUtil;
+import com.owen.wms.web.utils.JewelryMappingUtil;
 import com.owen.wms.web.utils.NullAwareBeanUtilsBean;
 
 @Controller
@@ -171,16 +172,7 @@ public class AmazonProductController {
 				
 				//2.setFeedProductTypeByItemType
 				String itemType = e.getItemType();
-				if(itemType!=null){
-					itemType = itemType.toLowerCase();
-					switch (itemType){
-					case "pendant-necklaces":e.setFeedProductType("FashionNecklaceBraceletAnklet");break;
-					case "link-bracelets":e.setFeedProductType("FashionNecklaceBraceletAnklet");break;
-					case "rings":e.setFeedProductType("FashionRing");break;
-					case "earrings":e.setFeedProductType("FashionEarring");break;
-					default:;//TODO TBC
-					}
-				}
+				e.setFeedProductType(JewelryMappingUtil.getFeedProductTypeByItemType(itemType));
 				
 				//3. set description
 				if(e.getProductDescription() == null || e.getProductDescription().trim().length()<1){

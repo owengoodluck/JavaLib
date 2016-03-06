@@ -129,6 +129,7 @@ function cleanForm(){
 					<th>序号</th>
 					<th>图片</th>
 					<th>ID</th>
+					<th>官网链接</th>
 					<th>分类</th>
 					<th>品牌</th>
 					<th>售价</th>

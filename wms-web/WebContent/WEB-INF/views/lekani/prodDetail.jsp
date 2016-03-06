@@ -19,17 +19,17 @@ function submitForm(){
 
 
 </script>
-<title>订单详情-${order.amazonOrderId}</title>
+<title>Lekani产品详情-${prod.productID }</title>
 </head>
 <body>
 	<div>
 		<ol class="breadcrumb" align="left">
-		  <li ><a href="<spring:url value='/order/list' />">Lekani产品列表</a></li>
+		  <li ><a href="<spring:url value='/lekani/pageQueryLocal' />">Lekani产品列表</a></li>
 		  <li class="active">产品详情   ${prod.productID }</li>
 		</ol>
 	</div>
 	
-	<section class="container-fluid " align="left">
+	<section class="container" align="left">
 		<table class="table table-striped">
 			<caption>
 				产品基本信息
@@ -41,25 +41,31 @@ function submitForm(){
 				</tr>
 			</thead>
 			<tbody align="left">	
+				
 				<tr >
-					<td><b>ID</b></td>  <td>${prod.productID }</td>
+					<td><b>ID</b></td>  <td>${prod.productID } &nbsp;&nbsp;&nbsp;&nbsp;<a href='<c:url value="http://www.pfhoo.com/p/${prod.productID}.html" />' target="_blank" >pfhoo.com</a> </td>
 					<td></td>
+					<td colspan="2" rowspan="5"><img src="${prod.mainImage}"  height="200"  onclick='window.open("${prod.mainImage}")'> </td>
+				</tr>
+				<tr >
 					<td><b>SKU</b></td>  <td>${prod.SKU }</td>
 				</tr>
 				<tr>
 					<td><b>barCode</b></td>  <td>${prod.barCode }</td>
 					<td></td>
+				</tr>
+				<tr>
 					<td><b>分类</b></td>  <td>${prod.catID } - ${prod.catName }</td>
+					<td></td>
 				</tr>
 				<tr>
 					<td><b>品名</b></td>  <td>${prod.brandID } - ${prod.brandName }</td>
 					<td></td>
-					<td><b>price</b></td>  <td>${prod.price }</td>
 				</tr>
 				<tr>
-					<td><b>stock</b></td>  <td>${prod.stock }</td>
+					<td><b>库存</b></td>  <td>${prod.stock }</td>
 					<td></td>
-					<td><b>isPackage</b></td>  <td>${prod.isPackage }</td>
+					<td><b>价格</b></td>  <td>${prod.price }</td>
 				</tr>
 				<tr>
 					<td><b>weight</b></td>  <td>${prod.weight }</td>
@@ -79,7 +85,7 @@ function submitForm(){
 				<tr>
 					<td><b>keyWords</b></td>  <td>${prod.keyWords }</td>
 					<td></td>
-					<td><b>mainImage</b></td>  <td>${prod.mainImage }</td>
+					<td><b>isPackage</b></td>  <td>${prod.isPackage }</td>
 				</tr>
 				<tr>
 					<td><b>name</b></td>  <td>${prod.name }</td>

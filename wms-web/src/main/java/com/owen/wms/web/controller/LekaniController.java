@@ -1,6 +1,8 @@
 package com.owen.wms.web.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,12 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.owen.wms.lekani.entity.GetProductModelListPackage;
 import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.service.LKNService;
 import com.owen.wms.web.dao.Page;
-import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.form.LekaniProdQueryForm;
 import com.owen.wms.web.service.LekaniProductService;
 
@@ -109,6 +111,13 @@ public class LekaniController {
 		model.addAttribute("prod", result);
 		model.addAttribute("currentMenu", "lekani");
 		return "lekani/prodDetail";
+	}
+	
+	@RequestMapping(value="/getBrandListByCategoryID", method = RequestMethod.GET)  
+    public @ResponseBody Map<String,String> getBrandListByCategoryID() {
+		String categoryID = null;
+		Map<String,String> map = this.lekaniProductService.getBrandListByCategoryID(categoryID );
+		return map;
 	}
 	
 }

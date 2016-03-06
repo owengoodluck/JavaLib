@@ -18,6 +18,18 @@ public class LekaniProductDao extends BaseHibernateDao<ProductModel,String> {
 		return result;
 	}
 	
+	public List<String> getBrandListByCategoryID(String categoryID){
+		String sql = null;
+		if(categoryID!=null && categoryID.trim().length()>0){
+			sql  = "select distinct brandID from ProductModel e where 1=1 and catID = '"+categoryID+"'";
+		}else{
+			sql =  "select distinct brandID from ProductModel e where 1=1 ";
+		}
+		Query query = this.getSession().createQuery(sql);
+		List<String> result = query.list();
+		return result;
+	}
+	
 	public Page pageListByCriteria(int currentPage,int pageSize,ProductModel entity){
 		Map<String,Object> criteriaMap = new HashMap();
 		StringBuffer hql = new StringBuffer(" from ProductModel where 1 = 1 ");
