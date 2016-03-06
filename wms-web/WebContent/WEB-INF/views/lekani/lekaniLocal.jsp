@@ -38,19 +38,19 @@ function cleanForm(){
 }
 
 </script>
-<title>Lekani产品列表</title>
+<title>Lekani本地产品列表</title>
 </head>
 <body>
 	<div>
 		<ol class="breadcrumb" align="left">
 		  <!-- <li><a href="#">Home</a></li> -->
-		  <li class="active">Lekani产品列表</li>
+		  <li class="active">Lekani本地产品列表</li>
 		</ol>
 	</div>
 	
 	<div class="container-fluid">
 	   <div class="row">
-	      	<form:form modelAttribute="queryForm" enctype="multipart/form-data" action="/wms-web/lekani/pageQuery">
+	      	<form:form modelAttribute="queryForm" enctype="multipart/form-data" action="/wms-web/lekani/pageQueryLocal">
 		      	<div align="left">
 			      	分类类别:
 			      	<form:select path="categoryID" onchange="submitForm(0)">
@@ -129,9 +129,12 @@ function cleanForm(){
 					<th>序号</th>
 					<th>图片</th>
 					<th>ID</th>
+					<th>SKU</th>
 					<th>分类</th>
 					<th>品牌</th>
+					<th>在售</th>
 					<th>售价</th>
+					<th>库存</th>
 					<th>名称</th>
 				</tr>
 			</thead>
@@ -144,10 +147,15 @@ function cleanForm(){
 								<img src="${prod.mainImage}"  height="100"  onclick='window.open("${prod.mainImage}")'> 
 							</c:if>
 						</td>
-						<td>${prod.productID}</td>
+						<td>
+							<a href='<c:url value="/lekani/prodDetail/${prod.productID}" />' target="_blank" >${prod.productID}</a>
+						</td>
+						<td>${prod.SKU}</td>
 						<td>${prod.catName}</td>
 						<td>${prod.brandName}</td>
+						<td>${prod.onSale}</td>	
 						<td>${prod.price}</td>	
+						<td>${prod.stock}</td>	
 						<td>${prod.name}</td>
 						<%-- <td>${prod.description}</td> --%>
 					</tr>

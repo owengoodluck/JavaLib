@@ -21,7 +21,8 @@ public class LKNServiceTest {
 			for(BrandModel b : list){
 				i++;
 //				System.out.println(b.getBrandID() + "----" + b.getBrandName());
-				System.out.println("<form:option value=\""+b.getBrandID()+"\">"+b.getBrandName()+"</form:option>");
+//				System.out.println("<form:option value=\""+b.getBrandID()+"\">"+b.getBrandName()+"</form:option>");
+				System.out.println("brandMap.put("+b.getBrandID()+",\""+b.getBrandName()+"\");");
 			}
 			System.out.println(i);
 		}
@@ -39,7 +40,8 @@ public class LKNServiceTest {
 		if(list!=null){
 			for(CategoryModel b : list){
 //				System.out.println(b.getCatID() + "----" + b.getCatName());
-				System.out.println("<form:option value=\""+b.getCatID()+"\">"+b.getCatName()+"</form:option>");
+//				System.out.println("<form:option value=\""+b.getCatID()+"\">"+b.getCatName()+"</form:option>");
+				System.out.println("categoryMap.put("+b.getCatID()+",\""+b.getCatName()+"\");");
 			}
 		}
 	}
@@ -81,14 +83,14 @@ public class LKNServiceTest {
 	
 	@Test
 	public void getIsOnSale(){
-		String sku = "LKNSPCN132-16";
+		String sku = "LKNSPCH389";
 		boolean resp = LKNService.getIsOnSale( sku);
 		System.out.println(sku +" is on sale ? "+resp);
 	}
 	
 	@Test
 	public void getStock(){
-		String sku = "LKN18KRGPN772";
+		String sku = "LKNSPCH389";
 		Integer resp = LKNService.getStock( sku);
 		System.out.println(sku +" stock = "+resp);
 	}

@@ -177,11 +177,19 @@ public class AmazonOrderDao extends BaseHibernateDao<AmazonOrder,String> {
 			public Object transformTuple(Object[] tuple, String[] aliases) {
 				OrderStatisticEntity e = new OrderStatisticEntity();
 				e.setItemSku(tuple[0].toString());
-				e.setSellCount(Integer.valueOf(tuple[1].toString()));
-				Timestamp t = ( Timestamp )tuple[2] ;
-				e.setLatestDate(new Date(t.getTime()));
-				e.setStockQuantity(Integer.valueOf(tuple[3].toString()));
-				e.setMainImageUrl(tuple[4].toString());
+				if(tuple.length>1  && tuple[1]!=null){
+					e.setSellCount(Integer.valueOf(tuple[1].toString()));
+				}
+				if(tuple.length>2  && tuple[2]!=null){
+					Timestamp t = ( Timestamp )tuple[2] ;
+					e.setLatestDate(new Date(t.getTime()));
+				}
+				if(tuple.length>3 && tuple[3]!=null){
+					e.setStockQuantity(Integer.valueOf(tuple[3].toString()));
+				}
+				if(tuple.length>4  && tuple[4]!=null){
+					e.setMainImageUrl(tuple[4].toString());
+				}
 				return e;
 			}
 

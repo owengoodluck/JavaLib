@@ -14,7 +14,9 @@ import com.owen.wms.lekani.entity.GetProductModelListPackage;
 import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.service.LKNService;
 import com.owen.wms.web.dao.LekaniProductAttributeDao;
-import com.owen.wms.web.dao.LekaniProductDao;;
+import com.owen.wms.web.dao.LekaniProductDao;
+import com.owen.wms.web.dao.Page;
+import com.owen.wms.web.entity.JewelryEntity;;
 
 @Service("lekaniProductService")
 @Transactional
@@ -31,24 +33,47 @@ public class LekaniProductService {
 	@Qualifier("lekaniProductDao")
 	private LekaniProductDao lekaniProductDao;
 	
-	public void loadProdList(int categoryID,int brandID){
+	public ProductModel getProductModelByID(String prodID){
+		ProductModel prod = this.lekaniProductDao.get(prodID);
+		return prod;
+	}
+	public void loadProdByCategoryAndBrand(int categoryID,int brandID){
 		int pageIndex = 1 ;
 		GetProductModelListPackage resp = LKNService.getProductList(pageIndex , categoryID, brandID);
 		if(resp!=null){
-			List<ProductModel> list = resp.getProductList();
-			int i=0;
-			for(ProductModel p :list){
-				String pID = p.getProductID();
-				List<AttributeModel> attList = p.getAttributes();
-				for(AttributeModel a : attList){
-					a.setAttributeModelID(pID+"_"+a.getAttrID());
-				}
-				this.lekaniProductDao.saveOrUpdate(p);
-				i++;
-				if(i>10){
-					break;
-				}
-			}
+			saveOrUpdateProdList(resp.getProductList());
 		}
+	}
+	
+	public void saveOrUpdateProdList(List<ProductModel> list){
+		if(list == null || list.isEmpty()){
+			return;
+		}
+		int pageIndex = 1 ;
+		int i=0;
+		for(ProductModel p :list){
+			String pID = p.getProductID();
+			List<AttributeModel> attList = p.getAttributes();
+			for(AttributeModel a : attList){
+				a.setAttributeModelID(pID+"_"+a.getAttrID());
+				a.setProduct(p);
+			}
+			
+			//get if on sale or not
+			boolean isOnSale = LKNService.getIsOnSale( p.getSKU() );
+			p.setOnSale(isOnSale);
+			
+			try{
+				this.lekaniProductDao.saveOrUpdate(p);
+			}catch(Exception e){
+				log.error(e.getMessage());
+				this.lekaniProductDao.merge(p);
+			}
+			i++;
+			log.info( i+"----"+pID );
+		}
+	}
+	public Page pageListByCriteria(int currentPage,int pageSize,ProductModel entity){
+		return this.lekaniProductDao.pageListByCriteria(currentPage, pageSize, entity);
 	}
 }

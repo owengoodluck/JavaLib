@@ -21,6 +21,8 @@ public class ProductModel {
 	@Id
 	@JsonProperty("ProductID")  
 	private String productID;
+
+	private boolean onSale;
 	
 	@JsonProperty("CatID")  
 	private String catID;
@@ -272,5 +274,11 @@ public class ProductModel {
 		this.mainImage = mainImage;
 	}
 
-	
+	public boolean isOnSale() {
+		return onSale;
+	}
+
+	public void setOnSale(boolean onSale) {
+		this.onSale = onSale;
+	}
 }

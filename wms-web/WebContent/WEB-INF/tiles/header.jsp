@@ -72,6 +72,15 @@ function openUrl(str){
           </ul>
         </li>
         
+        <li <c:if test="${currentMenu == 'lekani' }">class="dropdown active"</c:if> 
+        	<c:if test="${currentMenu != 'lekani' }">class="dropdown"</c:if>>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="<spring:url value="/lekani/pageQuery" />" onclick="openUrl('<c:url value="/lekani/pageQuery" />')">Lekani<span class="caret"></span></a>
+          <ul class="dropdown-menu" >
+            <li><a href="<spring:url value="/lekani/pageQuery" />">Lekani官网</a> </li>
+            <li><a href="<spring:url value="/lekani/pageQueryLocal" />" />Lekani已导入</a> </li>
+          </ul>
+        </li>
+        
         <li <c:if test="${currentMenu == 'pic' }">class="active"</c:if> ><a href="<spring:url value="/picture/download" />">图片管理</a> </li>
       </ul>
       

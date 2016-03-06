@@ -93,6 +93,14 @@
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
         <put-attribute name="main"   value="/WEB-INF/views/lekani/prodList.jsp" />
     </definition>
+    <definition name="lekani/pageQueryLocal" extends="baselayout">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="main"   value="/WEB-INF/views/lekani/lekaniLocal.jsp" />
+    </definition>
+    <definition name="lekani/prodDetail" extends="baselayout">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="main"   value="/WEB-INF/views/lekani/prodDetail.jsp" />
+    </definition>
  
 </tiles-definitions>
 
