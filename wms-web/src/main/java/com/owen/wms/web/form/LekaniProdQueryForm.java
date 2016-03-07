@@ -2,6 +2,7 @@ package com.owen.wms.web.form;
 
 public class LekaniProdQueryForm {
 
+	private String status;
 	private int categoryID;
 	private int brandID;
 	private int currentPage;
@@ -30,6 +31,12 @@ public class LekaniProdQueryForm {
 	}
 	public void setBrandID(int brandID) {
 		this.brandID = brandID;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

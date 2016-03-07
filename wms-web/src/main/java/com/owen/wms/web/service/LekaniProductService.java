@@ -18,6 +18,7 @@ import com.owen.wms.lekani.entity.GetProductModelListPackage;
 import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.service.LKNService;
 import com.owen.wms.web.constants.AppConstant;
+import com.owen.wms.web.dao.AmazonJewelryDao;
 import com.owen.wms.web.dao.LekaniProductAttributeDao;
 import com.owen.wms.web.dao.LekaniProductDao;
 import com.owen.wms.web.dao.Page;
@@ -39,6 +40,10 @@ public class LekaniProductService {
 	@Autowired
 	@Qualifier("lekaniProductDao")
 	private LekaniProductDao lekaniProductDao;
+
+	@Autowired
+	@Qualifier("amazonJewelryDao")
+	private AmazonJewelryDao amazonJewelryDao;
 	
 	private Map<Integer,String> categoryMap = new HashMap<Integer,String>();
 	private Map<Integer,String> brandMap = new HashMap<Integer,String>();
@@ -101,6 +106,15 @@ public class LekaniProductService {
 		categoryMap.put(221,"领带夹&袖扣");
 	}
 	
+	public void upateStatus(String prodID,String status){
+		if(status!=null && status.trim().length()>0){
+			ProductModel prod = this.lekaniProductDao.get(prodID);
+			if(prod!=null){
+				prod.setStatus(status);
+				this.lekaniProductDao.update(prod);
+			}
+		}
+	}
 	public ProductModel getProductModelByID(String prodID){
 		ProductModel prod = this.lekaniProductDao.get(prodID);
 		return prod;
@@ -162,6 +176,17 @@ public class LekaniProductService {
 		return result;
 	}
 	
+	public void saveAmazonJewelryFromLekaniProds(String[] prodIDs){
+		if(prodIDs!=null && prodIDs.length>0){
+			for(String prodID: prodIDs){
+				ProductModel pm = this.getProductModelByID(prodID.trim());
+				JewelryEntity jew = this.convert2AmazonJewelry(pm);
+				this.amazonJewelryDao.saveOrUpdate(jew);
+			}
+			this.lekaniProductDao.bathUpdateStatus(prodIDs, "converted");
+		}
+	}
+	
 	public JewelryEntity convert2AmazonJewelry(ProductModel pm){
 		if(pm==null){
 			return null;
@@ -180,7 +205,7 @@ public class LekaniProductService {
 	
 	private void setPrice(JewelryEntity jew,ProductModel pm){
 		Double purchagePrice = Double.valueOf(pm.getPrice());
-		double totalSalePrice = (purchagePrice + AppConstant.ShippingFeePay + 30 ) / AppConstant.USDRate / 0.8;
+		double totalSalePrice = (purchagePrice + AppConstant.ShippingFeePay + 40 ) / AppConstant.USDRate / 0.8;
 		double salePrice = totalSalePrice - AppConstant.ShippingFeeEarnPerItem - AppConstant.ShippingFeeEarnPerShip;
 		jew.setStandardPrice(DigitalFormatUtil.getFormatedDouble(salePrice, 2));
 		jew.setListPrice(DigitalFormatUtil.getFormatedDouble(salePrice/0.3, 2));
@@ -333,4 +358,7 @@ public class LekaniProductService {
 		jew.setFeedProductType(JewelryMappingUtil.getFeedProductTypeByItemType(itemType));
 	}
 	
+	public void bathUpdateStatus(String[] prodIDs,String status){
+		this.lekaniProductDao.bathUpdateStatus(prodIDs, status);
+	}
 }

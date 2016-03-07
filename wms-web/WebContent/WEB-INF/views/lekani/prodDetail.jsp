@@ -41,14 +41,22 @@ function submitForm(){
 				</tr>
 			</thead>
 			<tbody align="left">	
-				
 				<tr >
 					<td><b>ID</b></td>  <td>${prod.productID } &nbsp;&nbsp;&nbsp;&nbsp;<a href='<c:url value="http://www.pfhoo.com/p/${prod.productID}.html" />' target="_blank" >pfhoo.com</a> </td>
 					<td></td>
 					<td colspan="2" rowspan="5"><img src="${prod.mainImage}"  height="200"  onclick='window.open("${prod.mainImage}")'> </td>
 				</tr>
 				<tr >
-					<td><b>SKU</b></td>  <td>${prod.SKU }</td>
+					<td><b>SKU</b></td>  
+					<td>${prod.SKU } &nbsp;&nbsp;&nbsp;
+						<c:choose>
+							<c:when test="${prod.status == 'converted'}">已转换</c:when>
+							<c:otherwise>
+								<input type="radio" name="status" value="discard" onchange="updateStatus( '${prod.productID}','discard')" <c:if test="${prod.status == 'discard'}">checked="checked"</c:if>/>丢弃 &nbsp;&nbsp;
+								<input type="radio" name="status" value="selected" onchange="updateStatus('${prod.productID}','selected')"<c:if test="${prod.status == 'selected'}">checked="checked"</c:if>/>备选
+							</c:otherwise>
+						</c:choose>
+					</td>
 				</tr>
 				<tr>
 					<td><b>barCode</b></td>  <td>${prod.barCode }</td>

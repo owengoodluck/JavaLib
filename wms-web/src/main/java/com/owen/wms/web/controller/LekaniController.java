@@ -74,12 +74,14 @@ public class LekaniController {
 		int currentPage =1;
 		int pageSize = 20; 
 		ProductModel entity = new ProductModel() ;
+		entity.setStatus("selected,null");
 		Page page = this.lekaniProductService.pageListByCriteria(currentPage, pageSize, entity);
 		model.addAttribute("page", page);
 		
 		LekaniProdQueryForm queryForm = new LekaniProdQueryForm();
 		queryForm.setCurrentPage(currentPage);
 		queryForm.setPageSize(pageSize);
+		queryForm.setStatus("selected,null");
 		model.addAttribute("queryForm", queryForm);
 		model.addAttribute("currentMenu", "lekani");
 		return "lekani/pageQueryLocal";
@@ -93,6 +95,9 @@ public class LekaniController {
 		}
 		if(queryForm.getBrandID() != 0 ){
 			entity.setBrandID(queryForm.getBrandID()+"");
+		}
+		if(queryForm.getStatus() != "all" ){
+			entity.setStatus(queryForm.getStatus());
 		}
 		Page page = this.lekaniProductService.pageListByCriteria(queryForm.getCurrentPage(), queryForm.getPageSize(), entity);
 		model.addAttribute("page", page);
@@ -118,6 +123,25 @@ public class LekaniController {
 		String categoryID = null;
 		Map<String,String> map = this.lekaniProductService.getBrandListByCategoryID(categoryID );
 		return map;
+	}
+	
+	@RequestMapping(value="/updateStatus", method = RequestMethod.GET)  
+    public void updateStatus(HttpServletRequest request) {
+		String prodID = request.getParameter("prodID");
+		String status = request.getParameter("status");
+		this.lekaniProductService.upateStatus(prodID, status);
+	}
+	
+	@RequestMapping(value = "/batchProcess", method = RequestMethod.POST)
+	public String batchProcess(Model model,HttpServletRequest request) throws Exception{
+		String[] prodIDs = request.getParameterValues("prodIDs");
+		String processMethod = request.getParameter("processMethod");
+		if("discard".equals(processMethod) || "selected".equals(processMethod)){
+			this.lekaniProductService.bathUpdateStatus(prodIDs, processMethod);
+		}else if("converted".equals(processMethod)){
+			this.lekaniProductService.saveAmazonJewelryFromLekaniProds(prodIDs);
+		}
+		return this.pageQueryLocal(model, request) ;
 	}
 	
 }

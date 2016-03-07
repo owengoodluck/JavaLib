@@ -12,7 +12,24 @@ import com.owen.wms.lekani.entity.ProductModel;
 @Repository("lekaniProductDao")
 public class LekaniProductDao extends BaseHibernateDao<ProductModel,String> {
 
-	public List<ProductModel> listAllParent(){
+	public void bathUpdateStatus(String[] prodIDs,String status){
+		if(prodIDs==null || prodIDs.length<1 || status == null || status.trim().length()<1){
+			return ;
+		}
+		StringBuffer hql = new StringBuffer("update ProductModel set status='"+status+"' where productID in ( ");
+		for(int i = 0 ; i< prodIDs.length;i ++){
+			hql.append("'"+prodIDs[i]+"'");
+			if(i < prodIDs.length-1){
+				hql.append(",");
+			}
+		}
+		hql.append(" ) ");
+		Query query = this.getSession().createQuery(hql.toString());
+		query.executeUpdate();
+	}
+	
+	
+	public List<ProductModel> listAll(){
 		Query query = this.getSession().createQuery("from ProductModel e where 1=1 order by catID,brandID desc");
 		List<ProductModel> result = query.list();
 		return result;
@@ -41,6 +58,15 @@ public class LekaniProductDao extends BaseHibernateDao<ProductModel,String> {
 			if(entity.getBrandID()!=null &&  entity.getBrandID().trim().length()>0){
 				hql.append(" and  brandID =:brandID");
 				criteriaMap.put("brandID", entity.getBrandID().trim());
+			}
+			if(entity.getStatus()!=null && entity.getStatus().trim().length()>0){
+				String status=entity.getStatus().trim();
+				if("selected".equals(status) || "discard".equals(status) || "converted".equals(status)){
+					hql.append(" and  status =:status");
+					criteriaMap.put("status", status);
+				}else if("selected,null".equals(status)){
+					hql.append(" and  (status ='selected' or status is null )");
+				}
 			}
 		}
 		List<ProductModel> list = this.findPageByQuery(currentPage, pageSize, hql.append(" order by catID,brandID desc").toString(), criteriaMap);

@@ -24,7 +24,7 @@ public class ProductModel {
 
 	private boolean onSale;
 	
-	private String status;//discard,convert
+	private String status;//selected,discard,converted and empty
 	
 	@JsonProperty("CatID")  
 	private String catID;
