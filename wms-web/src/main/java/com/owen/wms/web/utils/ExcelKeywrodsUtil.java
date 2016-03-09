@@ -2,6 +2,7 @@ package com.owen.wms.web.utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -69,5 +70,50 @@ public class ExcelKeywrodsUtil {
 				buf.append(blank);
 			}
 		}
+	}
+	
+	public static void setKeywords4NewVersion(ArrayList<JewelryEntity> prodList,File excelKeywordFile,int keywordsExcelStartIndex,int prodStartIndex){
+		List<String[]> list = ExcelUtil.readExcel(excelKeywordFile, 0, 1, 1);
+		StringBuffer buf = new StringBuffer();
+		int prodIndex=prodStartIndex;
+		List<String> keywords = new ArrayList<String>();
+		Iterator<String[]> iterator = list.iterator();
+		while(iterator.hasNext()){
+			String[] next = iterator.next();
+			if(buf.length()>= 990){
+				if(buf.length()>1000){
+					keywords.add(buf.toString().substring(0, 1000).trim());
+				}else{
+					keywords.add(buf.toString());
+				}
+				buf.delete(0, buf.length()-1);
+				buf.append(next[0].trim());
+			}else if(!iterator.hasNext()){
+				buf.append(next[0].trim());
+				if(buf.length()>1000){
+					keywords.add(buf.toString().substring(0, 1000).trim());
+				}else{
+					keywords.add(buf.toString().trim());
+				}
+			}else{
+				buf.append(next[0].trim());
+				buf.append(blank);
+			}
+		}
+		
+		int index = 0;
+		for(String keyword:keywords){
+			index ++;
+			if(keywordsExcelStartIndex > index){
+				continue;
+			}else{
+				if(prodIndex-1>=prodList.size()){
+					break;
+				}
+				prodList.get(prodIndex-1).setGenericKeywords(keyword);
+				prodIndex++;
+			}
+		}
+		log.info("------ 关键字总组数 = " + keywords.size());
 	}
 }

@@ -113,11 +113,7 @@ function submitForm(preOrNext){
 									</c:if>
 								</td>
 								<td width="80%">
-									<input id="list${status.index}.genericKeywords1" name='list[${status.index}].genericKeywords1' type="text"  style="width:100%" type='text' value="${prod.genericKeywords1}" />
-									<input id="list${status.index}.genericKeywords2" name='list[${status.index}].genericKeywords2' type="text"  style="width:100%" type='text' value="${prod.genericKeywords2}" />
-									<input id="list${status.index}.genericKeywords3" name='list[${status.index}].genericKeywords3' type="text"  style="width:100%" type='text' value="${prod.genericKeywords3}" />
-									<input id="list${status.index}.genericKeywords4" name='list[${status.index}].genericKeywords4' type="text"  style="width:100%" type='text' value="${prod.genericKeywords4}" />
-									<input id="list${status.index}.genericKeywords5" name='list[${status.index}].genericKeywords5' type="text"  style="width:100%" type='text' value="${prod.genericKeywords5}" />
+									<input id="list${status.index}.genericKeywords" name='list[${status.index}].genericKeywords' type="text"  style="width:100%" type='text' value="${prod.genericKeywords}" />
 								</td>
 							</tr>
 						</c:forEach>

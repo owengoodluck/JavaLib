@@ -63,9 +63,7 @@ function submitForm(preOrNext){
 						<th>缩略图</th> 
 						<th>manufacturer</th> 
 						<th>model</th> 
-						<th>feed_product_type</th> 
-						<!-- <th>item_type</th> 
-						<th>metalType</th>  -->
+						<th>metalType</th> 
 						<th>metalStamp</th> 
 						<th>gemType1</th> 
 						<th>gemType2</th> 

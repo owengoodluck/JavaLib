@@ -12,7 +12,17 @@ import com.owen.wms.web.constants.AppConstant;
 
 @Entity
 @Table(name="amz_jewelry")
-public class JewelryEntity implements java.io.Serializable{
+public class JewelryEntity implements java.io.Serializable,Cloneable{
+	
+	public JewelryEntity clone() {  
+		JewelryEntity o = null;  
+        try {  
+            o = (JewelryEntity) super.clone();  
+        } catch (CloneNotSupportedException e) {  
+            e.printStackTrace();  
+        }  
+        return o;  
+    }  
 	private static final long serialVersionUID = -1519524380820857135L;
 
 //	public void getProfit(Double d){ }
@@ -200,7 +210,7 @@ public class JewelryEntity implements java.io.Serializable{
 
 	@Column(name="bullet_point5")
 	private String bulletPoint5;
-
+	
 	@Column(name="target_audience_keywords1")
 	private String targetAudienceKeywords1;
 
@@ -257,6 +267,9 @@ public class JewelryEntity implements java.io.Serializable{
 
 	@Column(name="thesaurus_subject_keywords5")
 	private String thesaurusSubjectKeywords5;
+
+	@Column(name="generic_keywords" ,length=1100)
+	private String genericKeywords;// key words for new version upload excel
 
 	@Column(name="generic_keywords1")
 	private String genericKeywords1;
@@ -2841,5 +2854,12 @@ public class JewelryEntity implements java.io.Serializable{
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+	public String getGenericKeywords() {
+		return genericKeywords;
+	}
+	public void setGenericKeywords(String genericKeywords) {
+		this.genericKeywords = genericKeywords;
+	}
+	
 	
 }

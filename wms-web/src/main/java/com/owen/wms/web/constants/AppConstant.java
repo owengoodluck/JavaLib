@@ -2,7 +2,7 @@ package com.owen.wms.web.constants;
 
 public class AppConstant {
 	public final static String picDownloadPath = "C:/Users/owen/Desktop/tmp_pic/";  
-	
+	public final static String defaultPdfDownloadPath = "C:/Users/owen/Desktop/Amazon/燕文物流/运单打印";
 	public final static Double ShippingFeeEarnPerShip = 2.9;  //USD
 	public final static Double ShippingFeeEarnPerItem = 1.95;  //USD
 	public final static Double USDRate = 6.4;  

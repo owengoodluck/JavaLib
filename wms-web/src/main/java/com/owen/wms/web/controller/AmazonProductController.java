@@ -102,7 +102,7 @@ public class AmazonProductController {
 		
 		File excelKeywordFile = new File(keywordsExcelFilePath);
 		if(excelKeywordFile.exists()){
-			ExcelKeywrodsUtil.setKeywords(productsForm.getList(), excelKeywordFile, Integer.valueOf(keywordsExcelStartIndex),Integer.valueOf(prodStartIndex));
+			ExcelKeywrodsUtil.setKeywords4NewVersion(productsForm.getList(), excelKeywordFile, Integer.valueOf(keywordsExcelStartIndex),Integer.valueOf(prodStartIndex));
 		}else{
 			this.log.error(keywordsExcelFilePath+" file does not exist !");
 			model.addAttribute("errorMsg",keywordsExcelFilePath+" file does not exist !");

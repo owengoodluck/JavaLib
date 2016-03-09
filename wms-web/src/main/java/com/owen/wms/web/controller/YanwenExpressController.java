@@ -2,7 +2,6 @@ package com.owen.wms.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
+import com.owen.wms.web.constants.AppConstant;
 import com.owen.wms.web.dao.Page;
-import com.owen.wms.web.entity.YanWenExpressEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
-import com.owen.wms.web.form.OrderQueryForm;
 import com.owen.wms.web.form.YanwenExpress;
 import com.owen.wms.web.service.YanwenExpressService;
 
@@ -27,7 +25,7 @@ import com.owen.wms.web.service.YanwenExpressService;
 public class YanwenExpressController {
 	private Logger log = Logger.getLogger(this.getClass());
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	private String defaultDownloadPtha = "C:/Users/owen/Desktop/Amazon/燕文物流/运单打印";
+	private String defaultDownloadPtha = AppConstant.defaultPdfDownloadPath;
 	private int defaultPageSize = 20;
 	
 	@Autowired
