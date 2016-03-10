@@ -85,41 +85,59 @@ function oppenPicLink(picButton,surfix){
 								</td>
 								<td width="51%">
 									<nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'mainImageUrl')"/>
-										<input id="list${status.index}.mainImageUrl" name='list[${status.index}].mainImageUrl' type="text"  style="width:100%" type='text' value="${prod.mainImageUrl}" />
+										<c:if test="${ prod.mainImageUrl !=null }">
+											<img src="${prod.mainImageUrl}"  height="100"  onclick='window.open("${prod.mainImageUrl}")'>
+										</c:if>
+										<b>0</b><input id="list${status.index}.mainImageUrl" name='list[${status.index}].mainImageUrl' type="text"  style="width:100%" type='text' value="${prod.mainImageUrl}" />
 									</nobr>
 									<nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'otherImageUrl1')"/>
-										<input id="list${status.index}.otherImageUrl1" name='list[${status.index}].otherImageUrl1' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl1}" />
+										<c:if test="${ prod.mainImageUrl !=null }">
+											<img src="${prod.otherImageUrl1}"  height="100"  onclick='window.open("${prod.otherImageUrl1}")'>
+										</c:if>
+										<b>1</b><input id="list${status.index}.otherImageUrl1" name='list[${status.index}].otherImageUrl1' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl1}" />
 									</nobr>
 									<nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'otherImageUrl2')"/>
-										<input id="list${status.index}.otherImageUrl2" name='list[${status.index}].otherImageUrl2' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl2}" />
+										<c:if test="${ prod.otherImageUrl2 !=null }">
+											<img src="${prod.otherImageUrl2}"  height="100"  onclick='window.open("${prod.otherImageUrl2}")'>
+										</c:if>
+										<b>2</b><input id="list${status.index}.otherImageUrl2" name='list[${status.index}].otherImageUrl2' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl2}" />
 									</nobr>
 									<nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'otherImageUrl3')"/>
-										<input id="list${status.index}.otherImageUrl3" name='list[${status.index}].otherImageUrl3' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl3}" />
+										<c:if test="${ prod.otherImageUrl3 !=null }">
+											<img src="${prod.otherImageUrl3}"  height="100"  onclick='window.open("${prod.otherImageUrl3}")'>
+										</c:if>
+										<b>3</b><input id="list${status.index}.otherImageUrl3" name='list[${status.index}].otherImageUrl3' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl3}" />
 									</nobr>
 									<nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'otherImageUrl4')"/>
-										<input id="list${status.index}.otherImageUrl4" name='list[${status.index}].otherImageUrl4' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl4}" />
+										<c:if test="${ prod.otherImageUrl4 !=null }">
+											<img src="${prod.otherImageUrl4}"  height="100"  onclick='window.open("${prod.otherImageUrl4}")'>
+										</c:if>
+										<b>4</b><input id="list${status.index}.otherImageUrl4" name='list[${status.index}].otherImageUrl4' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl4}" />
 									</nobr>
 									<nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'otherImageUrl5')"/>
-										<input id="list${status.index}.otherImageUrl5" name='list[${status.index}].otherImageUrl5' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl5}" />
-									</nobr>
-									<%-- <nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'otherImageUrl6')"/>
-										<input id="list${status.index}.otherImageUrl6" name='list[${status.index}].otherImageUrl6' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl6}" />
+										<c:if test="${ prod.otherImageUrl5 !=null }">
+											<img src="${prod.otherImageUrl5}"  height="100"  onclick='window.open("${prod.otherImageUrl5}")'>
+										</c:if>
+										<b>5</b><input id="list${status.index}.otherImageUrl5" name='list[${status.index}].otherImageUrl5' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl5}" />
 									</nobr>
 									<nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'otherImageUrl7')"/>
-										<input id="list${status.index}.otherImageUrl7" name='list[${status.index}].otherImageUrl7' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl7}" />
+										<c:if test="${ prod.otherImageUrl6 !=null }">
+											<img src="${prod.otherImageUrl6}"  height="100"  onclick='window.open("${prod.otherImageUrl6}")'>
+										</c:if>
+										<b>6</b><input id="list${status.index}.otherImageUrl6" name='list[${status.index}].otherImageUrl6' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl6}" />
 									</nobr>
 									<nobr>
-										<input id="pictureButton${status.index}" type="button" value="打开图片链接" onclick="oppenPicLink(this,'otherImageUrl8')"/>
-										<input id="list${status.index}.otherImageUrl8" name='list[${status.index}].otherImageUrl8' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl8}" />
-									</nobr> --%>
+										<c:if test="${ prod.otherImageUrl7 !=null }">
+											<img src="${prod.otherImageUrl7}"  height="100"  onclick='window.open("${prod.otherImageUrl7}")'>
+										</c:if>
+										<b>7</b><input id="list${status.index}.otherImageUrl7" name='list[${status.index}].otherImageUrl7' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl7}" />
+									</nobr>
+									<nobr>
+										<c:if test="${ prod.otherImageUrl8 !=null }">
+											<img src="${prod.otherImageUrl8}"  height="100"  onclick='window.open("${prod.otherImageUrl8}")'>
+										</c:if>
+										<b>8</b><input id="list${status.index}.otherImageUrl8" name='list[${status.index}].otherImageUrl8' type="text"  style="width:100%" type='text' value="${prod.otherImageUrl8}" />
+									</nobr>
 								</td>
 							</tr>
 						</c:forEach>

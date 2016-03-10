@@ -84,12 +84,14 @@ public class ExcelKeywrodsUtil {
 				if(buf.length()>1000){
 					keywords.add(buf.toString().substring(0, 1000).trim());
 				}else{
-					keywords.add(buf.toString());
+					keywords.add(buf.toString().trim());
 				}
 				buf.delete(0, buf.length()-1);
 				buf.append(next[0].trim());
+				buf.append(blank);
 			}else if(!iterator.hasNext()){
 				buf.append(next[0].trim());
+				buf.append(blank);
 				if(buf.length()>1000){
 					keywords.add(buf.toString().substring(0, 1000).trim());
 				}else{
