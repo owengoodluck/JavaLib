@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!Doctype html>
 <html>
 <link rel="stylesheet"
@@ -108,9 +109,14 @@ function submitForm(preOrNext){
 								<td width="6%">${ status.index + 1}</td>  
 								<td width="10%"><b>${prod.itemSku}</b></td>
 								<td width="8%">
-									<c:if test="${ prod.getLocalImagePath() !=null }">
-										<img src="/wms-web/img${prod.getLocalImagePath()}"  height="100"  onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'> 
-									</c:if>
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com')>-1 }">
+											<img src="${ prod.mainImageUrl}"  height="100" onclick='window.open("${ prod.mainImageUrl}")'/>
+										</c:if>
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com') == -1 }">
+											<c:if test="${ prod.getLocalImagePath() !=null }">
+												<img src="/wms-web/img${prod.getLocalImagePath()}"  height="100" onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'/> 
+											</c:if>
+										</c:if>
 								</td>
 								<td width="80%">
 									<input id="list${status.index}.genericKeywords" name='list[${status.index}].genericKeywords' type="text"  style="width:100%" type='text' value="${prod.genericKeywords}" />

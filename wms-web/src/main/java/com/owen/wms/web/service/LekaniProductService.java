@@ -205,7 +205,7 @@ public class LekaniProductService {
 	
 	private void setPrice(JewelryEntity jew,ProductModel pm){
 		Double purchagePrice = Double.valueOf(pm.getPrice());
-		double totalSalePrice = (purchagePrice + AppConstant.ShippingFeePay + 40 ) / AppConstant.USDRate / 0.8;
+		double totalSalePrice = (purchagePrice + AppConstant.ShippingFeePay + AppConstant.profit ) / AppConstant.USDRate / 0.8;
 		double salePrice = totalSalePrice - AppConstant.ShippingFeeEarnPerItem - AppConstant.ShippingFeeEarnPerShip;
 		jew.setStandardPrice(DigitalFormatUtil.getFormatedDouble(salePrice, 2));
 		jew.setListPrice(DigitalFormatUtil.getFormatedDouble(salePrice/0.3, 2));

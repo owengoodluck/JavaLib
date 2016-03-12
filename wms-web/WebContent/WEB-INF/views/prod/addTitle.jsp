@@ -156,8 +156,13 @@ function submitForm(preOrNext){
 							<c:if test="${ status.index == 0}">
 								<tr id="firstItem">
 									<td width="4%">
-										<c:if test="${ prod.getLocalImagePath() !=null }">
-											<img src="/wms-web/img${prod.getLocalImagePath()}"  height="50" onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'/> 
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com')>-1 }">
+											<img src="${ prod.mainImageUrl}"  height="50" onclick='window.open("${ prod.mainImageUrl}")'/>
+										</c:if>
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com') == -1 }">
+											<c:if test="${ prod.getLocalImagePath() !=null }">
+												<img src="/wms-web/img${prod.getLocalImagePath()}"  height="50" onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'/> 
+											</c:if>
 										</c:if>
 									</td>
 									<td width="10%">
@@ -214,8 +219,13 @@ function submitForm(preOrNext){
 							<c:if test="${ status.index > 0}">
 								<tr>
 									<td width="4%">
-										<c:if test="${ prod.getLocalImagePath() !=null }">
-											<img src="/wms-web/img${prod.getLocalImagePath()}"  height="50"  onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'> 
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com')>-1 }">
+											<img src="${ prod.mainImageUrl}"  height="50" onclick='window.open("${ prod.mainImageUrl}")'/>
+										</c:if>
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com') == -1 }">
+											<c:if test="${ prod.getLocalImagePath() !=null }">
+												<img src="/wms-web/img${prod.getLocalImagePath()}"  height="50" onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'/> 
+											</c:if>
 										</c:if>
 									</td>
 									<td width="10%">

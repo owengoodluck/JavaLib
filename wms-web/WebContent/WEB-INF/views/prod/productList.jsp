@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!Doctype html>
 <html>
 <link rel="stylesheet"
@@ -104,8 +105,13 @@ function cleanForm(){
 							<td>${ status.index + 1}</td>  
 							<td width="9%"><input name="itemSkuList" id="itemSkuList" type="checkbox" value="${order.itemSku}"/>${order.itemSku}</td>
 							<td width="5%"> 
-								<c:if test="${ order.getLocalImagePath() !=null }">
-									<img src="/wms-web/img${order.getLocalImagePath()}"  height="40" onclick='window.open("/wms-web/img${order.getLocalImagePath()}")'/> 
+								<c:if test="${fn:indexOf(order.mainImageUrl,'pfhoo.com')>-1 }">
+									<img src="${ order.mainImageUrl}"  height="50" onclick='window.open("${ order.mainImageUrl}")'/>
+								</c:if>
+								<c:if test="${fn:indexOf(order.mainImageUrl,'pfhoo.com') < 0 }">
+									<c:if test="${ order.getLocalImagePath() !=null }">
+										<img src="/wms-web/img${order.getLocalImagePath()}"  height="50" onclick='window.open("/wms-web/img${order.getLocalImagePath()}")'/> 
+									</c:if>
 								</c:if>
 							</td>
 							<td width="9%"><a href='<c:url value="/prod/edit/${order.itemSku}" />' class="btn">编辑产品</a></td>

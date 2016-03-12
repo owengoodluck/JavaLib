@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!Doctype html>
 <html>
 <link rel="stylesheet"
@@ -85,9 +86,14 @@ function oppenLink(button,suffix){
 								<input type="hidden" id="list${status.index}.itemSku" name='list[${status.index}].itemSku'  value="${prod.itemSku}"/>
 								<td width="6%"><b>${prod.itemSku}</b></td>
 								<td width="5%">
-									<c:if test="${ prod.getLocalImagePath() !=null }">
-										<img src="/wms-web/img${prod.getLocalImagePath()}"  height="100"  onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'> 
-									</c:if>
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com')>-1 }">
+											<img src="${ prod.mainImageUrl}"  height="100" onclick='window.open("${ prod.mainImageUrl}")'/>
+										</c:if>
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com') == -1 }">
+											<c:if test="${ prod.getLocalImagePath() !=null }">
+												<img src="/wms-web/img${prod.getLocalImagePath()}"  height="100" onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'/> 
+											</c:if>
+										</c:if>
 								</td>
 								<td width="51%">
 									<nobr>

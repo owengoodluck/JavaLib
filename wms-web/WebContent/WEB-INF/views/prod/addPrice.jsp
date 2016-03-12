@@ -5,6 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%-- <% Double shippingFee = com.owen.wms.web.constants.AppConstant.shippingFee; %>  --%>
 <%@ page import = "com.owen.wms.web.constants.AppConstant" %>
 <!Doctype html>
@@ -84,9 +85,14 @@ function submitForm(preOrNext){
 								<input type="hidden" id="list${status.index}.itemSku" name='list[${status.index}].itemSku'  value="${prod.itemSku}"/>
 								<td width="8%"><b>${prod.itemSku}</b></td>
 								<td width="5%">
-									<c:if test="${ prod.getLocalImagePath() !=null }">
-										<img src="/wms-web/img${prod.getLocalImagePath()}"  height="35"  onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'> 
-									</c:if>
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com')>-1 }">
+											<img src="${ prod.mainImageUrl}"  height="35" onclick='window.open("${ prod.mainImageUrl}")'/>
+										</c:if>
+										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com') == -1 }">
+											<c:if test="${ prod.getLocalImagePath() !=null }">
+												<img src="/wms-web/img${prod.getLocalImagePath()}"  height="35" onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'/> 
+											</c:if>
+										</c:if>
 								</td>
 								<td width="10%">
 									<input id="list${status.index}.standardPrice" name='list[${status.index}].standardPrice' type="text"  style="width:100%" type='text' value="${prod.standardPrice}" />

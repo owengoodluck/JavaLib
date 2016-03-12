@@ -7,6 +7,7 @@ public class AppConstant {
 	public final static Double ShippingFeeEarnPerItem = 1.95;  //USD
 	public final static Double USDRate = 6.4;  
 	public final static Double ShippingFeePay = 14.5;  //RMB
+	public final static Double profit = 18.5;  //RMB
 	
 	//
 	public static String picCopyFolder;
