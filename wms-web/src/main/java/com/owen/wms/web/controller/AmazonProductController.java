@@ -178,9 +178,6 @@ public class AmazonProductController {
 				if(e.getProductDescription() == null || e.getProductDescription().trim().length()<1){
 					e.setProductDescription(e.getItemName());
 				}
-				
-				//4.by default setUpdateDelete as Update
-				e.setUpdateDelete(UpdateModel.Update.toString());
 			}
 		}
 	}
@@ -225,87 +222,6 @@ public class AmazonProductController {
 		}
 	}
 	
-	@RequestMapping(value = "/addPicture", method = RequestMethod.POST)
-	public String addPicture(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
-		this.saveOrUpate(productsForm);
-		ArrayList<JewelryEntity> list = productsForm.getList();
-		String imgPath = request.getSession().getServletContext().getRealPath("/img");
-		this.downLoadPicture(list, new File(imgPath));
-		String preOrNext = request.getParameter("preOrNext");
-		model.addAttribute("currentMenu", "prod");
-		if("pre".equals(preOrNext)){
-			return "prod/addTitle";
-		}else{
-			return "prod/addBulletPoint";
-		}
-	}
-	
-	@RequestMapping(value = "/addBulletPoint", method = RequestMethod.POST)
-	public String addBulletPoint(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
-		this.saveOrUpate(productsForm);
-		String preOrNext = request.getParameter("preOrNext");
-		model.addAttribute("currentMenu", "prod");
-		if("pre".equals(preOrNext)){
-			return "prod/addPicture";
-		}else{
-			return "prod/addKeyword";
-		}
-	}
-	
-	@RequestMapping(value = "/addKeyword", method = RequestMethod.POST)
-	public String addKeyword(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
-		this.saveOrUpate(productsForm);
-		String preOrNext = request.getParameter("preOrNext");
-		model.addAttribute("currentMenu", "prod");
-		if("pre".equals(preOrNext)){
-			return "prod/addBulletPoint";
-		}else{
-			return "prod/addPrice";
-		}
-	}
-	
-	@RequestMapping(value = "/addPrice", method = RequestMethod.POST)
-	public String addPrice(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
-		this.saveOrUpate(productsForm);
-		String preOrNext = request.getParameter("preOrNext");
-		model.addAttribute("currentMenu", "prod");
-		if("pre".equals(preOrNext)){
-			return "prod/addKeyword";
-		}else{
-			return "prod/addOtherinfo";
-		}
-	}
-	
-	@RequestMapping(value = "/addOtherinfo", method = RequestMethod.POST)
-	public String addOtherinfo(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
-		this.saveOrUpate(productsForm);
-		ArrayList<JewelryEntity> list = productsForm.getList();
-		String preOrNext = request.getParameter("preOrNext");
-		model.addAttribute("currentMenu", "prod");
-		if("pre".equals(preOrNext)){
-			return "prod/addPrice";
-		}else{
-			return "prod/addPurchaseUrl";
-		}
-	}
-	
-	@RequestMapping(value = "/addPurchaseUrl", method = RequestMethod.POST)
-	public String addPurchaseUrl(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
-		this.saveOrUpate(productsForm);
-		ArrayList<JewelryEntity> list = productsForm.getList();
-		String preOrNext = request.getParameter("preOrNext");
-		model.addAttribute("currentMenu", "prod");
-		if("pre".equals(preOrNext)){
-			return "prod/addOtherinfo";
-		}else{
-			if(list!=null && !list.isEmpty()){
-				String excelFilePath = this.defaultPathToExportExcel+"/"+list.get(0).getItemSku()+".xls";
-				this.amazonProductService.write2Excel(list, excelFilePath);
-			}
-			return listAll(model);
-		}
-	}
-	
 	@RequestMapping(value = "/export2Excel", method = RequestMethod.POST)
 	public String export2Excel(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
 		this.saveOrUpate(productsForm);
@@ -332,6 +248,7 @@ public class AmazonProductController {
 				}else{
 					try {
 						nullAwareBeanUtil.copyProperties(en, form);
+						JewelryMappingUtil.enrichDefaultValue(en);
 						this.amazonProductService.saveOrUpdate(en);
 						list.set(i, en);
 					} catch (IllegalAccessException | InvocationTargetException e) {

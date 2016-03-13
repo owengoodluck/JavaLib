@@ -9,6 +9,8 @@ public class AppConstant {
 	public final static Double ShippingFeePay = 14.5;  //RMB
 	public final static Double profit = 18.5;  //RMB
 	
+	public final static String manufacturer = "CandyVillage";
+	
 	//
 	public static String picCopyFolder;
 

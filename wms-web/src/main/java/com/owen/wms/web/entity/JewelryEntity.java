@@ -80,7 +80,7 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private String itemName;
 
 	@Column(name="manufacturer")
-	private String manufacturer = "CandyVillage";
+	private String manufacturer;
 
 	@Column(name="model")
 	private String model;
@@ -98,7 +98,7 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private String externalProductId;
 
 	@Column(name="external_product_id_type")
-	private String externalProductIdType="UPC";
+	private String externalProductIdType;
 
 	@Column(name="product_description",length=2000)
 	private String productDescription;
@@ -113,7 +113,7 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private Integer quantity;
 
 	@Column(name="currency")
-	private String currency="USD";
+	private String currency;
 
 	@Column(name="product_site_launch_date")
 	private String productSiteLaunchDate;
@@ -122,7 +122,7 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private String productTaxCode;
 
 	@Column(name="list_price")
-	private Double listPrice=26.9;
+	private Double listPrice;
 
 	@Column(name="sale_price")
 	private String salePrice;
@@ -170,7 +170,7 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private String websiteShippingWeightUnitOfMeasure;
 
 	@Column(name="display_dimensions_unit_of_measure")
-	private String displayDimensionsUnitOfMeasure="MM";
+	private String displayDimensionsUnitOfMeasure;
 
 	@Column(name="item_display_diameter")
 	private String itemDisplayDiameter;
@@ -365,7 +365,7 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private String variationTheme;
 
 	@Column(name="country_of_origin")
-	private String countryOfOrigin="China";
+	private String countryOfOrigin;
 
 	@Column(name="prop_65")
 	private String prop65;
@@ -422,10 +422,10 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private String materialType4;
 
 	@Column(name="metal_type")
-	private String metalType="stainless-steel";
+	private String metalType;
 
 	@Column(name="metal_stamp")
-	private String metalStamp="NA";
+	private String metalStamp;
 
 	@Column(name="setting_type")
 	private String settingType;
@@ -482,13 +482,13 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private String certificateNumber9;
 
 	@Column(name="gem_type1")
-	private String gemType1="NA";
+	private String gemType1;
 
 	@Column(name="gem_type2")
-	private String gemType2="NA";
+	private String gemType2;
 
 	@Column(name="gem_type3")
-	private String gemType3="NA";
+	private String gemType3;
 
 	@Column(name="stone_cut1")
 	private String stoneCut1;

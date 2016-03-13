@@ -197,10 +197,27 @@ public class LekaniProductService {
 		this.setImages(jew, pm);
 		this.setAttributes(jew, pm);
 		this.setPrice(jew, pm);
+		this.setMetalType(jew, pm);
 		jew.setDepartmentName("womens");//TODO girls ???
 		jew.setUpdateDate(new Date());
 		jew.setPurchaseUrl1("http://www.pfhoo.com/p/"+pm.getProductID()+".html");
+		
+		JewelryMappingUtil.enrichDefaultValue(jew);
 		return jew;
+	}
+	
+	private void setMetalType(JewelryEntity e,ProductModel pm){
+//		e.setWebsiteShippingWeight(pm.getWeight());
+//		e.setWebsiteShippingWeightUnitOfMeasure("g");
+		List<AttributeModel> list = pm.getAttributes();
+		if(list!=null){
+			for(AttributeModel a : list){
+				if(a.getAttrName()!=null && a.getAttrName().indexOf("Metals Type")>-1){
+					e.setMetalType(a.getAttrValue());
+					break;
+				}
+			}
+		}
 	}
 	
 	private void setPrice(JewelryEntity jew,ProductModel pm){
@@ -208,7 +225,7 @@ public class LekaniProductService {
 		double totalSalePrice = (purchagePrice + AppConstant.ShippingFeePay + AppConstant.profit ) / AppConstant.USDRate / 0.8;
 		double salePrice = totalSalePrice - AppConstant.ShippingFeeEarnPerItem - AppConstant.ShippingFeeEarnPerShip;
 		jew.setStandardPrice(DigitalFormatUtil.getFormatedDouble(salePrice, 2));
-		jew.setListPrice(DigitalFormatUtil.getFormatedDouble(salePrice/0.3, 2));
+		jew.setListPrice(DigitalFormatUtil.getFormatedDouble(salePrice/0.2, 2));
 		jew.setPurchasePrice(purchagePrice);
 	}
 	
@@ -236,10 +253,11 @@ public class LekaniProductService {
 			jew.setItemName(title);
 		}
 	}
+	
 	private void setAttributes(JewelryEntity jew,ProductModel pm){
 		jew.setBulletPoint1("Fashion and charming design to make you stand out from others in all kinds of party or gathering");
-		jew.setBulletPoint3("Perfect gift for many occasions that will surely make a memorable impression");
-		jew.setBulletPoint2("Please refer to the picture detail for jewelry size,and make sure it fit for you size");
+		jew.setBulletPoint2("Perfect gift for many occasions that will surely make a memorable impression");
+		jew.setBulletPoint3("Please refer to the picture detail for jewelry size,and make sure it fit for you size");
 		List<AttributeModel> attributes = pm.getAttributes();
 		if(attributes!=null){
 			int index=4;

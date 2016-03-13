@@ -18,4 +18,12 @@ public class StringUtils {
 		}
 		return input;
 	}
+	
+	public static boolean isEmpty(String i){
+		if(i ==null || i.trim().length()<1){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
