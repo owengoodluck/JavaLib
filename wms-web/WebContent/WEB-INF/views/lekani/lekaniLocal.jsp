@@ -62,13 +62,15 @@ function selectAll(isCheckeced){
 
 function batchProcess(method){
 	var result = confirm(method+'确定进行批量操作？');  
-	if(result){  
+	if(result){
 		$('#discardBtn').attr('disabled',"true");
 		$('#selectedBtn').attr('disabled',"true");
 		$('#convertedBtn').attr('disabled',"true");
 		
 		$('#processMethod').val(method);
-		$('#batchProcessForm').submit();
+		$("#queryForm").attr("action", "/wms-web/lekani/batchProcess");
+		//$('#batchProcessForm').submit();
+		$('#queryForm').submit();
 	}  
 	
 	
@@ -85,8 +87,8 @@ function batchProcess(method){
 	</div>
 	
 	<div class="container-fluid">
+	  <form:form modelAttribute="queryForm" enctype="multipart/form-data" action="/wms-web/lekani/pageQueryLocal">
 	   <div class="row">
-	      	<form:form modelAttribute="queryForm" enctype="multipart/form-data" action="/wms-web/lekani/pageQueryLocal">
 		      	<div align="left">
 			      	分类类别:
 			      	<form:select path="categoryID" onchange="submitForm(0)">
@@ -171,11 +173,11 @@ function batchProcess(method){
 					当前页：<form:input path="currentPage" size="2"/>
 					<input type="button" value="下一页" class="btn btn-primary" <c:if test='${!page.hasNextPage }'>disabled="disabled"</c:if> onclick="submitForm(1)"/>
 		      	</div>
-			</form:form>
+			<%-- </form:form> --%>
 	   </div>
 	   
 	<section class="container-fluid ">
-		<form id="batchProcessForm" enctype="multipart/form-data" action="/wms-web/lekani/batchProcess" method="post">
+		<%-- <form id="batchProcessForm" enctype="multipart/form-data" action="/wms-web/lekani/batchProcess" method="post"> --%>
 		<input id="processMethod" name="processMethod" type="hidden">
 		<table class="table table-hover" >
 			<thead>
@@ -233,12 +235,14 @@ function batchProcess(method){
 				</c:forEach>
 			</tbody>
 		</table>
-		</form>
+		<%-- </form> --%>
 	</section>
 	
 	 <div class="row">
      	<input type="button" value="上一页" class="btn btn-primary" <c:if test='${!page.hasPrePage }'>disabled="disabled"</c:if> onclick="submitForm(-1)"/>
 		<input type="button" value="下一页" class="btn btn-primary" <c:if test='${!page.hasNextPage }'>disabled="disabled"</c:if> onclick="submitForm(1)"/>
+	 </div>
+		</form:form>
 	 </div>
 </body>
 </html>

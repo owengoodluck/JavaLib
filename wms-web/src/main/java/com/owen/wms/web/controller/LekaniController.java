@@ -133,7 +133,7 @@ public class LekaniController {
 	}
 	
 	@RequestMapping(value = "/batchProcess", method = RequestMethod.POST)
-	public String batchProcess(Model model,HttpServletRequest request) throws Exception{
+	public String batchProcess(Model model,@ModelAttribute("queryForm") LekaniProdQueryForm queryForm,HttpServletRequest request) throws Exception{
 		String[] prodIDs = request.getParameterValues("prodIDs");
 		String processMethod = request.getParameter("processMethod");
 		if("discard".equals(processMethod) || "selected".equals(processMethod)){
@@ -141,7 +141,7 @@ public class LekaniController {
 		}else if("converted".equals(processMethod)){
 			this.lekaniProductService.saveAmazonJewelryFromLekaniProds(prodIDs);
 		}
-		return this.pageQueryLocal(model, request) ;
+		return this.pageQueryLocal(model, queryForm) ;
 	}
 	
 }
