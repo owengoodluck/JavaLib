@@ -96,7 +96,7 @@ function cleanForm(){
 				<c:forEach items="${page.list}" var="express" >
 					<tr align="left">
 						<td >${express.epcode}</td>
-						<td>${express.userOrderNumber}</td>
+						<td align="left"><a href='<c:url value="/order/detail/${express.userOrderNumber}" />' target="_blank" >${express.userOrderNumber}</a></td>
 						<td><fmt:formatDate value="${express.sendDate}" pattern="yyyy-MM-dd "/></td>
 						<td>${express.channel}</td>
 						<td>${express.name}</td>
