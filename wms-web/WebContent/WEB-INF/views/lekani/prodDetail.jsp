@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ page import = "com.owen.wms.web.constants.AppConstant" %>
+<%@ page import = "com.owen.wms.common.constant.AppConstant" %>
 <!Doctype html>
 <html>
 <link rel="stylesheet" href='<c:url value="/resource/css/bootstrap.min.css" />' type="text/css" />

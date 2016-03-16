@@ -15,11 +15,11 @@
  */
 package com.amazonservices.mws.orders._2013_09_01.samples;
 
-import com.amazonaws.mws.config.Owen;
 import com.amazonservices.mws.orders._2013_09_01.MWSEndpoint;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrdersAsyncClient;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrdersClient;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrdersConfig;
+import com.owen.wms.common.constant.AppConstant;
 
 /**
  * Configuration for MarketplaceWebServiceOrders samples.
@@ -27,16 +27,16 @@ import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrdersConf
 public class MarketplaceWebServiceOrdersSampleConfig {
 
     /** Developer AWS access key. */
-    private static final String accessKey = Owen.accessKeyId;
+    private static final String accessKey = AppConstant.accessKeyId;
 
     /** Developer AWS secret key. */
-    private static final String secretKey = Owen.secretAccessKey;
+    private static final String secretKey = AppConstant.secretAccessKey;
 
     /** The client application name. */
-    private static final String appName = Owen.appName;
+    private static final String appName = AppConstant.appName;
 
     /** The client application version. */
-    private static final String appVersion = Owen.appVersion;
+    private static final String appVersion = AppConstant.appVersion;
 
     /**
      * The endpoint for region service and version.

@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import com.owen.wms.web.constants.AppConstant;
+import com.owen.wms.common.constant.AppConstant;
 
 @Entity
 @Table(name="AMAZON_ORDER")

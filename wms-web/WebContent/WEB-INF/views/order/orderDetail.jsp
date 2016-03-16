@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ page import = "com.owen.wms.web.constants.AppConstant" %>
+<%@ page import = "com.owen.wms.common.constant.AppConstant" %>
 <!Doctype html>
 <html>
 <link rel="stylesheet" href='<c:url value="/resource/css/bootstrap.min.css" />' type="text/css" />
@@ -42,7 +42,7 @@ function submitForm(){
 	<section class="container-fluid " align="left">
 		<table class="table table-striped">
 			<caption>
-				利润 = 售价 + 运费收入 - 进货价 - 运费支出(按 <%=com.owen.wms.web.constants.AppConstant.ShippingFeePay%>每单算) = ${order.getProfit()}
+				利润 = 售价 + 运费收入 - 进货价 - 运费支出(按 <%=com.owen.wms.common.constant.AppConstant.ShippingFeePay%>每单算) = ${order.getProfit()}
 			</caption>
 			<thead>
 				<tr align="center">

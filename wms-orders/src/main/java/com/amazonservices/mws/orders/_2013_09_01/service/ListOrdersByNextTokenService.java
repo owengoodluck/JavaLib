@@ -15,7 +15,6 @@
  */
 package com.amazonservices.mws.orders._2013_09_01.service;
 
-import com.amazonaws.mws.config.Owen;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrders;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrdersClient;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrdersException;
@@ -23,6 +22,7 @@ import com.amazonservices.mws.orders._2013_09_01.model.ListOrdersByNextTokenRequ
 import com.amazonservices.mws.orders._2013_09_01.model.ListOrdersByNextTokenResponse;
 import com.amazonservices.mws.orders._2013_09_01.model.ResponseHeaderMetadata;
 import com.amazonservices.mws.orders._2013_09_01.samples.MarketplaceWebServiceOrdersSampleConfig;
+import com.owen.wms.common.constant.AppConstant;
 
 
 /** Sample call for ListOrdersByNextToken. */
@@ -77,7 +77,7 @@ public class ListOrdersByNextTokenService {
 
         // Create a request.
         ListOrdersByNextTokenRequest request = new ListOrdersByNextTokenRequest();
-        String sellerId = Owen.sellerId;
+        String sellerId = AppConstant.sellerId;
         request.setSellerId(sellerId);
         String mwsAuthToken = "example";
         request.setMWSAuthToken(mwsAuthToken);
@@ -96,7 +96,7 @@ public class ListOrdersByNextTokenService {
 
         // Create a request.
         ListOrdersByNextTokenRequest request = new ListOrdersByNextTokenRequest();
-        String sellerId = Owen.sellerId;
+        String sellerId = AppConstant.sellerId;
         request.setSellerId(sellerId);
         String mwsAuthToken = "example";
         request.setMWSAuthToken(mwsAuthToken);

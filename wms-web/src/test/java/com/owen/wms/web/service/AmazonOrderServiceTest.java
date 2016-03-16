@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.entity.AmazonOrderItem;
 
@@ -29,6 +29,7 @@ public class AmazonOrderServiceTest {
 	@Qualifier("amazonOrderService")
 	private AmazonOrderService amazonOrderService;
 	
+	
 
 	
 	@Test
@@ -40,7 +41,8 @@ public class AmazonOrderServiceTest {
 	
 	@Test
 	public void getOrderList() {
-		this.amazonOrderService.getOrderList();
+//		this.amazonOrderService.getOrderList();
+		System.out.println(AppConstant.picCopyFolder);
 	}
 	@Test
 	public void getOrderById() {

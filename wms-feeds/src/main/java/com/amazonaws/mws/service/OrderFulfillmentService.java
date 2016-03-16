@@ -19,7 +19,6 @@ package com.amazonaws.mws.service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.math.BigInteger;
 import java.util.Arrays;
 
 import com.amazonaws.mws.MarketplaceWebService;
@@ -27,16 +26,13 @@ import com.amazonaws.mws.MarketplaceWebServiceClient;
 import com.amazonaws.mws.MarketplaceWebServiceConfig;
 import com.amazonaws.mws.MarketplaceWebServiceException;
 import com.amazonaws.mws.config.FeedType;
-import com.amazonaws.mws.config.Owen;
-import com.amazonaws.mws.jaxb.entity.OrderFulfillment;
-import com.amazonaws.mws.jaxb.entity.OrderFulfillment.FulfillmentData;
-import com.amazonaws.mws.jaxb.entity.OrderFulfillment.Item;
 import com.amazonaws.mws.model.FeedSubmissionInfo;
 import com.amazonaws.mws.model.IdList;
 import com.amazonaws.mws.model.ResponseMetadata;
 import com.amazonaws.mws.model.SubmitFeedRequest;
 import com.amazonaws.mws.model.SubmitFeedResponse;
 import com.amazonaws.mws.model.SubmitFeedResult;
+import com.owen.wms.common.constant.AppConstant;
 
 /**
  * 
@@ -50,11 +46,11 @@ public class OrderFulfillmentService {
 		if(!file.exists()){
 			return false;
 		}
-        final String accessKeyId = Owen.accessKeyId;
-        final String secretAccessKey = Owen.secretAccessKey;
+        final String accessKeyId = AppConstant.accessKeyId;
+        final String secretAccessKey = AppConstant.secretAccessKey;
 
-        final String appName = Owen.appName;
-        final String appVersion = Owen.appVersion;
+        final String appName = AppConstant.appName;
+        final String appVersion = AppConstant.appVersion;
 
         MarketplaceWebServiceConfig config = new MarketplaceWebServiceConfig();
 
@@ -66,12 +62,12 @@ public class OrderFulfillmentService {
 
         MarketplaceWebService service = new MarketplaceWebServiceClient(
                 accessKeyId, secretAccessKey, appName, appVersion, config);
-        final String merchantId = Owen.sellerId;//"<Your Merchant ID>";
+        final String merchantId = AppConstant.sellerId;//"<Your Merchant ID>";
         final String sellerDevAuthToken = "<Merchant Developer MWS Auth Token>";//TODO 
         // marketplaces to which this feed will be submitted; look at the
         // API reference document on the MWS website to see which marketplaces are
         // included if you do not specify the list yourself
-        final IdList marketplaces = new IdList(Arrays.asList( Owen.marketplaceIDUS));
+        final IdList marketplaces = new IdList(Arrays.asList( AppConstant.marketplaceIDUS));
 
         SubmitFeedRequest request = new SubmitFeedRequest();
         request.setMerchant(merchantId);
@@ -107,11 +103,11 @@ public class OrderFulfillmentService {
          * Access Key ID and Secret Access Key ID, obtained from:
          * http://aws.amazon.com
          ***********************************************************************/
-        final String accessKeyId = Owen.accessKeyId;
-        final String secretAccessKey = Owen.secretAccessKey;
+        final String accessKeyId = AppConstant.accessKeyId;
+        final String secretAccessKey = AppConstant.secretAccessKey;
 
-        final String appName = Owen.appName;
-        final String appVersion = Owen.appVersion;
+        final String appName = AppConstant.appName;
+        final String appVersion = AppConstant.appVersion;
 
         MarketplaceWebServiceConfig config = new MarketplaceWebServiceConfig();
 
@@ -163,12 +159,12 @@ public class OrderFulfillmentService {
          * Marketplace and Merchant IDs are required parameters for all
          * Marketplace Web Service calls.
          ***********************************************************************/
-        final String merchantId = Owen.sellerId;//"<Your Merchant ID>";
+        final String merchantId = AppConstant.sellerId;//"<Your Merchant ID>";
         final String sellerDevAuthToken = "<Merchant Developer MWS Auth Token>";//TODO 
         // marketplaces to which this feed will be submitted; look at the
         // API reference document on the MWS website to see which marketplaces are
         // included if you do not specify the list yourself
-        final IdList marketplaces = new IdList(Arrays.asList( Owen.marketplaceIDUS));
+        final IdList marketplaces = new IdList(Arrays.asList( AppConstant.marketplaceIDUS));
 
         SubmitFeedRequest request = new SubmitFeedRequest();
         request.setMerchant(merchantId);

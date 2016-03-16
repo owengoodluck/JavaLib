@@ -28,10 +28,10 @@ import com.amazonaws.mws.MarketplaceWebService;
 import com.amazonaws.mws.MarketplaceWebServiceClient;
 import com.amazonaws.mws.MarketplaceWebServiceConfig;
 import com.amazonaws.mws.MarketplaceWebServiceException;
-import com.amazonaws.mws.config.Owen;
 import com.amazonaws.mws.model.GetFeedSubmissionResultRequest;
 import com.amazonaws.mws.model.GetFeedSubmissionResultResponse;
 import com.amazonaws.mws.model.ResponseMetadata;
+import com.owen.wms.common.constant.AppConstant;
 
 /**
  *
@@ -53,11 +53,11 @@ public class GetFeedSubmissionResultService {
          * Access Key ID and Secret Access Key ID, obtained from:
          * http://aws.amazon.com
          ***********************************************************************/
-        final String accessKeyId = Owen.accessKeyId;//"<Your Access Key ID>";
-        final String secretAccessKey =Owen.secretAccessKey ;//"<Your Secret Access Key>";
+        final String accessKeyId = AppConstant.accessKeyId;//"<Your Access Key ID>";
+        final String secretAccessKey =AppConstant.secretAccessKey ;//"<Your Secret Access Key>";
 
-        final String appName = Owen.appName;
-        final String appVersion = Owen.appVersion;
+        final String appName = AppConstant.appName;
+        final String appVersion = AppConstant.appVersion;
 
 
         MarketplaceWebServiceConfig config = new MarketplaceWebServiceConfig();
@@ -109,7 +109,7 @@ public class GetFeedSubmissionResultService {
          * Marketplace and Merchant IDs are required parameters for all 
          * Marketplace Web Service calls.
          ***********************************************************************/
-        final String merchantId = Owen.sellerId;//"<Your Merchant ID>";
+        final String merchantId = AppConstant.sellerId;//"<Your Merchant ID>";
         final String sellerDevAuthToken = "<Merchant Developer MWS Auth Token>";
 
         GetFeedSubmissionResultRequest request = new GetFeedSubmissionResultRequest();

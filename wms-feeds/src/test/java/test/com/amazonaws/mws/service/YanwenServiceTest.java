@@ -1,15 +1,14 @@
 package test.com.amazonaws.mws.service;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import com.amazonaws.mws.config.Owen;
 import com.amazonaws.mws.entity.yanwen.ExpressType;
 import com.amazonaws.mws.entity.yanwen.GoodsName;
 import com.amazonaws.mws.entity.yanwen.Receiver;
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
 import com.amazonaws.mws.service.YanwenService;
 import com.amazonaws.mws.util.JaxbUtil;
+import com.owen.wms.common.constant.AppConstant;
 
 public class YanwenServiceTest {
 	private String downloaFolde = "C:/Users/owen/Desktop/tmp";
@@ -42,7 +41,7 @@ public class YanwenServiceTest {
 //	@Ignore
 	public void testCreateExpress(){
 		ExpressType et  = new ExpressType ();
-		et.setUserid(Owen.yanwenUserId);
+		et.setUserid(AppConstant.yanwenUserId);
 		et.setChannel("中邮北京平邮小包");
 		et.setUserOrderNumber("test-6");
 		et.setSendDate("2015-11-19T00:00:00");//2014-07-09T00:00:00
@@ -50,7 +49,7 @@ public class YanwenServiceTest {
 		
 		Receiver rc = new Receiver();
 		et.setReceiver(rc );
-		rc.setUserid(Owen.yanwenUserId);
+		rc.setUserid(AppConstant.yanwenUserId);
 		rc.setName("name");
 		rc.setPhone("815-718-3860");
 		rc.setCountry("美国");
@@ -61,7 +60,7 @@ public class YanwenServiceTest {
 		
 		GoodsName gn = new  GoodsName();
 		et.setGoodsName(gn );
-		gn.setUserid(Owen.yanwenUserId);
+		gn.setUserid(AppConstant.yanwenUserId);
 		gn.setNameCh("不锈钢饰品 吊坠");
 		gn.setNameEn("Stainless Steel Necklace Pendant");
 		gn.setDeclaredValue(123);

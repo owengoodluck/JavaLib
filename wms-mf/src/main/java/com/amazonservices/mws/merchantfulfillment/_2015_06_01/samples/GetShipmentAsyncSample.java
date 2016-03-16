@@ -15,15 +15,18 @@
  */
 package com.amazonservices.mws.merchantfulfillment._2015_06_01.samples;
 
-import java.util.*;
-import java.util.concurrent.*;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
-import com.amazonaws.mws.config.Owen;
-import com.amazonservices.mws.client.*;
-import com.amazonservices.mws.merchantfulfillment._2015_06_01.*;
-import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.*;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentServiceAsync;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentServiceAsyncClient;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentServiceException;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.GetShipmentRequest;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.GetShipmentResponse;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.ResponseHeaderMetadata;
+import com.owen.wms.common.constant.AppConstant;
 
 /** Sample async call for GetShipment. */
 public class GetShipmentAsyncSample {
@@ -97,7 +100,7 @@ public class GetShipmentAsyncSample {
         // Create a request list.
         List<GetShipmentRequest> requestList = new ArrayList<GetShipmentRequest>();
         GetShipmentRequest request = new GetShipmentRequest();
-        String sellerId = Owen.sellerId;
+        String sellerId = AppConstant.sellerId;
         request.setSellerId(sellerId);
         String mwsAuthToken = "example";
         request.setMWSAuthToken(mwsAuthToken);

@@ -8,9 +8,7 @@
 	<version>1.0</version>
 	<packaging>pom</packaging>
 	<modules>
-		<!-- C:/Users/owen/git/wms-parent/wms-parent
-		C:/Users/owen/Documents/workspaces/lab_1/wms-common -->
-		<module>../../../owen/Documents/workspaces/lab_1/wms-priv</module>
+		<module>../wms-common</module>
 		<module>../HtmlParser</module>
 		<module>../wms-orders</module>
 		<module>../wms-feeds</module>

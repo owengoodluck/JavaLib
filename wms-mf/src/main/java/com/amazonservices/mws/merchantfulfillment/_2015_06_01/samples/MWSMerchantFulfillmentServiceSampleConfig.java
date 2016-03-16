@@ -15,11 +15,11 @@
  */
 package com.amazonservices.mws.merchantfulfillment._2015_06_01.samples;
 
-import com.amazonaws.mws.config.Owen;
 import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSEndpoint;
 import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentServiceAsyncClient;
 import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentServiceClient;
 import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentServiceConfig;
+import com.owen.wms.common.constant.AppConstant;
 
 /**
  * Configuration for MWSMerchantFulfillmentService samples.
@@ -27,16 +27,16 @@ import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfill
 public class MWSMerchantFulfillmentServiceSampleConfig {
 
     /** Developer AWS access key. */
-    private static final String accessKey = Owen.accessKeyId;
+    private static final String accessKey = AppConstant.accessKeyId;
 
     /** Developer AWS secret key. */
-    private static final String secretKey = Owen.secretAccessKey;
+    private static final String secretKey = AppConstant.secretAccessKey;
 
     /** The client application name. */
-    private static final String appName = Owen.appName;
+    private static final String appName = AppConstant.appName;
 
     /** The client application version. */
-    private static final String appVersion = Owen.appVersion;
+    private static final String appVersion = AppConstant.appVersion;
 
     /**
      * The endpoint for region service and version.

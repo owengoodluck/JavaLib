@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.lekani.entity.AttributeModel;
 import com.owen.wms.lekani.entity.GetProductModelListPackage;
 import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.service.LKNService;
-import com.owen.wms.web.constants.AppConstant;
 import com.owen.wms.web.dao.AmazonJewelryDao;
 import com.owen.wms.web.dao.LekaniProductAttributeDao;
 import com.owen.wms.web.dao.LekaniProductDao;

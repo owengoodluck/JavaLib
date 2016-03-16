@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
-import com.owen.wms.web.constants.AppConstant;
+import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.web.dao.Page;
 import com.owen.wms.web.form.ExpressQueryForm;
 import com.owen.wms.web.form.YanwenExpress;

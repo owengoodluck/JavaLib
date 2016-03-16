@@ -21,10 +21,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-import com.amazonaws.mws.config.Owen;
 import com.amazonaws.mws.entity.yanwen.ExpressType;
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
 import com.amazonaws.mws.util.JaxbUtil;
+import com.owen.wms.common.constant.AppConstant;
 
 public class YanwenService {
 	private Logger log = Logger.getLogger(this.getClass());
@@ -38,10 +38,10 @@ public class YanwenService {
 	 * @param expressType
 	 */
 	public CreateExpressResponseType createExpress(ExpressType expressType){
-		String url=serviceEndpoint+"Users/"+Owen.yanwenUserId+"/EXPRESSES";
+		String url=serviceEndpoint+"Users/"+AppConstant.yanwenUserId+"/EXPRESSES";
 		HttpClient client =  new DefaultHttpClient();  
 		HttpPost request = new HttpPost(url.toString());
-		setHeaderProperties(request,Owen.yanwenUserToken);
+		setHeaderProperties(request,AppConstant.yanwenUserToken);
 		
 		HttpEntity requestEntity  = null;
 		String charset="UTF8";
@@ -73,11 +73,11 @@ public class YanwenService {
 	 */
 	public String downloadLabel(String epCode,String downloadFolder,String amazonOrderID){
 		String targetFilePath =null;
-		String url=serviceEndpoint+"Users/"+Owen.yanwenUserId+"/EXPRESSES/"+epCode+"/A10x10LCLabel";
+		String url=serviceEndpoint+"Users/"+AppConstant.yanwenUserId+"/EXPRESSES/"+epCode+"/A10x10LCLabel";
 		this.log.info(url);
 		HttpClient client =  new DefaultHttpClient();  
 		HttpGet request = new HttpGet(url.toString());
-		setHeaderProperties(request,Owen.yanwenUserToken);
+		setHeaderProperties(request,AppConstant.yanwenUserToken);
 		
 		InputStream is = null;
 		OutputStream os = null;
@@ -128,7 +128,7 @@ public class YanwenService {
 	 */
 	public String queryStatus(Integer pageIndex,String epCode){
 		String result = null;
-		StringBuffer url=new StringBuffer(serviceEndpoint+"Users/"+Owen.yanwenUserId+"/EXPRESSES?");
+		StringBuffer url=new StringBuffer(serviceEndpoint+"Users/"+AppConstant.yanwenUserId+"/EXPRESSES?");
 		
 		if(pageIndex!=null){
 			url.append("PAGE="+pageIndex);
@@ -141,7 +141,7 @@ public class YanwenService {
 		
 		HttpClient client =  new DefaultHttpClient();  
 		HttpGet request = new HttpGet(url.toString());
-		setHeaderProperties(request,Owen.yanwenUserToken);
+		setHeaderProperties(request,AppConstant.yanwenUserToken);
 		
 		try {
 			HttpResponse response = client.execute(request);
@@ -161,10 +161,10 @@ public class YanwenService {
 	 */
 	public String getChannels(){
 		String result = null;
-		String url=serviceEndpoint+"Users/"+Owen.yanwenUserId+"/GetChannels";
+		String url=serviceEndpoint+"Users/"+AppConstant.yanwenUserId+"/GetChannels";
 		HttpClient client =  new DefaultHttpClient();  
 		HttpGet request = new HttpGet(url);
-		setHeaderProperties(request,Owen.yanwenUserToken);
+		setHeaderProperties(request,AppConstant.yanwenUserToken);
 		try {
 			HttpResponse response = client.execute(request);
 			HttpEntity responseEntity = response.getEntity();

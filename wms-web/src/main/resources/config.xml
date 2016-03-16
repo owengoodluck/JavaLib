@@ -15,14 +15,39 @@
 	<context:component-scan base-package="com.owen.wms" />
 	
 	<!-- properties -->
-	<context:property-placeholder location="classpath:app.properties"/>
+	<!-- <context:property-placeholder location="classpath:app.properties"/>
+	<context:property-placeholder location="C:/Users/owen/config.properties"/> -->
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:app.properties</value>
+				<value>file:C:/Users/owen/user.properties</value>
+				<!-- <value>classpath:user.properties</value> -->
+			</list>
+		</property>
+		<!-- <property name="ignoreUnresolvablePlaceholders" value="true" />  -->
+	</bean>
+
+
+
+	
 	
 	<!-- other spring config files -->
 	<import resource="spring-mvc.xml" />
 	<import resource="spring-hibernate.xml" />
 	
-	<bean id="AppConstant" class="com.owen.wms.web.constants.AppConstant">
+	<bean id="AppConstant" class="com.owen.wms.common.constant.AppConstant">
 		<property name="picCopyFolder" value="${image.download.path}"></property>
+		<property name="yanwenUserId" value="${yanwen.user.id}"></property>
+		<property name="yanwenUserToken" value="${yanwen.user.token}"></property>
+		<property name="manufacturer" value="${amz.manufacturer}"></property>
+		<property name="accessKeyId" value="${amz.access.key.id}"></property>
+		<property name="secretAccessKey" value="${amz.serect.access.key}"></property>
+		<property name="sellerId" value="${amz.seller.id}"></property>
+		<property name="appName" value="${amz.app.name}"></property>
+		<property name="appVersion" value="${amz.app.version}"></property>
+		<property name="marketplaceIDUS" value="${amz.market.place.id.us}"></property>
 	</bean>
 	
 	<util:set id="omitColumnNames4Parent" value-type="java.lang.String" set-class="java.util.HashSet">

@@ -15,14 +15,14 @@
  */
 package com.amazonservices.mws.merchantfulfillment._2015_06_01.samples;
 
-import java.util.*;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.math.BigDecimal;
-
-import com.amazonaws.mws.config.Owen;
-import com.amazonservices.mws.client.*;
-import com.amazonservices.mws.merchantfulfillment._2015_06_01.*;
-import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.*;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentService;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentServiceClient;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.MWSMerchantFulfillmentServiceException;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.GetEligibleShippingServicesRequest;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.GetEligibleShippingServicesResponse;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.ResponseHeaderMetadata;
+import com.amazonservices.mws.merchantfulfillment._2015_06_01.model.ShipmentRequestDetails;
+import com.owen.wms.common.constant.AppConstant;
 
 
 /** Sample call for GetEligibleShippingServices. */
@@ -77,7 +77,7 @@ public class GetEligibleShippingServicesSample {
 
         // Create a request.
         GetEligibleShippingServicesRequest request = new GetEligibleShippingServicesRequest();
-        String sellerId = Owen.sellerId;
+        String sellerId = AppConstant.sellerId;
         request.setSellerId(sellerId);
         String mwsAuthToken = "example";
         request.setMWSAuthToken(mwsAuthToken);

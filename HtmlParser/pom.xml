@@ -20,5 +20,11 @@
 			<artifactId>htmlparser</artifactId>
 			<version>1.6</version>
 		</dependency>
+		<!--owen wms-common -->
+		<dependency>
+			<groupId>com.owen.wms</groupId>
+			<artifactId>wms-common</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.owen.htmlparser.util.FileUtil;
 import com.owen.htmlparser.util.PictureDownloadUtil;
-import com.owen.wms.web.constants.AppConstant;
+import com.owen.wms.common.constant.AppConstant;
 
 public class PictureDownLoadThread extends Thread{
 	private String url;

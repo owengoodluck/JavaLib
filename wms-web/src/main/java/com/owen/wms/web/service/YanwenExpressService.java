@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.amazonaws.mws.config.Owen;
 import com.amazonaws.mws.entity.yanwen.ExpressType;
 import com.amazonaws.mws.entity.yanwen.GoodsName;
 import com.amazonaws.mws.entity.yanwen.Receiver;
@@ -22,6 +21,7 @@ import com.amazonservices.mws.orders._2013_09_01.model.GetOrderResponse;
 import com.amazonservices.mws.orders._2013_09_01.model.GetOrderResult;
 import com.amazonservices.mws.orders._2013_09_01.model.Order;
 import com.amazonservices.mws.orders._2013_09_01.service.GetOrderService;
+import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.web.constants.AmazonOrderStatus;
 import com.owen.wms.web.dao.AmazonJewelryDao;
 import com.owen.wms.web.dao.AmazonOrderDao;
@@ -146,7 +146,7 @@ public class YanwenExpressService {
 	
 	private ExpressType convert(AmazonOrder orderEntity, YanwenExpress form) {
 		ExpressType et = new ExpressType();
-		et.setUserid(Owen.yanwenUserId);
+		et.setUserid(AppConstant.yanwenUserId);
 		et.setSendDate(form.getSendDate()+"T00:00:00");// 2015-07-09T00:00:00
 		et.setQuantity(form.getQuantity());
 		et.setChannel(form.getChannel());//中文 ， 中邮北京平邮小包
@@ -158,7 +158,7 @@ public class YanwenExpressService {
 
 		Receiver rc = new Receiver();
 		et.setReceiver(rc);
-		rc.setUserid(Owen.yanwenUserId);
+		rc.setUserid(AppConstant.yanwenUserId);
 		rc.setName(orderEntity.getShippingAddressName());
 		rc.setPhone(orderEntity.getShippingAddressPhone());
 		rc.setCountry(form.getCountry()); 
@@ -170,7 +170,7 @@ public class YanwenExpressService {
 
 		GoodsName gn = new GoodsName();
 		et.setGoodsName(gn);
-		gn.setUserid(Owen.yanwenUserId);
+		gn.setUserid(AppConstant.yanwenUserId);
 		gn.setNameCh(form.getNameChinese());
 		gn.setNameEn(form.getNameEnglish());
 		gn.setDeclaredValue(form.getDeclaredValue());
@@ -221,7 +221,7 @@ public class YanwenExpressService {
 		Order order = orderResult.getOrders().get(0);//TODO TBC
 		
 		ExpressType et = new ExpressType();
-		et.setUserid(Owen.yanwenUserId);
+		et.setUserid(AppConstant.yanwenUserId);
 		et.setSendDate(form.getSendDate()+"T00:00:00");// 2015-07-09T00:00:00
 		et.setQuantity(form.getQuantity());
 		et.setChannel(form.getChannel());//中文 ， 中邮北京平邮小包
@@ -234,7 +234,7 @@ public class YanwenExpressService {
 		Address address = order.getShippingAddress();
 		Receiver rc = new Receiver();
 		et.setReceiver(rc);
-		rc.setUserid(Owen.yanwenUserId);
+		rc.setUserid(AppConstant.yanwenUserId);
 		rc.setName(address.getName());
 		rc.setPhone(address.getPhone());
 		rc.setCountry(form.getCountry()); 
@@ -246,7 +246,7 @@ public class YanwenExpressService {
 
 		GoodsName gn = new GoodsName();
 		et.setGoodsName(gn);
-		gn.setUserid(Owen.yanwenUserId);
+		gn.setUserid(AppConstant.yanwenUserId);
 		gn.setNameCh(form.getNameChinese());
 		gn.setNameEn(form.getNameEnglish());
 		gn.setDeclaredValue(form.getDeclaredValue());

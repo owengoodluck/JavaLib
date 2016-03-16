@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%-- <% Double shippingFee = com.owen.wms.web.constants.AppConstant.shippingFee; %>  --%>
-<%@ page import = "com.owen.wms.web.constants.AppConstant" %>
+<%@ page import = "com.owen.wms.common.constant.AppConstant" %>
 <!Doctype html>
 <html>
 <link rel="stylesheet"
@@ -74,7 +74,7 @@ function submitForm(preOrNext){
 						<th width="8%">进货价格(RMB)</th>
 						<th width="8%">运费收入(USD)</th>
 						<th width="8%">亚马逊收费(USD)</th>
-						<th width="12%">利润(-运费  <%=com.owen.wms.web.constants.AppConstant.ShippingFeePay%> RMB)</th>
+						<th width="12%">利润(-运费  <%=com.owen.wms.common.constant.AppConstant.ShippingFeePay%> RMB)</th>
 						
 					</tr>
 				</thead>

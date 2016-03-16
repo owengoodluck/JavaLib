@@ -1,6 +1,6 @@
 package com.owen.wms.web.utils;
 
-import com.owen.wms.web.constants.AppConstant;
+import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.web.constants.UpdateModel;
 import com.owen.wms.web.entity.JewelryEntity;
 

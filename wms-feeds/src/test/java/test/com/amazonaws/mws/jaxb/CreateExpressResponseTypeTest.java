@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.amazonaws.mws.config.Owen;
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
 import com.amazonaws.mws.jaxb.entity.AmazonEnvelope;
 import com.amazonaws.mws.jaxb.entity.AmazonEnvelope.Message;
@@ -22,6 +21,7 @@ import com.amazonaws.mws.jaxb.entity.OrderFulfillment.Item;
 import com.amazonaws.mws.util.JaxbUtil;
 import com.amazonservices.mws.orders._2013_09_01.util.XMLGregorianCalendarUtil;
 import com.owen.htmlparser.util.FileUtil;
+import com.owen.wms.common.constant.AppConstant;
 
 public class CreateExpressResponseTypeTest {
 	private Logger logger= Logger.getLogger(this.getClass());
@@ -75,7 +75,7 @@ public class CreateExpressResponseTypeTest {
 		//1. set header
 		Header header  = new Header();
 		e.setHeader(header  );
-		header.setMerchantIdentifier(Owen.sellerId);
+		header.setMerchantIdentifier(AppConstant.sellerId);
 		header.setDocumentVersion("1.01");
 		
 		//2.set MessageType

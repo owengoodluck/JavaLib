@@ -5,13 +5,13 @@ import java.util.List;
 
 import com.amazonaws.mws.config.DocumentVersion;
 import com.amazonaws.mws.config.MessageType;
-import com.amazonaws.mws.config.Owen;
 import com.amazonaws.mws.config.ProductOperationType;
 import com.amazonaws.mws.jaxb.entity.AmazonEnvelope;
 import com.amazonaws.mws.jaxb.entity.AmazonEnvelope.Message;
 import com.amazonaws.mws.jaxb.entity.Header;
 import com.amazonaws.mws.jaxb.entity.Product;
 import com.amazonaws.mws.jaxb.entity.Product.DescriptionData;
+import com.owen.wms.common.constant.AppConstant;
 
 public class JewelryExcelTemplateConvertService {
 	private static final int columnCount=220;
@@ -29,7 +29,7 @@ public class JewelryExcelTemplateConvertService {
 				//header
 				Header header = new Header();
 				env.setHeader(header );
-				header.setMerchantIdentifier(Owen.sellerId);
+				header.setMerchantIdentifier(AppConstant.sellerId);
 				header.setDocumentVersion(DocumentVersion.version1_01.toString());
 //				header.setOverrideReleaseId(value);
 				

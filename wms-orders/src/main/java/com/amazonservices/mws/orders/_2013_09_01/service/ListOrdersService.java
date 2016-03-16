@@ -17,14 +17,9 @@ package com.amazonservices.mws.orders._2013_09_01.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.amazonaws.mws.config.Owen;
-import com.amazonservices.mws.client.MwsUtl;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrders;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrdersClient;
 import com.amazonservices.mws.orders._2013_09_01.MarketplaceWebServiceOrdersException;
@@ -37,6 +32,7 @@ import com.amazonservices.mws.orders._2013_09_01.model.Order;
 import com.amazonservices.mws.orders._2013_09_01.model.ResponseHeaderMetadata;
 import com.amazonservices.mws.orders._2013_09_01.samples.MarketplaceWebServiceOrdersSampleConfig;
 import com.amazonservices.mws.orders._2013_09_01.util.XMLGregorianCalendarUtil;
+import com.owen.wms.common.constant.AppConstant;
 
 
 /** Sample call for ListOrders. */
@@ -128,7 +124,7 @@ public class ListOrdersService {
     		request.setCreatedBefore(XMLGregorianCalendarUtil.dateToXmlDate(createdBeforeDate));
     	}
     	
-        request.setSellerId(Owen.sellerId);
+        request.setSellerId(AppConstant.sellerId);
         
         List<String> marketplaceId = new ArrayList<String>();
         marketplaceId.add("ATVPDKIKX0DER");//TODO

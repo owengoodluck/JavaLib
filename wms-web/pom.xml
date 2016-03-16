@@ -40,6 +40,12 @@
 			<artifactId>HtmlParser</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<!--owen wms-common -->
+		<dependency>
+			<groupId>com.owen.wms</groupId>
+			<artifactId>wms-common</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<!--owen wms-feeds -->
 		<dependency>
 			<groupId>com.owen.wms</groupId>

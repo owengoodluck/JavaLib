@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.owen.wms.web.constants.AppConstant;
+import com.owen.wms.common.constant.AppConstant;
 
 @Entity
 @Table(name="amz_jewelry")
