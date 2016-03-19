@@ -1,1 +1,6 @@
 /target/
+/target/*
+/Users/
+/.settings
+/.classpath
+/*.classpath
