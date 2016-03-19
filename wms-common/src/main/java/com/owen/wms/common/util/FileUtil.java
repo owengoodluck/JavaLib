@@ -3,17 +3,41 @@ package com.owen.wms.common.util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
 public class FileUtil {
 	private static Logger log = Logger.getLogger(FileUtil.class);
-
+	
+	public static void writeObject(Serializable obj,File file){
+		if(file==null){
+			log.warn("Target file doesn't exist ");
+		}else{
+			ObjectOutputStream out = null;  
+			try {
+				out= new ObjectOutputStream(new FileOutputStream(file,true));
+				out.writeObject(obj);
+				out.flush();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally{
+				if(out!=null){
+					try { out.close();  } catch (IOException e) { }
+				}
+			}
+		}
+	}
+	
 	public static File createSubFolder(String downloadRootFolder) {
 		File rootFolder = new File(downloadRootFolder);
 		File subFolder = null;

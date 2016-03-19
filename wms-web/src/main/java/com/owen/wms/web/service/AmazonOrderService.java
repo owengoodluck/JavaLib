@@ -36,6 +36,7 @@ import com.amazonservices.mws.orders._2013_09_01.service.ListOrdersService;
 import com.amazonservices.mws.orders._2013_09_01.util.XMLGregorianCalendarUtil;
 import com.owen.htmlparser.util.FileUtil;
 import com.owen.wms.common.constant.AppConstant;
+import com.owen.wms.common.util.DateUtil;
 import com.owen.wms.web.dao.AmazonOrderDao;
 import com.owen.wms.web.dao.AmazonOrderItemDao;
 import com.owen.wms.web.dao.Page;
@@ -44,8 +45,7 @@ import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.entity.AmazonOrderItem;
 import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.entity.YanWenExpressEntity;
-import com.owen.wms.web.form.OrderStatisticEntity;
-import com.owen.wms.web.utils.DateUtil;;
+import com.owen.wms.web.form.OrderStatisticEntity;;
 
 @Service("amazonOrderService")
 @Transactional

@@ -1,10 +1,20 @@
-package com.owen.wms.web.utils;
+package com.owen.wms.common.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
 
+	public static String getDateString(Date date,String pattern){
+		if(date == null){
+			return null;
+		}else{
+			SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+			return sdf.format(date);
+		}
+	}
+	
 	public static Date getUTCtime(){
 		// 1、取得本地时间：  
         Calendar cal = Calendar.getInstance() ;  
