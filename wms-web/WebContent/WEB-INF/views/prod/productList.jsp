@@ -92,6 +92,7 @@ function cleanForm(){
 					<th width="3%">序号</th>
 					<th width="9%">SKU</th>
 					<th width="5%">Pic</th>
+					<th width="3%">状态</th>
 					<th width="9%">Edit</th>
 					<th width="9%">parentSku</th>
 					<th width="80%">title</th>
@@ -114,6 +115,7 @@ function cleanForm(){
 									</c:if>
 								</c:if>
 							</td>
+							<td width="9%">${order.status}</td>
 							<td width="9%"><a href='<c:url value="/prod/edit/${order.itemSku}" />' class="btn" target="_blank">编辑产品</a></td>
 							<td width="9%">${order.parentSku}</td>
 							<td width="80%">${order.itemName}</td>

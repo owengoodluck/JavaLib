@@ -53,7 +53,10 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private Integer stockQuantity;//实际库存
 	@Column(name="purchase_price")
 	private Double purchasePrice;//进货价格
-
+	
+	@Column(name="status")
+	private String status;
+	
 	@Column(name="purchase_url_1")
 	private String purchaseUrl1;
 	@Column(name="purchase_url_2")
@@ -753,9 +756,6 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	}
 
 	public String getManufacturer() {
-		if(manufacturer == null || manufacturer.trim().length()<1){
-			manufacturer ="CandyVillage";
-		}
 		return manufacturer;
 	}
 
@@ -2860,6 +2860,10 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	public void setGenericKeywords(String genericKeywords) {
 		this.genericKeywords = genericKeywords;
 	}
-	
-	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

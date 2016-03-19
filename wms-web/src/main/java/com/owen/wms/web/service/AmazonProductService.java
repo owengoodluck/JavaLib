@@ -13,6 +13,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +69,9 @@ public class AmazonProductService {
 	@Autowired
 	@Qualifier("amazonJewelryDao")
 	private AmazonJewelryDao amazonJewelryDao;
+	
+	@Value("${amz.manufacturer}")
+	private String manufacturer;
 	
 	public Boolean isParent(String sku){
 		return this.amazonJewelryDao.isParent(sku);
@@ -225,6 +229,12 @@ public class AmazonProductService {
 		targetBoook.write();
 		targetBoook.close();
 		sourceBook.close();
+		
+
+		for(JewelryEntity ent : list){
+			ent.setStatus(manufacturer);
+			this.amazonJewelryDao.update(ent);
+		}
 	}
 	
 	private boolean isNeedInParent(String columnName){
