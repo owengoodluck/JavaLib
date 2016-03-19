@@ -26,7 +26,7 @@ public class BackupServiceTest {
 	}
 	@Test
 	public void testRead(){
-		File f = new File("C:/Users/owen/Desktop/tmp/jew_bak_0319.dat");
+		File f = new File("C:/Users/Fang/Desktop/tmp/jew_bak_0319.dat");
 		this.backupService.readJewelryProdFromFile(f);
 	}
 }

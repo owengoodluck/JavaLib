@@ -34,6 +34,18 @@ public class BackupService {
 	@Value("${db.backup.folder}")
 	private String backFileFolder;
 	
+	@Value("${db.backup.sku.prefix}")
+	private String skuPrefix;
+	
+	@Value("${db.backup.sku.transform.index}")
+	private int skuTransformIndex;
+	
+	@Value("${db.backup.is.load.into.db}")
+	private boolean isLoadIntoDB;
+	
+	@Value("${amz.manufacturer}")
+	private String manufacturer;
+	
 	public void writeJewelryProd2File(){
 		//check and create target file
 		File folder = new File(backFileFolder);
@@ -85,7 +97,6 @@ public class BackupService {
 			return;
 		}
 		ObjectInputStream in = null;
-		List<JewelryEntity> list = new ArrayList();
 		int index=0;
 		try {
 			in = new ObjectInputStream(new FileInputStream(file));
@@ -93,7 +104,9 @@ public class BackupService {
 			while(ent!=null){
 				log.info(ent);
 				ent = (JewelryEntity) in.readObject();
-				list.add(ent);
+				if(this.isLoadIntoDB){
+					this.transferAndLoadIntoDB(ent);
+				}
 				index++;
 			}
 		} catch(EOFException e1){
@@ -109,6 +122,43 @@ public class BackupService {
 				}
 			}
 		}
-		log.info(list.size()+" object is read ");
+		log.info(index +" rows inserted into DB !");
+	}
+	
+	private void transferAndLoadIntoDB(JewelryEntity input){
+		if(input == null){
+			return;
+		}
+		
+		String newSku = this.getNewSKU(input.getItemSku(), skuTransformIndex, skuPrefix);
+		String newParentSku = this.getNewSKU(input.getParentSku(), skuTransformIndex, skuPrefix);
+		if(this.amazonJewelryDao.get(newSku)!=null){
+			log.info(newSku +" (new = " +input.getItemSku()+") exists in local DB .");
+		}else{
+			input.setItemSku(newSku);
+			input.setParentSku(newParentSku);
+			input.setManufacturer(manufacturer);
+			this.amazonJewelryDao.save(input);
+		}
+	}
+	
+	private String getNewSKU(String str,int index,String prefix) {
+		if(str==null || str.trim().length()<1){
+			return null;
+		}
+		StringBuffer rs = new StringBuffer(prefix);
+		for (int i = 0; i < str.length(); i++) {
+			if (Character.isDigit(str.charAt(i))) {
+				int x = Integer.valueOf(str.charAt(i)+"") + index;
+				if (x >= 10) {
+					rs.append(x%10);
+				} else {
+					rs.append(x);
+				}
+			} else {
+				rs.append(str.charAt(i));
+			}
+		}
+		return rs.toString();
 	}
 }

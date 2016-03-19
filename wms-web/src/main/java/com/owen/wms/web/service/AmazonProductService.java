@@ -285,6 +285,7 @@ public class AmazonProductService {
 			this.log.error("faile to assembel GET method for column columnName = "+columnName);
 		}
 		return setMethodName;
-		
 	}
+	
+
 }

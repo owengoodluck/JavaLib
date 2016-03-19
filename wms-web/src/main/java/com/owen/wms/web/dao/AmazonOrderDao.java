@@ -16,15 +16,22 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.ResultTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.owen.wms.web.constants.AmazonOrderStatus;
 import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.entity.AmazonOrderItem;
+import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.form.OrderStatisticEntity;
 
 @Repository("amazonOrderDao")
 public class AmazonOrderDao extends BaseHibernateDao<AmazonOrder,String> {
+
+	@Autowired
+	@Qualifier("amazonJewelryDao")
+	private AmazonJewelryDao amazonJewelryDao;
 	
 	public List<AmazonOrder> getOrdersByOrderIDList(String[] orderIdArray){
 		if(orderIdArray==null || orderIdArray.length<1){
@@ -201,5 +208,20 @@ public class AmazonOrderDao extends BaseHibernateDao<AmazonOrder,String> {
 		
 		List<OrderStatisticEntity> list = query.list();
 		return list;
+	}
+	
+	public void createDummyProd4Order(){
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select distinct sellerSKU from AMAZON_ORDER_ITEM left join amz_jewelry  on sellerSKU=item_sku where item_sku is null ");
+		SQLQuery query = this.getSession().createSQLQuery(sql.toString());
+		List<String> list = query.list();
+		if(list!=null && !list.isEmpty()){
+			for(String sku: list){
+				JewelryEntity ent = new JewelryEntity();
+				ent.setItemSku(sku);
+				ent.setItemName("Dummy prod,Dummy prod,Dummy prod");
+				this.amazonJewelryDao.save(ent);
+			}
+		}
 	}
 }

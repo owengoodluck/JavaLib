@@ -80,6 +80,10 @@ public class AmazonOrderService {
 		return order;
 	}
 	
+	public void createDummyProdForOrder(){
+		this.dao.createDummyProd4Order();
+	}
+	
 	public Page pageListByCriteria(int currentPage, int pageSize,AmazonOrder order){
 		Page page = this.dao.pageListByCriteria(currentPage, pageSize, order);
 		List<AmazonOrder> list = page.getList();

@@ -114,7 +114,7 @@ function cleanForm(){
 									</c:if>
 								</c:if>
 							</td>
-							<td width="9%"><a href='<c:url value="/prod/edit/${order.itemSku}" />' class="btn">编辑产品</a></td>
+							<td width="9%"><a href='<c:url value="/prod/edit/${order.itemSku}" />' class="btn" target="_blank">编辑产品</a></td>
 							<td width="9%">${order.parentSku}</td>
 							<td width="80%">${order.itemName}</td>
 						</tr>

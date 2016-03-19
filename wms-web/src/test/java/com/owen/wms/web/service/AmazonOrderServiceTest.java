@@ -29,9 +29,11 @@ public class AmazonOrderServiceTest {
 	@Qualifier("amazonOrderService")
 	private AmazonOrderService amazonOrderService;
 	
-	
+	@Test
+	public void createDummyProdForOrder(){
+		this.amazonOrderService.createDummyProdForOrder();
+	}
 
-	
 	@Test
 	public void testConfirmShipFulfillment() throws Exception {
 		String[] orderIdArray = new String[]{"109-6548891-6545024","111-1362599-8942658","103-3565411-6936268"};
