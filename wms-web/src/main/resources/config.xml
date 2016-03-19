@@ -22,7 +22,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath:app.properties</value>
-				<value>file:C:/Users/owen/user.properties</value>
+				<value>file:C:/user.properties</value>
 				<!-- <value>classpath:user.properties</value> -->
 			</list>
 		</property>

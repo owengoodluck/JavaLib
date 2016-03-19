@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.owen.wms.web.constants.ParentChild;
 import com.owen.wms.web.constants.RelationshipType;
-import com.owen.wms.web.constants.UpdateModel;
 import com.owen.wms.web.dao.Page;
 import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.form.JewelryEntityListPackageForm;
@@ -38,7 +38,10 @@ import com.owen.wms.web.utils.NullAwareBeanUtilsBean;
 //@SessionAttributes("productsForm")
 public class AmazonProductController {
 	private Logger log = Logger.getLogger(this.getClass());
-	private String defaultPathToExportExcel = "C:/Users/owen/Desktop/tmp";
+	
+	@Value("${excel.export.path}")
+	private String defaultPathToExportExcel ;
+	
 	private int defaultPageSize = 20;
 	
 	private ExecutorService pool = Executors.newFixedThreadPool(3);
