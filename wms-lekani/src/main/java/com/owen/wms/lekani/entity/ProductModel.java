@@ -48,7 +48,9 @@ public class ProductModel {
 	private String price;
 
 	@JsonProperty("Stock")  
-	private String stock;
+	private Integer stock;
+	
+	private Integer stockPrevious;
 
 	@JsonProperty("IsPackage")  
 	private String isPackage;
@@ -152,11 +154,11 @@ public class ProductModel {
 		this.price = price;
 	}
 
-	public String getStock() {
+	public Integer getStock() {
 		return stock;
 	}
 
-	public void setStock(String stock) {
+	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
 
@@ -284,6 +286,14 @@ public class ProductModel {
 		this.onSale = onSale;
 	}
 
+	public Integer getStockPrevious() {
+		return stockPrevious;
+	}
+
+	public void setStockPrevious(Integer stockPrevious) {
+		this.stockPrevious = stockPrevious;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -291,4 +301,7 @@ public class ProductModel {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	
+	
 }

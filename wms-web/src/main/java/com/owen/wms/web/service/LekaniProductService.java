@@ -1,6 +1,7 @@
 package com.owen.wms.web.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -180,10 +181,27 @@ public class LekaniProductService {
 		if(prodIDs!=null && prodIDs.length>0){
 			for(String prodID: prodIDs){
 				ProductModel pm = this.getProductModelByID(prodID.trim());
-				JewelryEntity jew = this.convert2AmazonJewelry(pm);
-				this.amazonJewelryDao.saveOrUpdate(jew);
+				if(!"converted".equals(pm.getStatus())){
+					JewelryEntity jew = this.convert2AmazonJewelry(pm);
+					this.amazonJewelryDao.saveOrUpdate(jew);
+				}else{
+					log.warn(prodID.trim()+" was already converted !");
+				}
 			}
 			this.lekaniProductDao.bathUpdateStatus(prodIDs, "converted");
+		}
+	}
+	
+	public void getLatestStockForLekaniProds(String[] prodIDs){
+		if(prodIDs!=null && prodIDs.length>0){
+			List<ProductModel> list = new ArrayList<ProductModel>();
+			for(String prodID: prodIDs){
+				ProductModel pm = this.getProductModelByID(prodID.trim());
+				if(pm!=null){
+					list.add(pm);
+				}
+			}
+			this.update2LatestStock(list);
 		}
 	}
 	
@@ -378,5 +396,26 @@ public class LekaniProductService {
 	
 	public void bathUpdateStatus(String[] prodIDs,String status){
 		this.lekaniProductDao.bathUpdateStatus(prodIDs, status);
+	}
+	
+	public List<ProductModel> listAll(){
+		return this.lekaniProductDao.listAll();
+	}
+	
+	public void update2LatestStock(List<ProductModel> list){
+		if(list==null || list.isEmpty()){
+			return ;
+		}
+		
+		for(ProductModel p : list){
+			Integer latestStock = LKNService.getStock(p.getSKU());
+			Integer previousStock = p.getStock();
+			if(latestStock!= null && latestStock != previousStock ){
+				this.log.warn(" LKN prod id = ["+p.getProductID() +"] latest stock is "+latestStock+", the old value = "+p.getStock());
+				p.setStock(latestStock);
+				p.setStockPrevious(previousStock);
+				this.lekaniProductDao.save(p);
+			}
+		}
 	}
 }

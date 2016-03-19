@@ -9,11 +9,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.owen.wms.web.constants.ParentChild;
 import com.owen.wms.web.dao.AmazonJewelryDao;
@@ -30,6 +32,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 @Service("amazonProductService")
+@Transactional
 public class AmazonProductService {
 	private Logger log = Logger.getLogger(this.getClass());
 

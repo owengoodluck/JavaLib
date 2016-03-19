@@ -90,6 +90,9 @@ public class LekaniController {
 	@RequestMapping(value="/pageQueryLocal", method = RequestMethod.POST)
 	public String pageQueryLocal(Model model,@ModelAttribute("queryForm") LekaniProdQueryForm queryForm ) throws Exception {
 		ProductModel entity = new ProductModel() ;
+		if(queryForm.getProdID() != null &&queryForm.getProdID().trim().length()>0){
+			entity.setProductID(queryForm.getProdID());
+		}
 		if(queryForm.getCategoryID() != 0 ){
 			entity.setCatID(queryForm.getCategoryID()+"");
 		}
@@ -98,6 +101,9 @@ public class LekaniController {
 		}
 		if(queryForm.getStatus() != "all" ){
 			entity.setStatus(queryForm.getStatus());
+		}
+		if(queryForm.getStock() != null ){
+			entity.setStock(queryForm.getStock());
 		}
 		Page page = this.lekaniProductService.pageListByCriteria(queryForm.getCurrentPage(), queryForm.getPageSize(), entity);
 		model.addAttribute("page", page);
@@ -140,6 +146,8 @@ public class LekaniController {
 			this.lekaniProductService.bathUpdateStatus(prodIDs, processMethod);
 		}else if("converted".equals(processMethod)){
 			this.lekaniProductService.saveAmazonJewelryFromLekaniProds(prodIDs);
+		}else if("getLatesStock".equals(processMethod)){
+			this.lekaniProductService.getLatestStockForLekaniProds(prodIDs);
 		}
 		return this.pageQueryLocal(model, queryForm) ;
 	}

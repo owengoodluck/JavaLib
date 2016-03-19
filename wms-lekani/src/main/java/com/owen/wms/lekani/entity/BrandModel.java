@@ -29,6 +29,12 @@ public class BrandModel {
 	public void setBrandEnName(String brandEnName) {
 		BrandEnName = brandEnName;
 	}
+	@Override
+	public String toString() {
+		return "BrandModel [" + (BrandID != null ? "BrandID=" + BrandID + ", " : "")
+				+ (BrandName != null ? "BrandName=" + BrandName + ", " : "")
+				+ (BrandEnName != null ? "BrandEnName=" + BrandEnName : "") + "]";
+	}
 	
 	
 }

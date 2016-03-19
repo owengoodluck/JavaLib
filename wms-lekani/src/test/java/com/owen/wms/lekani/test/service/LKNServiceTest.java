@@ -22,7 +22,7 @@ public class LKNServiceTest {
 				i++;
 //				System.out.println(b.getBrandID() + "----" + b.getBrandName());
 //				System.out.println("<form:option value=\""+b.getBrandID()+"\">"+b.getBrandName()+"</form:option>");
-				System.out.println("brandMap.put("+b.getBrandID()+",\""+b.getBrandName()+"\");");
+				System.out.println(b);
 			}
 			System.out.println(i);
 		}
@@ -31,7 +31,7 @@ public class LKNServiceTest {
 	@Test
 	public void getBrandInfo(){
 		BrandModel brand = LKNService.getBrandInfo(29);
-		System.out.println(brand.getBrandName());
+		System.out.println(brand);
 	}
 	
 	@Test

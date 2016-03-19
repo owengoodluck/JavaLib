@@ -2,6 +2,7 @@ package com.owen.wms.web.service;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -129,5 +130,11 @@ public class LekaniProductServiceTest {
 		System.out.println(jew.getListPrice());
 		
 		this.amazonJewelryDao.saveOrUpdate(jew);
+	}
+	
+	@Test
+	public void updateStock(){
+		List<ProductModel> list = this.lekaniProductService.listAll();
+		this.lekaniProductService.update2LatestStock(list);
 	}
 }

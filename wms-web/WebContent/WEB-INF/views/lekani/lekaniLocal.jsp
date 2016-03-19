@@ -66,14 +66,18 @@ function batchProcess(method){
 		$('#discardBtn').attr('disabled',"true");
 		$('#selectedBtn').attr('disabled',"true");
 		$('#convertedBtn').attr('disabled',"true");
+		$('#getLatesStockBtn').attr('disabled',"true");
 		
 		$('#processMethod').val(method);
 		$("#queryForm").attr("action", "/wms-web/lekani/batchProcess");
 		//$('#batchProcessForm').submit();
 		$('#queryForm').submit();
 	}  
-	
-	
+}
+
+function cleanForm(){
+	$('#prodID').val(null);
+	$('#stock').val(null);
 }
 </script>
 <title>Lekani本地产品列表</title>
@@ -90,7 +94,9 @@ function batchProcess(method){
 	  <form:form modelAttribute="queryForm" enctype="multipart/form-data" action="/wms-web/lekani/pageQueryLocal">
 	   <div class="row">
 		      	<div align="left">
-			      	分类类别:
+		      		<input type="button" class="btn btn-primary" value="清空" onclick="cleanForm()"/>
+			      	产品ID：<form:input path="prodID" size="3"/>
+			      	类别:
 			      	<form:select path="categoryID" onchange="submitForm(0)">
 			      		<form:option value="0">请选择</form:option>
 						<form:option value="216">项链</form:option>
@@ -127,7 +133,7 @@ function batchProcess(method){
 						<form:option value="54">包装&展件</form:option> 
 						--%>
 			      	</form:select>
-			      	品牌列表:
+			      	品牌:
 			      	<form:select path="brandID" onchange="submitForm(0)">
 			      		<form:option value="0">请选择</form:option>
 			      		<form:option value="29">潘多拉系列</form:option>
@@ -162,8 +168,9 @@ function batchProcess(method){
 			      		<form:option value="converted">已转换</form:option>
 			      		<form:option value="all">全部</form:option>
 			      	</form:select>
-			      	
+			      	库存数小于：<form:input path="stock" size="2"/>
 					<input type="submit" id="btnAdd" class="btn btn-primary" value="查询" onclick="submitForm(0)"/>
+					<input type="button" id="getLatesStockBtn" class="btn btn-primary" value="最新库存" onclick="batchProcess('getLatesStock')"/>
 					<input type="button" id="discardBtn" class="btn btn-primary" value="丢弃" onclick="batchProcess('discard')"/>
 					<input type="button" id="selectedBtn" class="btn btn-primary" value="备选" onclick="batchProcess('selected')"/>
 					<input type="button" id="convertedBtn" class="btn btn-primary" value="转换" onclick="batchProcess('converted')"/>
@@ -192,7 +199,8 @@ function batchProcess(method){
 					<th>品牌</th>
 					<th>在售</th>
 					<th>售价</th>
-					<th>库存</th>
+					<th>最新库存</th>
+					<th>上次库存</th>
 					<th>名称</th>
 				</tr>
 			</thead>
@@ -225,10 +233,46 @@ function batchProcess(method){
 						</td>
 						<td>${prod.SKU}</td>
 						<td>${prod.catName}</td>
-						<td>${prod.brandName}</td>
+						<td>
+							<c:choose>
+								<c:when test="${prod.brandName == 'pandora'}">潘多拉系列</c:when>
+								<c:when test="${prod.brandName == 'Titanium series'}">钛钢系列</c:when>
+								<c:when test="${prod.brandName == 'GOMAYA'}">古玛雅</c:when>
+								<c:when test="${prod.brandName == 'Shambala'}">香芭拉</c:when>
+								<c:when test="${prod.brandName == 'JETHMY'}">珍姿美</c:when>
+								<c:when test="${prod.brandName == 'Folk-custom'}">民族风系列</c:when>
+								<c:when test="${prod.brandName == 'Statement Jewelry'}">夸张大牌产品</c:when>
+								<c:when test="${prod.brandName == 'INALIS'}">依娜丽饰</c:when>
+								<c:when test="${prod.brandName == 'Viennois'}">威妮华</c:when>
+								<c:when test="${prod.brandName == 'Luminous Series'}">夜光系列</c:when>
+								<c:when test="${prod.brandName == 'Handbags'}">包包系列</c:when>
+								<c:when test="${prod.brandName == 'Nature Stone'}">天然石系列</c:when>
+								<c:when test="${prod.brandName == 'A New Brand'}">品牌A</c:when>
+								<c:when test="${prod.brandName == 'YUEYIN'}">又一银</c:when>
+								<c:when test="${prod.brandName == 'KGP Zircon'}">K金锆石类</c:when>
+								<c:when test="${prod.brandName == 'Korean Styles'}">韩风</c:when>
+								<c:when test="${prod.brandName == 'FAVOURER'}">法伯丽</c:when>
+								<c:when test="${prod.brandName == 'B New Brand'}">品牌B</c:when>
+								<c:when test="${prod.brandName == 'Watch series'}">手表系列</c:when>
+								<%-- <c:when test="${prod.brandName == 'Other'}">时尚K金产品</c:when>
+								<c:when test="${prod.brandName == 'Other'}">婚饰系列</c:when>
+								<c:when test="${prod.brandName == 'Other'}">爆款品类</c:when>
+								<c:when test="${prod.brandName == 'Other'}">时尚银饰产品</c:when>
+								<c:when test="${prod.brandName == 'Other'}">其它</c:when> --%>
+								<c:otherwise>
+									${prod.brandName}
+								</c:otherwise>
+							</c:choose>
+						</td>
 						<td>${prod.onSale}</td>	
-						<td>${prod.price}</td>	
-						<td>${prod.stock}</td>	
+						<td>${prod.price}</td>
+						<c:choose>
+							<c:when test="${prod.stock<1}">
+								<td><span class="label label-danger">${prod.stock}</span> </td>
+							</c:when>
+							<c:otherwise> <td>${prod.stock}</td> </c:otherwise>
+						</c:choose>
+						<td>${prod.stockPrevious}</td>
 						<td>${prod.name}</td>
 						<%-- <td>${prod.description}</td> --%>
 					</tr>

@@ -51,21 +51,30 @@ public class LekaniProductDao extends BaseHibernateDao<ProductModel,String> {
 		Map<String,Object> criteriaMap = new HashMap();
 		StringBuffer hql = new StringBuffer(" from ProductModel where 1 = 1 ");
 		if(entity!=null){
-			if(entity.getCatID()!=null &&  entity.getCatID().trim().length()>0){
-				hql.append(" and  catID =:catID");
-				criteriaMap.put("catID", entity.getCatID().trim());
-			}
-			if(entity.getBrandID()!=null &&  entity.getBrandID().trim().length()>0){
-				hql.append(" and  brandID =:brandID");
-				criteriaMap.put("brandID", entity.getBrandID().trim());
-			}
-			if(entity.getStatus()!=null && entity.getStatus().trim().length()>0){
-				String status=entity.getStatus().trim();
-				if("selected".equals(status) || "discard".equals(status) || "converted".equals(status)){
-					hql.append(" and  status =:status");
-					criteriaMap.put("status", status);
-				}else if("selected,null".equals(status)){
-					hql.append(" and  (status ='selected' or status is null )");
+			if(entity.getProductID()!=null &&entity.getProductID().trim().length()>0){
+				hql.append(" and  productID like :productID");
+				criteriaMap.put("productID", "%"+entity.getProductID().trim()+"%");
+			}else{
+				if(entity.getCatID()!=null &&  entity.getCatID().trim().length()>0){
+					hql.append(" and  catID =:catID");
+					criteriaMap.put("catID", entity.getCatID().trim());
+				}
+				if(entity.getBrandID()!=null &&  entity.getBrandID().trim().length()>0){
+					hql.append(" and  brandID =:brandID");
+					criteriaMap.put("brandID", entity.getBrandID().trim());
+				}
+				if(entity.getStock()!=null && entity.getStock()>0){
+					hql.append(" and  stock <=:stock");
+					criteriaMap.put("stock", entity.getStock());
+				}
+				if(entity.getStatus()!=null && entity.getStatus().trim().length()>0){
+					String status=entity.getStatus().trim();
+					if("selected".equals(status) || "discard".equals(status) || "converted".equals(status)){
+						hql.append(" and  status =:status");
+						criteriaMap.put("status", status);
+					}else if("selected,null".equals(status)){
+						hql.append(" and  (status ='selected' or status is null )");
+					}
 				}
 			}
 		}

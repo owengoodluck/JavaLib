@@ -31,7 +31,7 @@
 	<!-- other spring config files -->
 	<import resource="spring-hibernate.xml" />
 	
-	<bean id="AppConstant" class="com.owen.wms.web.constants.AppConstant">
+	<bean id="AppConstant" class="com.owen.wms.common.constant.AppConstant">
 		<property name="picCopyFolder" value="${image.download.path}"></property>
 		<property name="yanwenUserId" value="${yanwen.user.id}"></property>
 		<property name="yanwenUserToken" value="${yanwen.user.token}"></property>
