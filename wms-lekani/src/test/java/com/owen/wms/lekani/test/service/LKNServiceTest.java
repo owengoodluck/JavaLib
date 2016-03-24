@@ -72,13 +72,14 @@ public class LKNServiceTest {
 	@Test
 	public void getProdInfo(){
 		String sku = "";
-		int prodId = 102421;
+		int prodId = 116767;
 		ProductModel prod = LKNService.getProdInfo(prodId, sku);
 		System.out.println(prod.getSKU() +" ---,getDescription =  "+prod.getDescription());
 		List<AttributeModel> attrs = prod.getAttributes();
 		for(AttributeModel ab : attrs){
 			System.out.println(ab.getAttrName()+"---"+ab.getAttrValue());
 		}
+		System.out.println(prod);
 	}
 	
 	@Test

@@ -129,6 +129,15 @@ public class LekaniProductService {
 		}
 	}
 	
+	public void loadById(Integer id){
+		ProductModel prod = LKNService.getProdInfo(id, null);
+		if(prod!=null){
+			ArrayList<ProductModel> list = new ArrayList();
+			list.add(prod);
+			saveOrUpdateProdList(list);
+		}
+	}
+	
 	public void saveOrUpdateProdList(List<ProductModel> list){
 		if(list == null || list.isEmpty()){
 			return;

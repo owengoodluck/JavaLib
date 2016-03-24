@@ -48,6 +48,8 @@
 		<property name="appName" value="${amz.app.name}"></property>
 		<property name="appVersion" value="${amz.app.version}"></property>
 		<property name="marketplaceIDUS" value="${amz.market.place.id.us}"></property>
+		<property name="picDownloadPath" value="${image.download.path.temp}"></property>
+		<property name="defaultPdfDownloadPath" value="${yanwen.express.pdf.download.path}"></property>
 	</bean>
 	
 	<util:set id="omitColumnNames4Parent" value-type="java.lang.String" set-class="java.util.HashSet">

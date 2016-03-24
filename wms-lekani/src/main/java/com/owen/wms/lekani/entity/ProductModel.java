@@ -302,6 +302,31 @@ public class ProductModel {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "ProductModel [" + (productID != null ? "productID=" + productID + ", " : "") + "onSale=" + onSale + ", "
+				+ (status != null ? "status=" + status + ", " : "") + (catID != null ? "catID=" + catID + ", " : "")
+				+ (catName != null ? "catName=" + catName + ", " : "")
+				+ (brandID != null ? "brandID=" + brandID + ", " : "")
+				+ (brandName != null ? "brandName=" + brandName + ", " : "") + (SKU != null ? "SKU=" + SKU + ", " : "")
+				+ (barCode != null ? "barCode=" + barCode + ", " : "") + (price != null ? "price=" + price + ", " : "")
+				+ (stock != null ? "stock=" + stock + ", " : "")
+				+ (stockPrevious != null ? "stockPrevious=" + stockPrevious + ", " : "")
+				+ (isPackage != null ? "isPackage=" + isPackage + ", " : "")
+				+ (weight != null ? "weight=" + weight + ", " : "")
+				+ (grossWeight != null ? "grossWeight=" + grossWeight + ", " : "")
+				+ (packageHeight != null ? "packageHeight=" + packageHeight + ", " : "")
+				+ (packageLength != null ? "packageLength=" + packageLength + ", " : "")
+				+ (packageWidth != null ? "packageWidth=" + packageWidth + ", " : "")
+				+ (shopTime != null ? "shopTime=" + shopTime + ", " : "")
+				+ (keyWords != null ? "keyWords=" + keyWords + ", " : "")
+				+ (images != null ? "images=" + images + ", " : "")
+				+ (mainImage != null ? "mainImage=" + mainImage + ", " : "")
+				+ (description != null ? "description=" + description + ", " : "")
+				+ (name != null ? "name=" + name + ", " : "") + (attributes != null ? "attributes=" + attributes : "")
+				+ "]";
+	}
+
 	
 	
 }

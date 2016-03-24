@@ -117,7 +117,13 @@ public class LekaniProductServiceTest {
 			}
 		}
 	}
+	@Test
+	public void loadByID(){
+		Integer id = 116767;
+		this.lekaniProductService.loadById(id);
+	}
 
+	
 	@Test
 	public void testConvet(){
 		String prodID = "100700";
