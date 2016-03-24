@@ -101,6 +101,10 @@
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
         <put-attribute name="main"   value="/WEB-INF/views/lekani/prodDetail.jsp" />
     </definition>
+    <definition name="lekani/importByID" extends="baselayout">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="main"   value="/WEB-INF/views/lekani/importByID.jsp" />
+    </definition>
  
 </tiles-definitions>
 
