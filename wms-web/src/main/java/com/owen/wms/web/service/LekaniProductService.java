@@ -129,13 +129,14 @@ public class LekaniProductService {
 		}
 	}
 	
-	public void loadById(Integer id){
-		ProductModel prod = LKNService.getProdInfo(id, null);
+	public ProductModel loadById(Integer id,String sku){
+		ProductModel prod = LKNService.getProdInfo(id, sku);
 		if(prod!=null){
 			ArrayList<ProductModel> list = new ArrayList();
 			list.add(prod);
 			saveOrUpdateProdList(list);
 		}
+		return prod;
 	}
 	
 	public void saveOrUpdateProdList(List<ProductModel> list){
@@ -146,6 +147,10 @@ public class LekaniProductService {
 		int i=0;
 		for(ProductModel p :list){
 			String pID = p.getProductID();
+			ProductModel prod = this.lekaniProductDao.get(pID);
+			if(prod!=null){//exist already
+				continue;
+			}
 			List<AttributeModel> attList = p.getAttributes();
 			for(AttributeModel a : attList){
 				a.setAttributeModelID(pID+"_"+a.getAttrID());

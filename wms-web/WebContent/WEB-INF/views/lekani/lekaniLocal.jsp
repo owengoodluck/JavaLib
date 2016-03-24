@@ -270,9 +270,22 @@ function cleanForm(){
 							<c:when test="${prod.stock<1}">
 								<td><span class="label label-danger">${prod.stock}</span> </td>
 							</c:when>
+							<c:when test="${prod.stock >=1 && prod.stock<5}">
+								<td><span class="label label-warning">${prod.stock}</span> </td>
+							</c:when>
 							<c:otherwise> <td>${prod.stock}</td> </c:otherwise>
 						</c:choose>
-						<td>${prod.stockPrevious}</td>
+						<td>
+							<c:choose>
+								<c:when test="${prod.stockPrevious<1}">
+									<span class="label label-danger">${prod.stockPrevious}</span> 
+								</c:when>
+								<c:when test="${prod.stockPrevious >=1 && prod.stockPrevious<5}">
+									<span class="label label-warning">${prod.stockPrevious}</span> 
+								</c:when>
+								<c:otherwise> ${prod.stockPrevious} </c:otherwise>
+							</c:choose>
+						</td>
 						<td>${prod.name}</td>
 						<%-- <td>${prod.description}</td> --%>
 					</tr>

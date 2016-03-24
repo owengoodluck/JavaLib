@@ -120,7 +120,10 @@ public class LekaniProductServiceTest {
 	@Test
 	public void loadByID(){
 		Integer id = 116767;
-		this.lekaniProductService.loadById(id);
+		String sku ="LKN18KRGPN522";
+//		this.lekaniProductService.loadById(id,null);
+		ProductModel prod = this.lekaniProductService.loadById(0,sku);
+		System.out.println(prod);
 	}
 
 	

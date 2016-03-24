@@ -173,7 +173,18 @@ public class YanwenExpressService {
 		gn.setUserid(AppConstant.yanwenUserId);
 		gn.setNameCh(form.getNameChinese());
 		gn.setNameEn(form.getNameEnglish());
-		gn.setDeclaredValue(form.getDeclaredValue());
+		
+		Set<AmazonOrderItem> list = orderEntity.getOrderItemList();
+		double sum=0;
+		for(AmazonOrderItem i:list){
+			sum+=i.getItemPriceAmount();
+		}
+		if(sum==0){
+			gn.setDeclaredValue(form.getDeclaredValue());
+		}else{
+			gn.setDeclaredValue(sum);
+		}
+	
 		gn.setDeclaredCurrency(form.getDeclaredCurrency());
 		gn.setWeight(form.getWeight());
 

@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
 <%@ page import = "com.owen.wms.common.constant.AppConstant" %>
 <!Doctype html>
 <html>
@@ -137,9 +138,11 @@ function submitForm(){
 				</c:forEach>
 			</tbody>
 		</table>
-		
-		
-		${prod.description }
+		<c:forEach items="${prod.getDescriptionPicList()}" var="image" varStatus="status">
+			<input value="${image}" size="100%"><br/>
+			<img src="${image}"> <br/>
+		</c:forEach>
+		<%-- ${prod.description } --%>
 	</section>
 </body>
 </html>

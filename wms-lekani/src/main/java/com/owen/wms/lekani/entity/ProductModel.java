@@ -1,5 +1,6 @@
 package com.owen.wms.lekani.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -82,10 +83,34 @@ public class ProductModel {
 
 	private String mainImage;
 	
+//  <img src=\"http://img.inalis.com/InfoImg/20140717/7eece521-6d4e-4070-995d-1e0acae3c3f7.jpg\" alt=\"\" />
+//	<img src=\"http://img.inalis.com/InfoImg/20140717/741093a6-8f3e-4f8f-a411-0db9fdfc837f.jpg\" alt=\"\" />"
+//	<img src=\"http://img.inalis.com/InfoImg/20140717/ddfdfc12-7b67-4c07-9f43-3093a5eefcd5.jpg\" alt=\"\" />"
+//	<img src=\"http://img.inalis.com/InfoImg/20140717/bf272e58-e975-4b28-b434-580f3036dd73.jpg\" alt=\"\" />
 	@JsonProperty("Description")  
 	@Column(length=1000)
 	private String description;
 
+	public List<String> getDescriptionPicList(){
+		ArrayList<String> list = new ArrayList<String>();
+		if(description!=null){
+			int index1=0;
+			int index2=0;
+			String pre="http://img",end=".jpg";
+			index1= description.indexOf(pre,index2);
+			while(index1!=-1){
+				index2=description.indexOf(end,index1);
+				if(index1!=-1){
+					list.add(description.substring(index1, index2+4));
+				}else{
+					break;
+				}
+				index1= description.indexOf(pre,index2);
+			}
+		}
+		return list;
+	}
+	
 	@JsonProperty("Name")  
 	private String name;
 	

@@ -1,7 +1,6 @@
 package com.owen.wms.web.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +20,7 @@ import com.owen.wms.lekani.entity.GetProductModelListPackage;
 import com.owen.wms.lekani.entity.ProductModel;
 import com.owen.wms.lekani.service.LKNService;
 import com.owen.wms.web.dao.Page;
+import com.owen.wms.web.form.LekaniProdImportForm;
 import com.owen.wms.web.form.LekaniProdQueryForm;
 import com.owen.wms.web.service.LekaniProductService;
 
@@ -129,6 +129,26 @@ public class LekaniController {
 		String categoryID = null;
 		Map<String,String> map = this.lekaniProductService.getBrandListByCategoryID(categoryID );
 		return map;
+	}
+
+	
+	@RequestMapping(value="/importByID", method = RequestMethod.GET)  
+    public String importByID(Model model) {
+		LekaniProdImportForm importForm = new LekaniProdImportForm();
+		model.addAttribute("importForm",importForm);
+		return "lekani/importByID";
+	}
+
+	@RequestMapping(value="/importByID", method = RequestMethod.POST)  
+    public String importByIDPost(Model model,@ModelAttribute("importForm") LekaniProdImportForm importForm) {
+		if(importForm.getProdID()==null){
+			importForm.setProdID(0);
+		}
+		ProductModel prod = this.lekaniProductService.loadById(importForm.getProdID(),importForm.getSku());
+		if(prod!=null){
+			return this.prodDetail(model, prod.getProductID());
+		}
+		return "lekani/importByID";
 	}
 	
 	@RequestMapping(value="/updateStatus", method = RequestMethod.GET)  
