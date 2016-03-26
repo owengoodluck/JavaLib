@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.owen.wms.common.util.DateUtil;
 import com.owen.wms.web.dao.Page;
 import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.form.OrderQueryForm;
@@ -58,7 +59,7 @@ public class OrderController {
 			this.amazonOrderService.confirmShipFulfillment(amazonOrderIds, tmpFolder);
 			//2. synchronize orders
 			Thread.sleep(1*60*1000);//1 minute
-			amazonOrderService.synchronizeOrderToLocalDB(this.getYesterday(), null, null);
+			amazonOrderService.synchronizeOrderToLocalDB(DateUtil.getDaysBefor(3), null, null);
 		}
 		
 		return listOrder(model) ;//TODO
@@ -110,15 +111,11 @@ public class OrderController {
 	
 	private void setSynchronizeForm(Model model){
 		OrderSynchronizeForm synForm = new OrderSynchronizeForm();
-		synForm.setStartDateStr(this.sdf.format(getYesterday()));
+		synForm.setStartDateStr(this.sdf.format(DateUtil.getDaysBefor(3)));
 		model.addAttribute("synForm",synForm);
 	}
 	
-	private Date getYesterday(){
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, -1);
-		return cal.getTime();
-	}
+	
 	@RequestMapping(value = "/synchronzieOrders", method = RequestMethod.GET)
 	public String preSynchronize(Model model) throws Exception{
 		this.setSynchronizeForm(model);

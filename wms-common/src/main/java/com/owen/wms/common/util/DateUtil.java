@@ -5,7 +5,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
-
+	public static Date getDaysBefor(int n){
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, -n);
+		return cal.getTime();
+	}
+	
 	public static String getDateString(Date date,String pattern){
 		if(date == null){
 			return null;
