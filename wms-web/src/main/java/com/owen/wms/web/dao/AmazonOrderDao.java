@@ -51,7 +51,7 @@ public class AmazonOrderDao extends BaseHibernateDao<AmazonOrder,String> {
 	}
 	
 	public Boolean checkIfOrderLoadedBefore(String amazonOrderId){
-		String hql = "select  count(*) from AmazonOrder where amazonOrderId = '" + amazonOrderId.trim()+"'";
+		String hql = "select  count(*) from AmazonOrder where amazonOrderId = '" + amazonOrderId.trim()+"' and orderStatus !='Pending'";
 		Query query = this.getSession().createQuery(hql);
 		Long result = (Long) query.uniqueResult();
 		if(result > 0){
