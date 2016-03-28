@@ -7,6 +7,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,8 @@ import com.owen.wms.web.utils.PdfPrintUtil;
 @Service
 @Transactional
 public class YanwenExpressService {
+	@Value("${yanwen.express.pdf.is.print}")
+	private boolean print;
 	private Logger log = Logger.getLogger(this.getClass());
 	private YanwenService yanwenService = new YanwenService();
 	private GetOrderService getOrderService = new GetOrderService();
@@ -111,7 +114,9 @@ public class YanwenExpressService {
 				}
 				
 				//6. print pdf label
-				PdfPrintUtil.printViaCommandLine(pdfFilePath);
+				if(print){
+					PdfPrintUtil.printViaCommandLine(pdfFilePath);
+				}
 				
 				//7 . update order print status
 				orderEntity.setIsPrinted(true);
