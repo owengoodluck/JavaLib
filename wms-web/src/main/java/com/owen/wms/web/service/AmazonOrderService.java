@@ -121,6 +121,9 @@ public class AmazonOrderService {
 
 		List<AmazonOrder> localDBOrderList = this.converOrderList(orderList);
 		this.dao.batchSaveOrUpdate(localDBOrderList);
+		
+		//update
+		this.createDummyProdForOrder();
 	}
 
 	/**

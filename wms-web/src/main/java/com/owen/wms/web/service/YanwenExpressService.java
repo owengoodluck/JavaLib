@@ -189,7 +189,8 @@ public class YanwenExpressService {
 		}else{
 			gn.setDeclaredValue(sum);
 		}
-	
+		et.setQuantity(list.size());//form.getQuantity()
+		
 		gn.setDeclaredCurrency(form.getDeclaredCurrency());
 		gn.setWeight(form.getWeight());
 
