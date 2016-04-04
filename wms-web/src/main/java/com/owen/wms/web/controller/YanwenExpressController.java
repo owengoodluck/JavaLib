@@ -25,7 +25,6 @@ import com.owen.wms.web.service.YanwenExpressService;
 public class YanwenExpressController {
 	private Logger log = Logger.getLogger(this.getClass());
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	private String defaultDownloadPtha = AppConstant.defaultPdfDownloadPath;
 	private int defaultPageSize = 20;
 	
 	@Autowired
@@ -64,7 +63,7 @@ public class YanwenExpressController {
 		express.setDeclaredValue(9);
 		express.setWeight(50);
 		express.setSendDate(sdf.format(new Date()));
-		express.setDownloadPath(defaultDownloadPtha);
+		express.setDownloadPath(AppConstant.defaultPdfDownloadPath);
 		express.setCountry("美国");
 		
 		model.addAttribute("express", express);
@@ -78,7 +77,8 @@ public class YanwenExpressController {
 		if("remoteAmz".equals(express.getMethodToGetOrder())){
 			result = this.service.createExpressFromAmazonOrderWMS(express);
 		}else{
-			result = this.service.createExpressFromAmazonOrder( express);
+			result = this.service.createExpress( express);
+			this.service.downloadPrintExpress(result, express.getDownloadPath(), express.getAmazonOrderID());
 		}
 		String orderId = express.getAmazonOrderID();
 		if(result!=null){

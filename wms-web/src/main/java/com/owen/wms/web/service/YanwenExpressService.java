@@ -80,14 +80,13 @@ public class YanwenExpressService {
 		return this.yanWenExpressDao.listAll();
 	}
 	
-	
 	/**
 	 * 
 	 * @param form
 	 * @return
 	 * @throws Exception
 	 */
-	public CreateExpressResponseType createExpressFromAmazonOrder(YanwenExpress form) throws Exception {
+	public CreateExpressResponseType createExpress(YanwenExpress form) throws Exception {
 		//1. get Amazon order info
 		AmazonOrder orderEntity = this.amazonOrderDao.get(form.getAmazonOrderID().trim());
 		CreateExpressResponseType result = null;
@@ -101,31 +100,45 @@ public class YanwenExpressService {
 				String epCode=result.getCreatedExpress().getEpcode();
 				et.setEpcode(epCode);
 				
-				//3. down load pdf to local
-				String pdfFilePath = this.yanwenService.downloadLabel(epCode, form.getDownloadPath(),form.getAmazonOrderID().trim());
-				
-				//4. save to DB
+				//1. save to DB
 				YanWenExpressEntity entity = this.convert2Entity(et);
 				this.yanWenExpressDao.saveOrUpdate(entity );
 				
-				//5. update product stock
+				//2 . update order print status
+				orderEntity.setIsPrinted(true);
+				this.amazonOrderDao.update(orderEntity);
+				
+				//3. update product stock
 				if(form.getSequenceNo()==null || form.getSequenceNo().trim().length()<1){//update only once
 					this.updateStock(orderEntity);
 				}
 				
-				//6. print pdf label
-				if(print){
-					PdfPrintUtil.printViaCommandLine(pdfFilePath);
-				}
-				
-				//7 . update order print status
-				orderEntity.setIsPrinted(true);
-				this.amazonOrderDao.update(orderEntity);
 			}else{
 				this.log.error("Fail to create Yanwen express:"+result.getResp().getReason()+result.getResp().getReasonMessage());
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * 
+	 * @param form
+	 * @return
+	 * @throws Exception
+	 */
+	public void downloadPrintExpress(CreateExpressResponseType result,String pdfDownloadPath,String amzOrderID) throws Exception {
+		if(result.isCallSuccess()){
+			String epCode=result.getCreatedExpress().getEpcode();
+			//down load pdf to local
+			String pdfFilePath = this.yanwenService.downloadLabel(epCode, pdfDownloadPath,amzOrderID);
+			//print pdf label
+			if(print){
+				PdfPrintUtil.printViaCommandLine(pdfFilePath);
+			}
+			
+		}else{
+			this.log.error("Fail to create Yanwen express:"+result.getResp().getReason()+result.getResp().getReasonMessage());
+		}
 	}
 	
 	private void updateStock(AmazonOrder orderEntity){
