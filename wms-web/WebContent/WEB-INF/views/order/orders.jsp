@@ -156,7 +156,7 @@ function confirmShipment(){
 							</c:if>
 							<c:if test="${order.getNumberOfItemsUnshipped() > 0 }">
 								<c:if test="${order.getOrderStatus() == 'Unshipped' || order.getOrderStatus()== 'Shipped'}">
-									<span class="label label-warning">&nbsp;&nbsp;  ${order.getNumberOfItemsUnshipped()} &nbsp;&nbsp;</span>
+									<span class="label label-danger">&nbsp;&nbsp;  ${order.getNumberOfItemsUnshipped()} &nbsp;&nbsp;</span>
 								</c:if>
 								<c:if test="${order.getOrderStatus() == 'Pending' || order.getOrderStatus()== 'Canceled'}">
 									${order.getNumberOfItemsUnshipped()}

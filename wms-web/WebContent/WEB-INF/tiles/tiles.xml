@@ -71,6 +71,10 @@
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
         <put-attribute name="main"  value="/WEB-INF/views/prod/addPurchaseUrl.jsp" />
     </definition>
+    <definition name="prod/loadUPCFile2DB" extends="baselayout">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="main"  value="/WEB-INF/views/other/loadUpc.jsp" />
+    </definition>
     
     <!-- picture download -->
     <definition name="downloadPicture" extends="baselayout">

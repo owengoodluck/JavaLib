@@ -60,6 +60,7 @@ function openUrl(str){
           <ul class="dropdown-menu" >
             <li><a href="<spring:url value="/prod/listAll" />">所有产品</a> </li>
             <li><a href="<spring:url value="/prod/addTitle" />">添加产品</a> </li>
+            <li><a href="<spring:url value="/prod/loadUPCFile2DB" />">加载UPC</a> </li>
           </ul>
         </li>
         

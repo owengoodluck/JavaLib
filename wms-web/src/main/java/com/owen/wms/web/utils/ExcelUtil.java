@@ -11,6 +11,14 @@ import jxl.read.biff.BiffException;
 
 public class ExcelUtil {
 
+	/**
+	 * 
+	 * @param excelFile
+	 * @param sheetNumber -- start with 0
+	 * @param totalColumns
+	 * @param ignoreHeadRows
+	 * @return
+	 */
 	public static List<String[]> readExcel(File excelFile,Integer sheetNumber,Integer totalColumns,Integer ignoreHeadRows ){
 		
 		List<String[]> rows = new ArrayList<String[]>();

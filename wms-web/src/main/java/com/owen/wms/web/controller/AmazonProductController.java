@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.owen.wms.web.constants.ParentChild;
 import com.owen.wms.web.constants.RelationshipType;
@@ -28,6 +29,7 @@ import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.form.JewelryEntityListPackageForm;
 import com.owen.wms.web.form.ProdQueryForm;
 import com.owen.wms.web.service.AmazonProductService;
+import com.owen.wms.web.service.UpcService;
 import com.owen.wms.web.thread.PictureDownLoadThread;
 import com.owen.wms.web.utils.ExcelKeywrodsUtil;
 import com.owen.wms.web.utils.JewelryMappingUtil;
@@ -49,6 +51,9 @@ public class AmazonProductController {
 	@Autowired
 	@Qualifier("amazonProductService")
 	private AmazonProductService amazonProductService;
+	
+	@Autowired
+	private UpcService upcService;
 	
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
 	public String listAll(Model model){
@@ -84,17 +89,47 @@ public class AmazonProductController {
 		return "prod/productList";
 	}
 	
-	@RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
-	public String exportExcel(Model model,HttpServletRequest request) throws Exception{
-		String[] skuList = request.getParameterValues("itemSkuList");
-		String exportFolder = request.getParameter("exportFolder");
-		if(skuList!=null && skuList.length>0){
-			String excelFilePath = exportFolder+"/"+skuList[0]+".xls";//"C:/Users/owen/git/wms-web/src/test/resources/copy.xls";
-			this.amazonProductService.write2Excel2(skuList, excelFilePath);
-		}else{
-			this.log.warn("SKU list is null");
+	@RequestMapping(value = "/cleanUPC/{sku}", method = RequestMethod.GET)
+	public @ResponseBody Boolean cleanUPC(HttpServletRequest request,@PathVariable("sku") String sku) throws Exception{
+		return this.upcService.cleanUPC4Jewelry(sku);
+	}
+	
+	@RequestMapping(value = "/loadUPCFile2DB", method = RequestMethod.GET)
+	public String loadUPCFile2DBPre(Model model,HttpServletRequest request) throws Exception{
+		model.addAttribute("currentMenu", "prod");
+		return "prod/loadUPCFile2DB"; 
+	}
+	
+	@RequestMapping(value = "/loadUPCFile2DB", method = RequestMethod.POST)
+	public String loadUPCFile2DBPost(Model model,HttpServletRequest request) throws Exception{
+		String upcFilePath = request.getParameter("upcFilePath");
+		this.upcService.loadUPCFromExcel(upcFilePath);
+		model.addAttribute("currentMenu", "prod");
+		model.addAttribute("upcFilePath", upcFilePath);
+		return "prod/loadUPCFile2DB"; 
+	}
+	
+	@RequestMapping(value = "/loadUPCAll", method = RequestMethod.POST)
+	public String loadUPCAll(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
+		String tabName = request.getParameter("tabName");
+		
+//		//1.save data
+//		this.saveOrUpate(productsForm);
+		
+		//2. load UPC
+		ArrayList<JewelryEntity> list =productsForm.getList() ;
+		ArrayList<JewelryEntity> list2 = new ArrayList<JewelryEntity>();
+		for(int i = 0;i<list.size();i++){
+			JewelryEntity ent = list.get(i);
+			JewelryEntity jew = this.upcService.setUPC4Jewelry(ent.getItemSku());
+			if(jew!=null){
+				list2.add(jew);
+			}
 		}
-		return listAll(model);
+		productsForm.setList(list2);
+		model.addAttribute("currentMenu", "prod");
+		return "prod/"+tabName;
+	
 	}
 	
 	@RequestMapping(value = "/loadKeywords", method = RequestMethod.POST)
@@ -117,6 +152,7 @@ public class AmazonProductController {
 		model.addAttribute("prodStartIndex", prodStartIndex);
 		return "prod/addKeyword";
 	}
+	
 	@RequestMapping(value = "/edit/{sku}", method = RequestMethod.GET)
 	public String eddit(Model model,@PathVariable("sku") String sku){
 		ArrayList<JewelryEntity> list = (ArrayList<JewelryEntity>) this.amazonProductService.findBySKUWithChild(sku);
@@ -156,7 +192,6 @@ public class AmazonProductController {
 		return "prod/"+tabName;
 	}
 	
-	
 	private void enrichInfo(JewelryEntityListPackageForm productsForm){
 		if(productsForm!=null && productsForm.getList()!=null && !productsForm.getList().isEmpty()){
 			ArrayList<JewelryEntity> list = productsForm.getList();
@@ -183,27 +218,6 @@ public class AmazonProductController {
 				}
 			}
 		}
-	}
-	
-	@RequestMapping(value = "/addTitle", method = RequestMethod.POST)
-	public String addTitlePost(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
-		this.setFeedProductTypeByItemType(productsForm);
-		this.saveOrUpate(productsForm);
-		ArrayList<JewelryEntity> list = productsForm.getList();
-		for(int i=0;;i++){
-			String p = request.getParameter("list["+i+"].itemSku");
-			if(p==null){
-				int size = list.size();
-				int index = i;
-				while(size > i){
-					list.remove(index);
-					i++;
-				}
-				break;
-			}
-		}
-		model.addAttribute("currentMenu", "prod");
-		return "prod/addPicture";
 	}
 	
 	private void setFeedProductTypeByItemType(JewelryEntityListPackageForm productsForm){

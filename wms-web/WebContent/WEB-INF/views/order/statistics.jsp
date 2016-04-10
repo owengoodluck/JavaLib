@@ -99,7 +99,9 @@ function confirmShipment(){
 						<td width="9%">
 							<img src="/wms-web/img${item.getLocalImagePath()}"  height="40" onclick='window.open("/wms-web/img${item.getLocalImagePath()}")'>
 						</td>
-						<td align="left" width="9%">${item.itemSku}</td>
+						<td align="left" width="9%">
+							<a href='<c:url value="/prod/edit/${item.itemSku}" />' target="_blank">${item.itemSku}</a>
+						</td>
 						<td align="left" width="9%">${item.sellCount}</td>
 						<td align="left" width="9%">
 							<c:if test="${ statisticType == 'latestDate' }"> 

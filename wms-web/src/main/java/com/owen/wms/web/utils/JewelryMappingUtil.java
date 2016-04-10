@@ -63,6 +63,13 @@ public class JewelryMappingUtil {
 			e.setSpecificUsesKeywords5(specificUsesKeywordsList[(int)(1+Math.random()*(specificUsesKeywordsList.length-1))]);
 		}
 		
+		if(StringUtils.isEmpty(e.getModel())){
+			String model = e.getItemSku();
+			if(e.getColorName()!=null && e.getColorName().trim().length()>0){
+				model += "_"+e.getColorName();
+			}
+			e.setModel(model);
+		}
 		if(StringUtils.isEmpty(e.getManufacturer())){
 			e.setManufacturer(AppConstant.manufacturer);
 		}
