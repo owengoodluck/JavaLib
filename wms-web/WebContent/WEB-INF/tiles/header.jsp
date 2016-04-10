@@ -60,6 +60,7 @@ function openUrl(str){
           <ul class="dropdown-menu" >
             <li><a href="<spring:url value="/prod/listAll" />">所有产品</a> </li>
             <li><a href="<spring:url value="/prod/addTitle" />">添加产品</a> </li>
+            <li><a href="<spring:url value="/prod/loadUPCFile2DB" />">加载UPC</a> </li>
           </ul>
         </li>
         
@@ -82,7 +83,15 @@ function openUrl(str){
           </ul>
         </li>
         
-        <li <c:if test="${currentMenu == 'pic' }">class="active"</c:if> ><a href="<spring:url value="/picture/download" />">图片管理</a> </li>
+        <li <c:if test="${currentMenu == 'express' }">class="dropdown active"</c:if> 
+        	<c:if test="${currentMenu != 'express' }">class="dropdown"</c:if>>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="<spring:url value="/picture/download" />" onclick="openUrl('<c:url value="/picture/download" />')">图片管理 <span class="caret"></span></a>
+          <ul class="dropdown-menu" >
+            <li><a href="<spring:url value="/picture/review" />">图片预览</a> </li>
+            <li><a href="<spring:url value="/picture/download" />">图片下载</a> </li>
+          </ul>
+        </li>
+        
       </ul>
       
       <ul class="nav navbar-nav navbar-right">

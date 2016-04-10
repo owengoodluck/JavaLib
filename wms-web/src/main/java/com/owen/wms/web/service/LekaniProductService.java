@@ -25,7 +25,8 @@ import com.owen.wms.web.dao.LekaniProductDao;
 import com.owen.wms.web.dao.Page;
 import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.utils.DigitalFormatUtil;
-import com.owen.wms.web.utils.JewelryMappingUtil;;
+import com.owen.wms.web.utils.JewelryMappingUtil;
+import com.owen.wms.web.utils.StringUtils;;
 
 @Service("lekaniProductService")
 @Transactional
@@ -233,6 +234,9 @@ public class LekaniProductService {
 		jew.setDepartmentName("womens");//TODO girls ???
 		jew.setUpdateDate(new Date());
 		jew.setPurchaseUrl1("http://www.pfhoo.com/p/"+pm.getProductID()+".html");
+		if(!StringUtils.isEmpty(pm.getSKU())){
+			jew.setModel(pm.getSKU());
+		}
 		
 		JewelryMappingUtil.enrichDefaultValue(jew);
 		return jew;

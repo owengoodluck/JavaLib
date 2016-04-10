@@ -1,5 +1,8 @@
 package com.owen.wms.web.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +22,7 @@ import com.owen.wms.web.form.URLString;
 public class PictureProcessController {
 	private Logger log = Logger.getLogger(this.getClass());
 	
-	private PictureDownloadService alibabaPictureDownloadService = new AlibabaGroupPictureDownloadServiceImpl();
+	private AlibabaGroupPictureDownloadServiceImpl alibabaPictureDownloadService = new AlibabaGroupPictureDownloadServiceImpl();
 	private PictureDownloadService amazonPictureDownloadService = new AmazonPictureDownloadServiceImpl();
 	
 	@RequestMapping(value="/download", method = RequestMethod.GET)
@@ -49,5 +52,32 @@ public class PictureProcessController {
 		model.addAttribute("currentMenu", "pic");
 		model.addAttribute("msg", "下载完成");
 		return "downloadPicture";
+	}
+
+	@RequestMapping(value="/review", method = RequestMethod.GET)
+	public String reviewPre(Model model) {
+		PictureDownloadPackage picPackage = new PictureDownloadPackage();
+		picPackage.setDownloadPath(AppConstant.picDownloadPath);
+		model.addAttribute("picPackage", picPackage);
+		model.addAttribute("currentMenu", "pic");
+		return "picture/review";
+	}
+
+	@RequestMapping(value="/review", method = RequestMethod.POST)
+	public String review(@ModelAttribute("picPackage") PictureDownloadPackage picPackage,Model model) {
+		List<String> picList = new ArrayList<String>();
+		for(URLString url:picPackage.getUrlList()){
+			if(url!=null && url.getUrl().trim().length()>0){
+				this.log.info(url.getUrl());
+				if(url.getUrl().indexOf("www.amazon.com")>-1){
+					this.amazonPictureDownloadService.downloadPictue(url.getUrl(), picPackage.getDownloadPath(),picPackage.getPicSize());
+				}else{
+					picList = this.alibabaPictureDownloadService.getPicReviewList(url.getUrl());
+				}
+			}
+		}
+		model.addAttribute("currentMenu", "pic");
+		model.addAttribute("picList", picList);
+		return "picture/review";
 	}
 }

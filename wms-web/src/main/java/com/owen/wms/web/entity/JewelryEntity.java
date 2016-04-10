@@ -98,7 +98,7 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	private String brandName="Generic";
 
 	@Column(name="external_product_id")
-	private String externalProductId;
+	private String externalProductId;//UPC
 
 	@Column(name="external_product_id_type")
 	private String externalProductIdType;
@@ -764,12 +764,6 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	}
 
 	public String getModel() {
-		if(this.model ==null ||  this.model.trim().length()<1){//TODO TBC
-			model = this.getItemSku();
-			if(this.colorName!=null && this.colorName.trim().length()>0){
-				model += "_"+this.getColorName();
-			}
-		}
 		return model;
 	}
 

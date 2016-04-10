@@ -38,6 +38,28 @@ function submitForm(preOrNext){
 	$('#preOrNext').val(preOrNext);
 	$('#productsForm').submit();
 }
+
+function loadUPCAll(){
+	var result = confirm('确定要加载所有UPC？');  
+	if(result){
+		$("#productsForm").attr("action", "/wms-web/prod/loadUPCAll");
+		$('#productsForm').submit();
+	}
+}
+
+
+function cleanUPC(sku,itemID){
+	var result = confirm('确定要清除'+sku+'的UPC？');  
+	if(result){
+		$.get('/wms-web/prod/cleanUPC/'+sku, function(result){
+			if( result ){
+			    $( document.getElementById(itemID) ).val(null);
+			}else{
+				alert('return result = '+result);
+			}
+		});
+	}
+}
 </script>
 <title>AddPordPrice</title>
 </head>
@@ -60,16 +82,18 @@ function submitForm(preOrNext){
 			<table id="myTable" class="table table-striped">
 				<caption>
 					<input type="button" id="btnAdd" class="btn btn-primary" value="保存"  onclick="submitFormAndGoTo()" />
+					<input type="button" id="btnAdd" class="btn btn-primary" value="加载UPC"  onclick="loadUPCAll()" />
 					<input type="checkbox" id="synchronizeBox" >同步更新后续子产品</input>
 				</caption>
 				<thead>
 					<tr>
 						<th width="10%">SKU</th> 
-						<th width="8%">缩略图</th> 
-						<th width="8%">售价(USD)</th>
-						<th width="8%">原价(USD)</th> 
-						<th width="8%">折扣率</th> 
-						<th width="8%">库存数量</th> 
+						<th width="5%">缩略图</th> 
+						<th width="12%">UPC</th> 
+						<th width="5%">售价(USD)</th>
+						<th width="5%">原价(USD)</th> 
+						<th width="5%">折扣率</th> 
+						<th width="5%">库存数量</th> 
 						<th width="8%">实际库存数量</th>
 						<th width="8%">进货价格(RMB)</th>
 						<th width="8%">运费收入(USD)</th>
@@ -94,19 +118,26 @@ function submitForm(preOrNext){
 											</c:if>
 										</c:if>
 								</td>
-								<td width="10%">
+								<td width="12%">
+									<nobr>
+										<input type="button"   value="clean"  onclick="cleanUPC('${prod.itemSku}','list${status.index}.externalProductId')" />
+										<input id="list${status.index}.externalProductId" name='list[${status.index}].externalProductId' type="text"  style="width:50%" type='text' value="${prod.externalProductId}" readonly="true"/>
+										<input type="button"  value="load"  onclick="loadUPC()" />
+									</nobr>
+								</td>
+								<td width="5%">
 									<input id="list${status.index}.standardPrice" name='list[${status.index}].standardPrice' type="text"  style="width:100%" type='text' value="${prod.standardPrice}" />
 								</td>
 								<!-- shippingFee and usdRate is defined in Header.jsp -->
-								<td width="10%">
+								<td width="5%">
 									<input id="list${status.index}.listPrice" name='list[${status.index}].listPrice' type="text"  style="width:100%" type='text' value="${prod.listPrice}" />
 								</td>
-								<td width="10%">
+								<td width="5%">
 									<c:if test="${prod.standardPrice != null && prod.listPrice != null && prod.listPrice != 0}">
 										<input disabled="true" type="text"  style="width:100%" type='text' value='<fmt:parseNumber value="${(100*prod.standardPrice/prod.listPrice)}" integerOnly="true"/>%' />
 									</c:if>
 								</td>
-								<td width="10%">
+								<td width="5%">
 									<input id="list${status.index}.quantity" name='list[${status.index}].quantity' type="text"  style="width:100%" type='text' value="${prod.quantity==nul?30:prod.quantity}" />
 								</td>
 								<td width="10%">

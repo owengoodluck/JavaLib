@@ -1,6 +1,7 @@
 package com.owen.htmlparser.service.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -25,6 +26,39 @@ public class AlibabaGroupPictureDownloadServiceImpl implements PictureDownloadSe
 	private Logger log = Logger.getLogger(this.getClass());
 	private String defaultFolder="C:/Users/owen/Desktop/Amazon/pictures/temp";
 
+	public List<String> getPicReviewList(String url){
+		List<String> pics = new ArrayList<String>();
+		//1.get html content
+		String htmlContent = null;
+		try {
+			htmlContent = HtmlParserUtil.getHtmlContent(url);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return pics;
+		}
+		
+		//2.Get the hidden url for dynamic page display and the content
+		String lazyLoadDetailDescURL = getLazyLoadDetailDescURL4AlibabaGroup(url,htmlContent);
+		String lazyLoadDetailDescHtmlContent = null;
+		try {
+			lazyLoadDetailDescHtmlContent = HtmlParserUtil.getHtmlContent(lazyLoadDetailDescURL);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//3. Get img tag label list
+		String originalLabel = "\",\"original\":\"";
+		String endLabel = "\"}'>";
+		List<String> imgUrlList2 = StringUtil.iteratorGetSubStringList(htmlContent, originalLabel, endLabel);
+		pics.addAll(imgUrlList2);
+		
+		List<String> imgUrlList = HtmlParserUtil.getImageTagUrlList(lazyLoadDetailDescHtmlContent);
+		pics.addAll(imgUrlList);
+		
+		
+		return pics;
+	}
+	
 	public void downloadPictue(String url,String targetRootFolder,Integer picFilterSize){
 		this.log.info("-----Parse Alibaba Group URL: "+url);
 		if(targetRootFolder == null){
