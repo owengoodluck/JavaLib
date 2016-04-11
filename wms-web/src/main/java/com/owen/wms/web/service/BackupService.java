@@ -138,6 +138,7 @@ public class BackupService {
 			input.setItemSku(newSku);
 			input.setParentSku(newParentSku);
 			input.setManufacturer(manufacturer);
+			input.setExternalProductId(null);
 			this.amazonJewelryDao.save(input);
 		}
 	}
