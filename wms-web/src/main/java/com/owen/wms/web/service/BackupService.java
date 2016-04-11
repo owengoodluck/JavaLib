@@ -105,9 +105,10 @@ public class BackupService {
 				log.info(ent);
 				ent = (JewelryEntity) in.readObject();
 				if(this.isLoadIntoDB){
-					this.transferAndLoadIntoDB(ent);
+					if(this.transferAndLoadIntoDB(ent)){
+						index++;
+					}
 				}
-				index++;
 			}
 		} catch(EOFException e1){
 			log.info("file end !");
@@ -125,20 +126,23 @@ public class BackupService {
 		log.info(index +" rows inserted into DB !");
 	}
 	
-	private void transferAndLoadIntoDB(JewelryEntity input){
+	private boolean transferAndLoadIntoDB(JewelryEntity input){
 		if(input == null){
-			return;
+			return false;
 		}
 		
 		String newSku = this.getNewSKU(input.getItemSku(), skuTransformIndex, skuPrefix);
 		String newParentSku = this.getNewSKU(input.getParentSku(), skuTransformIndex, skuPrefix);
 		if(this.amazonJewelryDao.get(newSku)!=null){
 			log.info(newSku +" (new = " +input.getItemSku()+") exists in local DB .");
+			return false;
 		}else{
 			input.setItemSku(newSku);
 			input.setParentSku(newParentSku);
 			input.setManufacturer(manufacturer);
+			input.setExternalProductId(null);
 			this.amazonJewelryDao.save(input);
+			return true;
 		}
 	}
 	
