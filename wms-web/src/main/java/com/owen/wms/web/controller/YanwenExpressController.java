@@ -2,11 +2,13 @@ package com.owen.wms.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
 import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.web.dao.Page;
+import com.owen.wms.web.entity.AmazonOrder;
+import com.owen.wms.web.entity.AmazonOrderItem;
+import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
 import com.owen.wms.web.form.YanwenExpress;
+import com.owen.wms.web.service.AmazonOrderService;
 import com.owen.wms.web.service.YanwenExpressService;
 
 @Controller
@@ -29,6 +35,9 @@ public class YanwenExpressController {
 	
 	@Autowired
 	private YanwenExpressService service;
+	@Autowired
+	@Qualifier("amazonOrderService")
+	private AmazonOrderService amazonOrderService ;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String listAll(Model model,HttpServletRequest request) throws Exception {
@@ -66,6 +75,47 @@ public class YanwenExpressController {
 		express.setDownloadPath(AppConstant.defaultPdfDownloadPath);
 		express.setCountry("美国");
 		
+		AmazonOrder order = this.amazonOrderService.getByOrderIDWithoutExpress(amazonOrderID);
+		Set<AmazonOrderItem> orderItems = order.getOrderItemList();
+		if(orderItems.size()>0){
+			AmazonOrderItem[] orderItemArray = orderItems.toArray(new AmazonOrderItem[]{});
+			AmazonOrderItem firstOrderItem = orderItemArray[0];
+			JewelryEntity prod = firstOrderItem.getSellerSKU();
+			if(prod!=null){
+				String itemType = prod.getItemType();
+				if(itemType!=null){
+					itemType = itemType.toLowerCase();
+					switch (itemType){
+						case "pendant-necklaces":{
+							express.setNameChinese("时尚简约饰品-项链吊坠");
+							express.setNameEnglish("Fashion Jewelry Accessories-Necklace Pendant");
+							break;
+						}
+						case "link-bracelets":{
+							express.setNameChinese("时尚简约饰品-手链手环");
+							express.setNameEnglish("Fashion Jewelry Accessories-Bracelets");
+							break;
+						}
+						case "rings":{
+							express.setNameChinese("时尚简约饰品-指环戒指");
+							express.setNameEnglish("Fashion Jewelry Accessories-Rings");
+							break;
+						}
+						case "anklets":{
+							express.setNameChinese("时尚简约饰品-脚踝链");
+							express.setNameEnglish("Fashion Jewelry Accessories-Anklets");
+							break;
+						}
+						case "dresses":{
+							express.setNameChinese("时尚服饰-连衣裙");
+							express.setNameEnglish("Fashion Clothes Dress");
+							break;
+						}
+						default:;//TODO TBC
+					}
+				}
+			}
+		}
 		model.addAttribute("express", express);
 		model.addAttribute("currentMenu", "express");
 		return "createYanwenExpress";

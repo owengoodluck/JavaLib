@@ -80,6 +80,10 @@ public class AmazonOrderService {
 		return order;
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRED)
+	public AmazonOrder getByOrderIDWithoutExpress(String orderId){
+		return  this.dao.getByOrderID(orderId);
+	}
 	public void createDummyProdForOrder(){
 		this.dao.createDummyProd4Order();
 	}

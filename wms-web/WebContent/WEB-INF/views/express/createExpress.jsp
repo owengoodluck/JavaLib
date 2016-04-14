@@ -13,10 +13,10 @@
 <script src="<c:url value="/resource/js/jquery.min.js" />" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	setNameOfEnglish();
-	$('#nameChinese').change(function(){
-		setNameOfEnglish();
-	});
+	//setNameOfEnglish();
+	//$('#nameChinese').change(function(){
+		//setNameOfEnglish();
+	//});
 });
 
 function setNameOfEnglish(){
@@ -118,8 +118,9 @@ function submitForm(){
 				<tr>
 					<td>中文品名</td> 
 					<td> 
-						<form:select path="nameChinese">
-								<%-- <form:option value=""></form:option> --%>
+						<form:input path="nameChinese" type="text" style="width:100%"/>
+						<%-- <form:select path="nameChinese">
+								<form:option value=""></form:option>
 								<form:option value="不锈钢首饰-吊坠">不锈钢首饰-吊坠</form:option>
 								<form:option value="不锈钢首饰-手链">不锈钢首饰-手链</form:option>
 								<form:option value="不锈钢首饰-指环">不锈钢首饰-指环</form:option>
@@ -128,7 +129,7 @@ function submitForm(){
 								<form:option value="时尚首饰-指环">时尚首饰-指环</form:option>
 								<form:option value="时尚首饰-耳环">时尚首饰-耳环</form:option>
 								<form:option value="时尚服饰-连衣裙">时尚服饰-连衣裙</form:option>
-						</form:select>
+						</form:select> --%>
 					</td>
 				</tr>
 				<tr>
