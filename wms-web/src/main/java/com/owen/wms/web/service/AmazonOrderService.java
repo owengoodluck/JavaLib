@@ -97,6 +97,7 @@ public class AmazonOrderService {
 				YanWenExpressEntity express = this.yanWenExpressDao.getByAmazonOrderId(o.getAmazonOrderId());
 				if(express != null){
 					o.setIsPrinted(true);
+					o.setIsScanedConfirmedDeliver(express.getScanedConfirmedDeliver());
 				}
 			}
 		}

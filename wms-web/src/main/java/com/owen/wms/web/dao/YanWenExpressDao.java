@@ -1,6 +1,5 @@
 package com.owen.wms.web.dao;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
-import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.entity.YanWenExpressEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
 
@@ -27,6 +25,11 @@ public class YanWenExpressDao extends BaseHibernateDao<YanWenExpressEntity,Strin
 	public YanWenExpressEntity getByAmazonOrderId(String amazonOrderId){
 		Query query = this.getSession().createQuery("from YanWenExpressEntity where userOrderNumber ='"+amazonOrderId+"'");
 		YanWenExpressEntity result = (YanWenExpressEntity) query.uniqueResult();
+		return result;
+	}
+	
+	public YanWenExpressEntity getByID(String expressNumber){
+		YanWenExpressEntity result =this.get(expressNumber);
 		return result;
 	}
 	

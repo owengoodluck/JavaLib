@@ -34,6 +34,7 @@ import com.owen.wms.web.entity.AmazonOrderItem;
 import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.entity.YanWenExpressEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
+import com.owen.wms.web.form.ExpressScanForm;
 import com.owen.wms.web.form.YanwenExpress;
 import com.owen.wms.web.utils.PdfPrintThread;
 import com.owen.wms.web.utils.PdfPrintUtil;
@@ -73,6 +74,41 @@ public class YanwenExpressService {
 		return this.yanWenExpressDao.pageListByCriteria(queryForm);
 	}
 	
+	public void scanByExpressNumber(ExpressScanForm expressScanForm){
+		YanWenExpressEntity express = this.yanWenExpressDao.getByID(expressScanForm.getExpressNumber().trim());
+		if(express != null){
+			AmazonOrder order = this.amazonOrderDao.getByOrderID(express.getUserOrderNumber());
+			if(order!=null){
+				expressScanForm.setOrder(order);
+				Set<AmazonOrderItem> orderItemList = order.getOrderItemList();
+				if(orderItemList!=null){
+					expressScanForm.setOrderItemSet(orderItemList);
+					for(AmazonOrderItem item: orderItemList){
+						JewelryEntity prod = item.getSellerSKU();
+					}
+				}
+			}
+		}
+	}
+	
+	public void scanExpressToConfirmDeliver(ExpressScanForm expressScanForm){
+		YanWenExpressEntity express = this.yanWenExpressDao.getByID(expressScanForm.getExpressNumber().trim());
+		if(express != null){
+			AmazonOrder order = this.amazonOrderDao.getByOrderID(express.getUserOrderNumber());
+			if(order!=null){
+				expressScanForm.setOrder(order);
+				Set<AmazonOrderItem> orderItemList = order.getOrderItemList();
+				if(orderItemList!=null){
+					expressScanForm.setOrderItemSet(orderItemList);
+					for(AmazonOrderItem item: orderItemList){
+						JewelryEntity prod = item.getSellerSKU();
+					}
+				}
+			}
+			express.setScanedConfirmedDeliver(true);
+			this.yanWenExpressDao.update(express);
+		}
+	}
 	/**
 	 * list all
 	 * @return

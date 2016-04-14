@@ -93,10 +93,12 @@ public class AmazonOrderDao extends BaseHibernateDao<AmazonOrder,String> {
 	public AmazonOrder getByOrderID(String amazonOrderId){
 		Criterion criteria = Restrictions.eq("amazonOrderId", amazonOrderId);
 		AmazonOrder order = this.uniqueResult(criteria);
-		Set<AmazonOrderItem> list = order.getOrderItemList();
-		if(list != null){
-			for(AmazonOrderItem i:list){
-				Hibernate.initialize(i.getSellerSKU());
+		if(order!=null){
+			Set<AmazonOrderItem> list = order.getOrderItemList();
+			if(list != null){
+				for(AmazonOrderItem i:list){
+					Hibernate.initialize(i.getSellerSKU());
+				}
 			}
 		}
 		return order;

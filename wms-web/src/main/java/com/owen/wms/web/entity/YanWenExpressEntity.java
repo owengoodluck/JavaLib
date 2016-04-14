@@ -18,6 +18,7 @@ public class YanWenExpressEntity {
 	private Date sendDate;
 	private String memo;
 	private int quantity;
+	private boolean scanedConfirmedDeliver=false;
 
 	//private GoodsName goodsName;
 	private String nameCh;
@@ -177,6 +178,12 @@ public class YanWenExpressEntity {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-	
+	public boolean getScanedConfirmedDeliver() {
+		return scanedConfirmedDeliver;
+	}
+	public void setScanedConfirmedDeliver(boolean scanedConfirmedDeliver) {
+		this.scanedConfirmedDeliver = scanedConfirmedDeliver;
+	}
+
 	
 }

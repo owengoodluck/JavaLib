@@ -50,6 +50,7 @@ public class AmazonOrder implements java.io.Serializable{
 	
 	
 	private Boolean isPrinted;
+	private Boolean isScanedConfirmedDeliver;
 	
 	@Id
 	private String amazonOrderId;
@@ -294,6 +295,12 @@ public class AmazonOrder implements java.io.Serializable{
 	}
 	public void setPurchaseDateTo(Date purchaseDateTo) {
 		this.purchaseDateTo = purchaseDateTo;
+	}
+	public Boolean getIsScanedConfirmedDeliver() {
+		return isScanedConfirmedDeliver;
+	}
+	public void setIsScanedConfirmedDeliver(Boolean isScanedConfirmedDeliver) {
+		this.isScanedConfirmedDeliver = isScanedConfirmedDeliver;
 	}
 	
 	

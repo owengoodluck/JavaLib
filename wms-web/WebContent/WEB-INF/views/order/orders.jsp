@@ -165,11 +165,16 @@ function confirmShipment(){
 						</td>	
 						<td>
 							<c:if test="${order.isPrinted}">
-								已打印
+								<c:if test="${order.isScanedConfirmedDeliver}">
+									<span class="label label-success">已发货</span>
+								</c:if>
+								<c:if test="${!order.isScanedConfirmedDeliver}">
+									<span class="label label-warning">未扫描</span>
+								</c:if>
 							</c:if>
 							<c:if test="${!order.isPrinted }">
 								<c:if test="${order.getOrderStatus() == 'Unshipped' || order.getOrderStatus()== 'Shipped'}">
-									<span class="label label-warning">未打印</span>
+									<span class="label label-danger">未打印</span>
 								</c:if>
 							</c:if>
 						</td>

@@ -84,6 +84,7 @@ function cleanForm(){
 				<tr >
 					<th>快递单号</th>
 					<th>订单号</th>
+					<th>是否发货</th>
 					<th>创建日期</th>
 					<th>发货渠道</th>
 					<th>收件人</th>
@@ -97,6 +98,14 @@ function cleanForm(){
 					<tr align="left">
 						<td >${express.epcode}</td>
 						<td align="left"><a href='<c:url value="/order/detail/${express.userOrderNumber}" />' target="_blank" >${express.userOrderNumber}</a></td>
+						<td>
+							<c:if test='${ express.scanedConfirmedDeliver }'>
+								<span class="label label-success">已扫描</span>
+							</c:if>
+							<c:if test='${ !express.scanedConfirmedDeliver }'>
+								<span class="label label-danger">未扫描</span>
+							</c:if>
+						</td>
 						<td><fmt:formatDate value="${express.sendDate}" pattern="yyyy-MM-dd "/></td>
 						<td>${express.channel}</td>
 						<td>${express.name}</td>

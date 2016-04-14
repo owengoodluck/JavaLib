@@ -95,6 +95,14 @@
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
         <put-attribute name="main"  value="/WEB-INF/views/express/expressList.jsp" />
     </definition>
+    <definition name="express/scan" extends="baselayout">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="main"  value="/WEB-INF/views/express/scanExpress.jsp" />
+    </definition>
+    <definition name="express/scanConfirmDeliver" extends="baselayout">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="main"  value="/WEB-INF/views/express/scanConfirmDeliver.jsp" />
+    </definition>
     
     <!-- lekani -->
     <definition name="lekani/prodList" extends="baselayout">

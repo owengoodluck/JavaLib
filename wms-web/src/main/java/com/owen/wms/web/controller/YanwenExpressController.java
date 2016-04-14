@@ -22,6 +22,7 @@ import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.entity.AmazonOrderItem;
 import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
+import com.owen.wms.web.form.ExpressScanForm;
 import com.owen.wms.web.form.YanwenExpress;
 import com.owen.wms.web.service.AmazonOrderService;
 import com.owen.wms.web.service.YanwenExpressService;
@@ -52,6 +53,53 @@ public class YanwenExpressController {
 		model.addAttribute("currentMenu", "express");
 		return "express/expressList";
 	}
+	
+	//扫描快递信息
+	@RequestMapping(value="/scan", method = RequestMethod.GET)
+	public String scan(Model model,HttpServletRequest request) throws Exception {
+		ExpressScanForm expressScanForm = new ExpressScanForm();
+		model.addAttribute("expressScanForm", expressScanForm);
+		model.addAttribute("currentMenu", "express");
+		return "express/scan";
+	}
+	
+	@RequestMapping(value="/scan", method = RequestMethod.POST)
+	public String scanPost(Model model,HttpServletRequest request,@ModelAttribute("expressScanForm") ExpressScanForm expressScanForm) throws Exception {
+		if(expressScanForm.getExpressNumber()!=null && expressScanForm.getExpressNumber().trim().length()>0){
+			expressScanForm.setPreviousExpressNumber(expressScanForm.getExpressNumber());
+			expressScanForm.setOrder(null);
+			expressScanForm.setOrderItemSet(null);
+			this.service.scanByExpressNumber(expressScanForm);
+			expressScanForm.setExpressNumber(null);
+		}
+		model.addAttribute("currentMenu", "express");
+		return "express/scan";
+	}
+	
+	//扫描确认发货
+	@RequestMapping(value="/scanConfirmDeliver", method = RequestMethod.GET)
+	public String scanDeliver(Model model,HttpServletRequest request) throws Exception {
+		ExpressScanForm expressScanForm = new ExpressScanForm();
+		model.addAttribute("expressScanForm", expressScanForm);
+		model.addAttribute("currentMenu", "express");
+		return "express/scanConfirmDeliver";
+	}
+	
+	@RequestMapping(value="/scanConfirmDeliver", method = RequestMethod.POST)
+	public String scanDeliverPost(Model model,HttpServletRequest request,@ModelAttribute("expressScanForm") ExpressScanForm expressScanForm) throws Exception {
+		if(expressScanForm.getExpressNumber()!=null && expressScanForm.getExpressNumber().trim().length()>0){
+			expressScanForm.setPreviousExpressNumber(expressScanForm.getExpressNumber());
+			expressScanForm.setOrder(null);
+			expressScanForm.setOrderItemSet(null);
+			this.service.scanExpressToConfirmDeliver(expressScanForm);
+			if(expressScanForm.getOrder()!=null){
+				model.addAttribute("message", expressScanForm.getExpressNumber()+"扫描发货成功！");
+			}
+			expressScanForm.setExpressNumber(null);
+		}
+		model.addAttribute("currentMenu", "express");
+		return "express/scanConfirmDeliver";
+	}
 
 	@RequestMapping(value="/pageQuery", method = RequestMethod.POST)
 	public String pageQuery(Model model,@ModelAttribute("expressQueryForm") ExpressQueryForm expressQueryForm) throws Exception {
@@ -76,16 +124,18 @@ public class YanwenExpressController {
 		express.setCountry("美国");
 		
 		AmazonOrder order = this.amazonOrderService.getByOrderIDWithoutExpress(amazonOrderID);
-		Set<AmazonOrderItem> orderItems = order.getOrderItemList();
-		if(orderItems.size()>0){
-			AmazonOrderItem[] orderItemArray = orderItems.toArray(new AmazonOrderItem[]{});
-			AmazonOrderItem firstOrderItem = orderItemArray[0];
-			JewelryEntity prod = firstOrderItem.getSellerSKU();
-			if(prod!=null){
-				String itemType = prod.getItemType();
-				if(itemType!=null){
-					itemType = itemType.toLowerCase();
-					switch (itemType){
+		if(order!=null){
+			
+			Set<AmazonOrderItem> orderItems = order.getOrderItemList();
+			if(orderItems.size()>0){
+				AmazonOrderItem[] orderItemArray = orderItems.toArray(new AmazonOrderItem[]{});
+				AmazonOrderItem firstOrderItem = orderItemArray[0];
+				JewelryEntity prod = firstOrderItem.getSellerSKU();
+				if(prod!=null){
+					String itemType = prod.getItemType();
+					if(itemType!=null){
+						itemType = itemType.toLowerCase();
+						switch (itemType){
 						case "pendant-necklaces":{
 							express.setNameChinese("时尚简约饰品-项链吊坠");
 							express.setNameEnglish("Fashion Jewelry Accessories-Necklace Pendant");
@@ -125,6 +175,7 @@ public class YanwenExpressController {
 							express.setNameChinese("时尚简约饰品-XXX");
 							express.setNameEnglish("Fashion Jewelry Accessories-XXX");
 							break;
+						}
 						}
 					}
 				}
