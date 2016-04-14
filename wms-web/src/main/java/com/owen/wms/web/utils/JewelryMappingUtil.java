@@ -24,7 +24,8 @@ public class JewelryMappingUtil {
 			case "pendant-necklaces":return "FashionNecklaceBraceletAnklet";
 			case "link-bracelets":return"FashionNecklaceBraceletAnklet";
 			case "rings":return"FashionRing";
-			case "earrings":return"FashionEarring";
+			case "earrings":return"FashionEarring"; 
+			case "anklets" : return "FashionNecklaceBraceletAnklet";
 			default:return null;//TODO TBC
 			}
 		}else{
