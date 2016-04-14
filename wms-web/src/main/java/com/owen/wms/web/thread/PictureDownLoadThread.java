@@ -15,17 +15,17 @@ public class PictureDownLoadThread extends Thread{
 	public PictureDownLoadThread(String url, File downloadFolder) {
 		super();
 		this.url = url;
-		this.downloadFolder = downloadFolder;
+		this.downloadFolder = new File(copyFolder);
 	}
 
 	public void run() {
 		File file = PictureDownloadUtil.downloadPicture(url, downloadFolder,picFilterSize);
-		if(file!=null && file.exists()){
-			File newFile = new File(copyFolder+file.getName());
-			if(!newFile.exists()){
-				FileUtil.copy(file, newFile );
-			}
-		}
+//		if(file!=null && file.exists()){
+//			File newFile = new File(copyFolder+file.getName());
+//			if(!newFile.exists()){
+//				FileUtil.copy(file, newFile );
+//			}
+//		}
 	}
 
 }

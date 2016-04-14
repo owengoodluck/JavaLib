@@ -128,6 +128,7 @@ public class StringUtil {
 		path = path.replace(">", "");
 		path = path.replace("|", "");
 		path = path.replace(" ", "");
+		path = path.replace(".", "");
 		return path;
 	}
 	

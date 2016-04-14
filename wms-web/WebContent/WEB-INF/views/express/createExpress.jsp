@@ -36,6 +36,8 @@ function setNameOfEnglish(){
 		nameEn = 'Fashion Accessories Rings';
 	}else if ( nameCh == '时尚首饰-耳环'){
 		nameEn = 'Fashion Accessories Earrings';
+	}else if ( nameCh == '时尚服饰-连衣裙'){
+		nameEn = 'Fashion Clothes Dress';
 	}
 	$('#nameEnglish').val(nameEn);
 }
@@ -125,6 +127,7 @@ function submitForm(){
 								<form:option value="时尚首饰-手链">时尚首饰-手链</form:option>
 								<form:option value="时尚首饰-指环">时尚首饰-指环</form:option>
 								<form:option value="时尚首饰-耳环">时尚首饰-耳环</form:option>
+								<form:option value="时尚服饰-连衣裙">时尚服饰-连衣裙</form:option>
 						</form:select>
 					</td>
 				</tr>
