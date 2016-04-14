@@ -27,7 +27,11 @@ function submitForm(num){
 	}
 	$('#queryForm').submit();
 }
-
+function loadProdByCategoryAndBrand(){
+	$('#currentPage').val(1);
+	$("#queryForm").attr("action", "/wms-web/lekani/loadProdByCategoryAndBrand");
+	$('#queryForm').submit();
+}
 function cleanForm(){
 	$('#prodID').val(null);
 	$('#orderID').val(null);
@@ -38,13 +42,13 @@ function cleanForm(){
 }
 
 </script>
-<title>Lekani产品列表</title>
+<title>Lekani官网产品列表</title>
 </head>
 <body>
 	<div>
 		<ol class="breadcrumb" align="left">
 		  <!-- <li><a href="#">Home</a></li> -->
-		  <li class="active">Lekani产品列表</li>
+		  <li class="active">Lekani官网产品列表</li>
 		</ol>
 	</div>
 	
@@ -68,9 +72,11 @@ function cleanForm(){
 						<form:option value="226">钱夹</form:option>
 						<form:option value="242">手拿包</form:option>
 						<form:option value="243">单肩包</form:option>
-						<%-- <form:option value="245">太阳镜</form:option>
+						<form:option value="245">太阳镜</form:option>
 						<form:option value="247">偏光镜</form:option>
-						<form:option value="248">眼镜盒</form:option> --%>
+						<form:option value="248">眼镜盒</form:option> 
+						<%-- 
+						--%>
 						<form:option value="211">耳圈</form:option>
 						<form:option value="202">耳饰</form:option>
 						<form:option value="212">耳钩&耳坠</form:option>
@@ -80,7 +86,8 @@ function cleanForm(){
 						<form:option value="215">耳饰花托</form:option>
 						<form:option value="204">饰品套装</form:option>
 						<form:option value="222">胸针</form:option>
-						<%-- <form:option value="244">时尚眼镜</form:option>
+						<form:option value="244">时尚眼镜</form:option>
+						<%-- 
 						<form:option value="241">时尚包包</form:option> --%>
 						<form:option value="221">领带夹&袖扣</form:option>
 						<form:option value="224">钥匙扣&钱夹</form:option>
@@ -110,9 +117,11 @@ function cleanForm(){
 						<form:option value="14">法伯丽</form:option>
 						<form:option value="22">时尚银饰产品</form:option>
 						<form:option value="19">品牌B</form:option>
+						<form:option value="19">眼镜系列</form:option>
 						<form:option value="99">其它</form:option>
 			      	</form:select>
 					<input type="submit" id="btnAdd" class="btn btn-primary" value="查询" onclick="submitForm(0)"/>
+					<input type="submit" id="btnAdd" class="btn btn-primary" value="下载" onclick="loadProdByCategoryAndBrand()"/>
 					每页显示：<form:input path="pageSize" size="2"/>
 					总页数 <b>${page.totalPage }</b>： 总条数<b>${page.totalCount }</b>
 		      		<input type="button" value="上一页" class="btn btn-primary" <c:if test='${!page.hasPrePage }'>disabled="disabled"</c:if> onclick="submitForm(-1)"/>

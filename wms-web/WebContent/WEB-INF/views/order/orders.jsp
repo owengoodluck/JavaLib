@@ -77,7 +77,7 @@ function confirmShipment(){
 			      	购买日期 从:<form:input path="queryOrderDateFrom" size="10"/>
 			      	到:<form:input path="queryOrderDateTo" size="10"/>
 			      	订单状态:
-			      	<form:select path="queryOrderStatus">
+			      	<form:select path="queryOrderStatus" onchange="submitForm(0)">
 			      		<form:option value="">全部订单</form:option>
 			      		<form:option value="Unshipped">未发货</form:option>
 			      		<form:option value="Shipped">已发货</form:option>

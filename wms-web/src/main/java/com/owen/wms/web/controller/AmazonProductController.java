@@ -261,11 +261,13 @@ public class AmazonProductController {
 				form.setUpdateDate(new Date());
 				JewelryEntity en = this.amazonProductService.getById(form.getItemSku());
 				if(en ==null){
+					reOrganizeImgs(form);
 					this.amazonProductService.saveOrUpdate(form);
 				}else{
 					try {
 						nullAwareBeanUtil.copyProperties(en, form);
 						JewelryMappingUtil.enrichDefaultValue(en);
+						reOrganizeImgs(en);
 						this.amazonProductService.saveOrUpdate(en);
 						list.set(i, en);
 					} catch (IllegalAccessException | InvocationTargetException e) {
@@ -273,6 +275,80 @@ public class AmazonProductController {
 						throw new Exception();
 					}
 				}
+			}
+		}
+	}
+	
+	private void reOrganizeImgs(JewelryEntity ent){
+		if(ent ==null){
+			return;
+		}else{
+			ArrayList<String> urlList = new ArrayList<String>();
+			//TODO  memory leak ?
+			String url = ent.getOtherImageUrl1();
+			if(url!=null && url.trim().length()>0){
+				urlList.add(url);
+			}
+			url = ent.getOtherImageUrl2();
+			if(url!=null && url.trim().length()>0){
+				urlList.add(url);
+			}
+			url = ent.getOtherImageUrl3();
+			if(url!=null && url.trim().length()>0){
+				urlList.add(url);
+			}
+			url = ent.getOtherImageUrl4();
+			if(url!=null && url.trim().length()>0){
+				urlList.add(url);
+			}
+			url = ent.getOtherImageUrl5();
+			if(url!=null && url.trim().length()>0){
+				urlList.add(url);
+			}
+			url = ent.getOtherImageUrl6();
+			if(url!=null && url.trim().length()>0){
+				urlList.add(url);
+			}
+			url = ent.getOtherImageUrl7();
+			if(url!=null && url.trim().length()>0){
+				urlList.add(url);
+			}
+			url = ent.getOtherImageUrl8();
+			if(url!=null && url.trim().length()>0){
+				urlList.add(url);
+			}
+			ent.setOtherImageUrl1(null);
+			ent.setOtherImageUrl2(null);
+			ent.setOtherImageUrl3(null);
+			ent.setOtherImageUrl4(null);
+			ent.setOtherImageUrl5(null);
+			ent.setOtherImageUrl6(null);
+			ent.setOtherImageUrl7(null);
+			ent.setOtherImageUrl8(null);
+			int length= urlList.size();
+			if(length>0){
+				ent.setOtherImageUrl1(urlList.get(0));
+			}
+			if(length>1){
+				ent.setOtherImageUrl2(urlList.get(1));
+			}
+			if(length>2){
+				ent.setOtherImageUrl3(urlList.get(2));
+			}
+			if(length>3){
+				ent.setOtherImageUrl4(urlList.get(3));
+			}
+			if(length>4){
+				ent.setOtherImageUrl5(urlList.get(4));
+			}
+			if(length>5){
+				ent.setOtherImageUrl6(urlList.get(5));
+			}
+			if(length>6){
+				ent.setOtherImageUrl7(urlList.get(6));
+			}
+			if(length>7){
+				ent.setOtherImageUrl8(urlList.get(7));
 			}
 		}
 	}

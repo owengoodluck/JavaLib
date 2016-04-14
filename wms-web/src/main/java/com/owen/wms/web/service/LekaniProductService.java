@@ -395,6 +395,9 @@ public class LekaniProductService {
 		}else if(productModel.getCatName().indexOf("Ring")>-1){
 			sku ="RI";
 			itemType = "rings";
+		}else if(productModel.getCatName().indexOf("Sunglasses")>-1){
+			sku ="SGL";
+			itemType = "sunglasses";
 		}else if(productModel.getCatName().indexOf("Bangle&Cuff")>-1){
 			sku ="BC";
 //			itemType = "xxxxxxx";

@@ -35,6 +35,7 @@ import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.entity.YanWenExpressEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
 import com.owen.wms.web.form.YanwenExpress;
+import com.owen.wms.web.utils.PdfPrintThread;
 import com.owen.wms.web.utils.PdfPrintUtil;
 
 @Service
@@ -133,7 +134,8 @@ public class YanwenExpressService {
 			String pdfFilePath = this.yanwenService.downloadLabel(epCode, pdfDownloadPath,amzOrderID);
 			//print pdf label
 			if(print){
-				PdfPrintUtil.printViaCommandLine(pdfFilePath);
+				PdfPrintThread pdfPrintThread = new PdfPrintThread(pdfFilePath);
+				pdfPrintThread.start();
 			}
 			
 		}else{

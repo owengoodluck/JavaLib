@@ -42,6 +42,9 @@ public class ProductModel {
 	@JsonProperty("SKU")
 	private String SKU;
 
+	@JsonProperty("Style")
+	private String style;
+
 	@JsonProperty("BarCode")
 	private String barCode;
 
@@ -325,6 +328,14 @@ public class ProductModel {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
 	}
 
 	@Override

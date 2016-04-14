@@ -114,17 +114,17 @@ function cleanForm(){
 						<form:option value="220">脚链</form:option>
 						<form:option value="204">饰品套装</form:option>
 						<form:option value="222">胸针</form:option>
+						<form:option value="245">太阳镜</form:option>
+						<form:option value="247">偏光镜</form:option>
+						<form:option value="244">时尚眼镜</form:option>
 						<%-- 
 						<form:option value="104">LEKANI 纯银首饰</form:option>
 						<form:option value="202">耳饰</form:option>
 						<form:option value="215">耳饰花托</form:option>
-						<form:option value="244">时尚眼镜</form:option>
 						<form:option value="225">钥匙扣</form:option>
 						<form:option value="226">钱夹</form:option>
 						<form:option value="242">手拿包</form:option>
 						<form:option value="243">单肩包</form:option>
-						<form:option value="245">太阳镜</form:option>
-						<form:option value="247">偏光镜</form:option>
 						<form:option value="248">眼镜盒</form:option>
 						<form:option value="241">时尚包包</form:option>
 						<form:option value="221">领带夹&袖扣</form:option>
@@ -151,6 +151,7 @@ function cleanForm(){
 						<form:option value="30">韩风</form:option>
 						<form:option value="14">法伯丽</form:option>
 						<form:option value="22">时尚银饰产品</form:option>
+						<form:option value="19">眼镜系列</form:option>
 						<form:option value="99">其它</form:option>
 						<!--  
 						<form:option value="19">品牌B</form:option>

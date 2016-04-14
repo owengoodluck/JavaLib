@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -159,5 +161,33 @@ public class FileUtil {
 				} catch (IOException e) { }
 			}
 		}
+	}
+	
+	public static List<String>  readFile2List( String filePath,boolean ignoreEmptyLine) {
+		List<String> list = new ArrayList<String>();
+		FileInputStream fin = null;
+		BufferedReader br = null;
+		try{
+			fin = new FileInputStream(filePath);
+			br = new BufferedReader(new InputStreamReader(fin));
+			String str = br.readLine();
+			while (str != null) {
+				if(str.trim().length()>0 || ignoreEmptyLine){
+					list.add(str);
+				}
+				str = br.readLine();
+			}
+		}catch(Exception e){
+			log.error(e.getMessage(),e);
+			return null;
+		}finally{
+			try {
+				if(br!=null ) br.close();
+			} catch (IOException e) { }
+			try {
+				if(fin!=null ) fin.close();
+			} catch (IOException e) { }
+		}
+		return list;
 	}
 }

@@ -48,7 +48,7 @@ public class LKNServiceTest {
 	
 	@Test
 	public void getCategoryInfo(){
-		CategoryModel cat = LKNService.getCategoryInfo(222);
+		CategoryModel cat = LKNService.getCategoryInfo(245);
 		System.out.println(cat.getCatName());
 	}
 	
@@ -91,9 +91,23 @@ public class LKNServiceTest {
 //				e.printStackTrace();
 			}
 		}
-	} 
+	}
+	
 	@Test
-	public void getProdInfo(){
+	public void getProdInfoBySku(){
+		String sku = "YJMH037-1";
+		int prodId = 0;
+		ProductModel prod = LKNService.getProdInfo(prodId, sku);
+		System.out.println(prod.getSKU() +" ---,getDescription =  "+prod.getDescription());
+		List<AttributeModel> attrs = prod.getAttributes();
+		for(AttributeModel ab : attrs){
+			System.out.println(ab.getAttrName()+"---"+ab.getAttrValue());
+		}
+		System.out.println(prod);
+	}
+	
+	@Test
+	public void getProdInfoByProdID(){
 		String sku = "";
 		int prodId = 116767;
 		ProductModel prod = LKNService.getProdInfo(prodId, sku);

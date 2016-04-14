@@ -189,6 +189,8 @@ public class AmazonProductService {
 		File templateFile = null;
 		if("dresses".equals(list.get(0).getItemType())||"shorts".equals(list.get(0).getItemType())){
 			templateFile =new ClassPathResource("template/ClothesTemplate.xls").getFile();		
+		}else if("sunglasses".equals(list.get(0).getItemType())){
+			templateFile =new ClassPathResource("template/ShoesHandbagsSunglassesTemple.xls").getFile();		
 		}else{
 			templateFile =new ClassPathResource("template/JewelryTemplate.xls").getFile();
 		}

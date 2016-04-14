@@ -68,6 +68,12 @@ public class LekaniController {
 		model.addAttribute("currentMenu", "lekani");
 		return "lekani/prodList";
 	}
+
+	@RequestMapping(value="/loadProdByCategoryAndBrand", method = RequestMethod.POST)
+	public String loadProdByCategoryAndBrand(Model model,@ModelAttribute("queryForm") LekaniProdQueryForm queryForm ) throws Exception {
+		this.lekaniProductService.loadProdByCategoryAndBrand(queryForm.getCategoryID(),queryForm.getBrandID());
+		return this.pageQueryLocal(model, queryForm);
+	}
 	
 	@RequestMapping(value="/pageQueryLocal", method = RequestMethod.GET)
 	public String pageQueryLocal(Model model,HttpServletRequest request) throws Exception {

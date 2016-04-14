@@ -78,7 +78,7 @@ public class LekaniProductDao extends BaseHibernateDao<ProductModel,String> {
 				}
 			}
 		}
-		List<ProductModel> list = this.findPageByQuery(currentPage, pageSize, hql.append(" order by catID,brandID desc").toString(), criteriaMap);
+		List<ProductModel> list = this.findPageByQuery(currentPage, pageSize, hql.append(" order by catID,brandID ,SKU asc").toString(), criteriaMap);
 		int totalCount = this.getTotalCount("select count(*) "+hql.toString(), criteriaMap);
 		return new Page(currentPage,pageSize,totalCount,list);
 	}
