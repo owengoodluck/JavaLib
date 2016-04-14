@@ -101,6 +101,11 @@ public class YanwenExpressController {
 							express.setNameEnglish("Fashion Jewelry Accessories-Rings");
 							break;
 						}
+						case "earrings":{
+							express.setNameChinese("时尚简约饰品-耳环耳坠");
+							express.setNameEnglish("Fashion Jewelry Accessories-Earrings");
+							break;
+						}
 						case "anklets":{
 							express.setNameChinese("时尚简约饰品-脚踝链");
 							express.setNameEnglish("Fashion Jewelry Accessories-Anklets");
@@ -111,7 +116,16 @@ public class YanwenExpressController {
 							express.setNameEnglish("Fashion Clothes Dress");
 							break;
 						}
-						default:;//TODO TBC
+						case "shorts":{
+							express.setNameChinese("时尚服饰-短裤");
+							express.setNameEnglish("Fashion Clothes Shorts");
+							break;
+						}
+						default:{
+							express.setNameChinese("时尚简约饰品-XXX");
+							express.setNameEnglish("Fashion Jewelry Accessories-XXX");
+							break;
+						}
 					}
 				}
 			}
