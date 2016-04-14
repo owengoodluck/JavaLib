@@ -181,6 +181,7 @@ function submitForm(preOrNext){
 												<option value="rings" <c:if test="${ prod.itemType == 'rings' }" >selected="true"</c:if> >戒指</option>
 												<option value="anklets" <c:if test="${ prod.itemType == 'anklets' }" >selected="true"</c:if> >脚链</option>
 												<option value="dresses" <c:if test="${ prod.itemType == 'dresses' }" >selected="true"</c:if> >dresses</option>
+												<option value="shorts" <c:if test="${ prod.itemType == 'shorts' }" >selected="true"</c:if> >shorts-短裤</option>
 										</select>
 									</td>
 									<td width="7%">
@@ -248,6 +249,7 @@ function submitForm(preOrNext){
 												<option value="rings" <c:if test="${ prod.itemType == 'rings' }" >selected="true"</c:if> >戒指</option>
 												<option value="anklets" <c:if test="${ prod.itemType == 'anklets' }" >selected="true"</c:if> >脚链</option>
 												<option value="dresses" <c:if test="${ prod.itemType == 'dresses' }" >selected="true"</c:if> >dresses</option>
+												<option value="shorts" <c:if test="${ prod.itemType == 'shorts' }" >selected="true"</c:if> >shorts-短裤</option>
 										</select>
 									</td>
 									<td width="7%">

@@ -187,7 +187,7 @@ public class AmazonProductService {
 		}
 		//1. copy excel head from template
 		File templateFile = null;
-		if("dresses".equals(list.get(0).getItemType())){
+		if("dresses".equals(list.get(0).getItemType())||"shorts".equals(list.get(0).getItemType())){
 			templateFile =new ClassPathResource("template/ClothesTemplate.xls").getFile();		
 		}else{
 			templateFile =new ClassPathResource("template/JewelryTemplate.xls").getFile();
