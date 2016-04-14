@@ -61,27 +61,27 @@ public class LekaniProductServiceTest {
 //		brandMap.put(99,"其它");
 		
 		//-----------------------------
-		categoryMap.put(201,"戒指");
-		categoryMap.put(210,"耳钉");
-		categoryMap.put(216,"项链");
-		categoryMap.put(217,"吊坠");
-		categoryMap.put(211,"耳圈");
-		categoryMap.put(202,"耳饰");
-		categoryMap.put(212,"耳钩&耳坠");
-		categoryMap.put(218,"长款项链");
-		categoryMap.put(205,"项链&吊坠");
-		categoryMap.put(207,"手链");
-		categoryMap.put(219,"链条配链");
-		categoryMap.put(213,"耳夹&耳扣");
-		categoryMap.put(208,"手镯");
-		categoryMap.put(220,"脚链");
-		categoryMap.put(215,"耳饰花托");
-		categoryMap.put(204,"饰品套装");
+//		categoryMap.put(201,"戒指");
+//		categoryMap.put(210,"耳钉");
+//		categoryMap.put(216,"项链");
+//		categoryMap.put(217,"吊坠");
+//		categoryMap.put(211,"耳圈");
+//		categoryMap.put(202,"耳饰");
+//		categoryMap.put(212,"耳钩&耳坠");
+//		categoryMap.put(218,"长款项链");
+//		categoryMap.put(205,"项链&吊坠");
+//		categoryMap.put(207,"手链");
+//		categoryMap.put(219,"链条配链");
+//		categoryMap.put(213,"耳夹&耳扣");
+//		categoryMap.put(208,"手镯");
+//		categoryMap.put(220,"脚链");
+//		categoryMap.put(215,"耳饰花托");
+//		categoryMap.put(204,"饰品套装");
 		categoryMap.put(222,"胸针");
-		categoryMap.put(244,"时尚眼镜");
-		categoryMap.put(224,"钥匙扣&钱夹");
-		categoryMap.put(223,"头饰、发饰");
-		categoryMap.put(104,"LEKANI 纯银首饰");
+//		categoryMap.put(244,"时尚眼镜");
+//		categoryMap.put(224,"钥匙扣&钱夹");
+//		categoryMap.put(223,"头饰、发饰");
+//		categoryMap.put(104,"LEKANI 纯银首饰");
 //		categoryMap.put(54,"包装&展件");
 //		categoryMap.put(249,"双肩背包");
 //		categoryMap.put(225,"钥匙扣");
@@ -112,16 +112,20 @@ public class LekaniProductServiceTest {
 		Set<Integer> categoryIDset = this.categoryMap.keySet();
 		Set<Integer> brandIDSet = this.brandMap.keySet();
 		for(int categroyID : categoryIDset){
-			for(int brandID:brandIDSet){
-				lekaniProductService.loadProdByCategoryAndBrand(categroyID, brandID);
+			if(brandIDSet == null || brandIDSet.isEmpty()){
+				lekaniProductService.loadProdByCategoryAndBrand(categroyID, 32);
+			}else{
+				for(int brandID:brandIDSet){
+					lekaniProductService.loadProdByCategoryAndBrand(categroyID, brandID);
+				}
 			}
 		}
 	}
 	@Test
 	public void loadByID(){
-		Integer id = 116767;
-		String sku ="LKN18KRGPN522";
-//		this.lekaniProductService.loadById(id,null);
+		Integer id = 120671;
+		String sku ="7000000506253";
+		this.lekaniProductService.loadById(null,sku);
 		ProductModel prod = this.lekaniProductService.loadById(0,sku);
 		System.out.println(prod);
 	}

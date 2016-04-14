@@ -2,6 +2,8 @@ package com.owen.wms.common.constant;
 
 public class AppConstant {
 	public static String picDownloadPath ;//"C:/Users/owen/Desktop/tmp_pic/";  
+	//others 
+	public static String picCopyFolder;
 	public static String defaultPdfDownloadPath ;//= "C:/Users/owen/Desktop/Amazon/燕文物流/运单打印";
 	
 	public final static Double ShippingFeeEarnPerShip = 2.9;  //USD
@@ -23,8 +25,6 @@ public class AppConstant {
     public static String appVersion ;
     public static String marketplaceIDUS ;
 
-    //others 
-    public static String picCopyFolder;
 
 	public void setYanwenUserId(String yanwenUserId) {
 		AppConstant.yanwenUserId = yanwenUserId;

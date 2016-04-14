@@ -163,7 +163,9 @@ public class LekaniProductService {
 			p.setOnSale(isOnSale);
 			
 			try{
-				this.lekaniProductDao.saveOrUpdate(p);
+				if(this.lekaniProductDao.get(p.getProductID())==null){
+					this.lekaniProductDao.save(p);
+				}
 			}catch(NonUniqueObjectException e){
 				log.error(e.getMessage());
 				try{

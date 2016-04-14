@@ -30,7 +30,7 @@ public class LKNServiceTest {
 	
 	@Test
 	public void getBrandInfo(){
-		BrandModel brand = LKNService.getBrandInfo(29);
+		BrandModel brand = LKNService.getBrandInfo(32);
 		System.out.println(brand);
 	}
 	
@@ -48,14 +48,14 @@ public class LKNServiceTest {
 	
 	@Test
 	public void getCategoryInfo(){
-		CategoryModel cat = LKNService.getCategoryInfo(205);
+		CategoryModel cat = LKNService.getCategoryInfo(222);
 		System.out.println(cat.getCatName());
 	}
 	
 	@Test
 	public void getProdList(){
-		int categoryID = 216;
-		int brandID = 10;
+		int categoryID = 222;
+		int brandID = 32;
 		int pageIndex = 1 ;
 		GetProductModelListPackage resp = LKNService.getProductList(pageIndex , categoryID, brandID);
 		System.out.println("getPageSize = "+resp.getPageSize() +"---getPageTotal=" +resp.getPageTotal()+"---getRecordTotal="+resp.getRecordTotal());
@@ -69,6 +69,29 @@ public class LKNServiceTest {
 		}
 	}
 	
+
+	@Test
+	public void getProdList2(){
+		int brandID = 32;
+		for(int categoryID = 0;categoryID<300;categoryID++){
+			System.out.println("brandID="+brandID+"  , categoryID="+categoryID);
+			int pageIndex = 1 ;
+			GetProductModelListPackage resp = LKNService.getProductList(pageIndex , categoryID, brandID);
+			try{
+				System.out.println("getPageSize = "+resp.getPageSize() +"---getPageTotal=" +resp.getPageTotal()+"---getRecordTotal="+resp.getRecordTotal());
+				List<ProductModel> list = resp.getProductList();
+				for(ProductModel p :list){
+					System.out.println(p.getBrandName() +"-------" + p.getCatName()+"-------" + p.getName());
+					List<AttributeModel> as = p.getAttributes();
+					for(AttributeModel a : as){
+						System.out.println(a.getAttrName()+"--"+a.getAttrValue());
+					}
+				}
+			}catch(Exception e){
+//				e.printStackTrace();
+			}
+		}
+	} 
 	@Test
 	public void getProdInfo(){
 		String sku = "";

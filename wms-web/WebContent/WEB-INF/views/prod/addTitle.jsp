@@ -143,9 +143,10 @@ function submitForm(preOrNext){
 						<th >父SKU</th>
 						<th >类别</th>
 						<th >对象</th>
-						<th >子分类依据</th>
+						<th >子分类</th>
 						<th >颜色</th>
-						<th>实际库存</th>
+						<th >尺码</th>
+						<th>库存数</th>
 						<th>进货价</th>
 						<th>标题</th>
 					</tr>
@@ -179,6 +180,7 @@ function submitForm(preOrNext){
 												<option value ="earrings" <c:if test="${ prod.itemType == 'earrings' }" >selected="true"</c:if> >耳环/耳坠</option>
 												<option value="rings" <c:if test="${ prod.itemType == 'rings' }" >selected="true"</c:if> >戒指</option>
 												<option value="anklets" <c:if test="${ prod.itemType == 'anklets' }" >selected="true"</c:if> >脚链</option>
+												<option value="dresses" <c:if test="${ prod.itemType == 'dresses' }" >selected="true"</c:if> >dresses</option>
 										</select>
 									</td>
 									<td width="7%">
@@ -199,13 +201,15 @@ function submitForm(preOrNext){
 											<option value="StyleName" <c:if test="${ prod.variationTheme == 'StyleName' }" >selected="true"</c:if> >StyleName</option>
 											<option value ="ColorName" <c:if test="${ prod.variationTheme == 'ColorName' }" >selected="true"</c:if> >ColorName</option>
 											<option value="RingSize" <c:if test="${ prod.variationTheme == 'RingSize' }" >selected="true"</c:if> >RingSize</option>
+											<option value="sizecolor" <c:if test="${ prod.variationTheme == 'sizecolor' }" >selected="true"</c:if> >sizecolor</option>
 											<%-- <option value="MetalType-RingSize" <c:if test="${ prod.variationTheme == 'MetalType-RingSize' }" >selected="true"</c:if> >FashionRing-MetalType-RingSize</option>
 											<option value="Length" <c:if test="${ prod.variationTheme == 'Length' }" >selected="true"</c:if> >FashionNecklaceBraceletAnklet-Length</option>
 											<option value="Length-MetalType" <c:if test="${ prod.variationTheme == 'Length-MetalType' }" >selected="true"</c:if> >FashionNecklaceBraceletAnklet-Length-MetalType</option> --%>
 										</select>
 									</td>
 									<td width="4%"><input id="list${status.index}.colorName"  name='list[${status.index}].colorName'  type="text"  style="width:100%" type='text' value="${prod.colorName}"/></td>
-									<td width="5%">
+									<td width="4%"><input id="list${status.index}.sizeName"  name='list[${status.index}].sizeName'  type="text"  style="width:100%" type='text' value="${prod.sizeName}"/></td>
+									<td width="4%">
 										<b><input id="list${status.index}.stockQuantity" name='list[${status.index}].stockQuantity' type="text"  style="width:100%" type='text' value="${prod.stockQuantity}" /></b>
 									</td>
 									<td width="4%">
@@ -243,6 +247,7 @@ function submitForm(preOrNext){
 												<option value ="earrings" <c:if test="${ prod.itemType == 'earrings' }" >selected="true"</c:if> >耳环/耳坠</option>
 												<option value="rings" <c:if test="${ prod.itemType == 'rings' }" >selected="true"</c:if> >戒指</option>
 												<option value="anklets" <c:if test="${ prod.itemType == 'anklets' }" >selected="true"</c:if> >脚链</option>
+												<option value="dresses" <c:if test="${ prod.itemType == 'dresses' }" >selected="true"</c:if> >dresses</option>
 										</select>
 									</td>
 									<td width="7%">
@@ -262,14 +267,16 @@ function submitForm(preOrNext){
 											<option value="StyleName" <c:if test="${ prod.variationTheme == 'StyleName' }" >selected="true"</c:if> >StyleName</option>
 											<option value ="ColorName" <c:if test="${ prod.variationTheme == 'ColorName' }" >selected="true"</c:if> >ColorName</option>
 											<option value="RingSize" <c:if test="${ prod.variationTheme == 'RingSize' }" >selected="true"</c:if> >RingSize</option>
+											<option value="sizecolor" <c:if test="${ prod.variationTheme == 'sizecolor' }" >selected="true"</c:if> >sizecolor</option>
 											<%-- <option value="MetalType-RingSize" <c:if test="${ prod.variationTheme == 'MetalType-RingSize' }" >selected="true"</c:if> >FashionRing-MetalType-RingSize</option>
 											<option value="Length" <c:if test="${ prod.variationTheme == 'Length' }" >selected="true"</c:if> >FashionNecklaceBraceletAnklet-Length</option>
 											<option value="Length-MetalType" <c:if test="${ prod.variationTheme == 'Length-MetalType' }" >selected="true"</c:if> >FashionNecklaceBraceletAnklet-Length-MetalType</option> --%>
 										</select>
 									</td>
 									<td width="4%"><input class="colorNameClass" id="list${status.index}.colorName"  name='list[${status.index}].colorName'  type="text"  style="width:100%" type='text' value="${prod.colorName}"/></td>
+									<td width="4%"><input                        id="list${status.index}.sizeName"  name='list[${status.index}].sizeName'  type="text"  style="width:100%" type='text' value="${prod.sizeName}"/></td>
 									
-									<td width="5%">
+									<td width="4%">
 										<b><input id="list${status.index}.stockQuantity" name='list[${status.index}].stockQuantity' type="text"  style="width:100%" type='text' value="${prod.stockQuantity}" /></b>
 									</td>
 									<td width="4%">

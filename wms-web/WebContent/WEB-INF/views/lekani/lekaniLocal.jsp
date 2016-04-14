@@ -113,11 +113,11 @@ function cleanForm(){
 						<form:option value="208">手镯</form:option>
 						<form:option value="220">脚链</form:option>
 						<form:option value="204">饰品套装</form:option>
+						<form:option value="222">胸针</form:option>
 						<%-- 
 						<form:option value="104">LEKANI 纯银首饰</form:option>
 						<form:option value="202">耳饰</form:option>
 						<form:option value="215">耳饰花托</form:option>
-						<form:option value="222">胸针</form:option>
 						<form:option value="244">时尚眼镜</form:option>
 						<form:option value="225">钥匙扣</form:option>
 						<form:option value="226">钱夹</form:option>

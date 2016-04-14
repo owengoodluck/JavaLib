@@ -39,6 +39,7 @@
 	
 	<bean id="AppConstant" class="com.owen.wms.common.constant.AppConstant">
 		<property name="picCopyFolder" value="${image.download.path}"></property>
+		<property name="picDownloadPath" value="${image.download.path.temp}"></property>
 		<property name="yanwenUserId" value="${yanwen.user.id}"></property>
 		<property name="yanwenUserToken" value="${yanwen.user.token}"></property>
 		<property name="manufacturer" value="${amz.manufacturer}"></property>
@@ -48,7 +49,6 @@
 		<property name="appName" value="${amz.app.name}"></property>
 		<property name="appVersion" value="${amz.app.version}"></property>
 		<property name="marketplaceIDUS" value="${amz.market.place.id.us}"></property>
-		<property name="picDownloadPath" value="${image.download.path.temp}"></property>
 		<property name="defaultPdfDownloadPath" value="${yanwen.express.pdf.download.path}"></property>
 	</bean>
 	

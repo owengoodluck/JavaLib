@@ -49,6 +49,10 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 		}
 		return fee;
 	}
+
+	@Column(name="size_name")
+	private String sizeName;
+	
 	@Column(name="stock_quantity")
 	private Integer stockQuantity;//实际库存
 	@Column(name="purchase_price")
@@ -2860,4 +2864,11 @@ public class JewelryEntity implements java.io.Serializable,Cloneable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getSizeName() {
+		return sizeName;
+	}
+	public void setSizeName(String sizeName) {
+		this.sizeName = sizeName;
+	}
+	
 }
