@@ -39,7 +39,7 @@ public class PictureProcessController {
 		for(URLString url:picPackage.getUrlList()){
 			if(url!=null && url.getUrl().trim().length()>0){
 				this.log.info(url.getUrl());
-				if(url.getUrl().indexOf("www.amazon.com")>-1){
+				if(url.getUrl().indexOf("www.amazon")>-1){
 					this.amazonPictureDownloadService.downloadPictue(url.getUrl(), picPackage.getDownloadPath(),picPackage.getPicSize());
 				}else{
 					this.alibabaPictureDownloadService.downloadPictue(url.getUrl(), picPackage.getDownloadPath(),picPackage.getPicSize());
@@ -47,7 +47,7 @@ public class PictureProcessController {
 			}
 		}
 		this.log.info("---------------------------------------------------------------------");
-		this.log.info("---------------------------Download Complete------------------------------------------");
+		this.log.info("---------------------------Download Complete-------------------------");
 		this.log.info("---------------------------------------------------------------------");
 		model.addAttribute("currentMenu", "pic");
 		model.addAttribute("msg", "下载完成");

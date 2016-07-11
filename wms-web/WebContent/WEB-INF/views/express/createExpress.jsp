@@ -110,12 +110,6 @@ function submitForm(){
 					</td>
 				</tr>
 				<tr>
-					<td>发往国家</td> 
-					<td> 
-						<form:input path="country" type="text" style="width:100%"/>
-					</td>
-				</tr>
-				<tr>
 					<td>中文品名</td> 
 					<td> 
 						<form:input path="nameChinese" type="text" style="width:100%"/>
@@ -163,6 +157,54 @@ function submitForm(){
 					</td>
 				</tr>
 				<tr>
+					<td>收件人姓名</td> 
+					<td> 
+						<form:input path="receiver.name" type="text" style="width:100%"/>
+					</td>
+				</tr>
+				<tr>
+					<td>收件人电话</td> 
+					<td> 
+						<form:input path="receiver.phone" type="text" style="width:100%"/>
+					</td>
+				</tr>
+				<tr>
+					<td>国家</td> 
+					<td> 
+						<form:input path="receiver.country" type="text" style="width:100%"/>
+					</td>
+				</tr>
+				<tr>
+					<td>州</td> 
+					<td> 
+						<form:input path="receiver.state" type="text" style="width:100%"/>
+					</td>
+				</tr>
+				<tr>
+					<td>城市</td> 
+					<td> 
+						<form:input path="receiver.city" type="text" style="width:100%"/>
+					</td>
+				</tr>
+				<tr>
+					<td>收件人地址1</td> 
+					<td> 
+						<form:input path="receiver.address1" type="text" style="width:100%"/>
+					</td>
+				</tr>
+				<tr>
+					<td>收件人地址2</td> 
+					<td> 
+						<form:input path="receiver.address2" type="text" style="width:100%"/>
+					</td>
+				</tr>
+				<tr>
+					<td>邮编</td> 
+					<td> 
+						<form:input path="receiver.postcode" type="text" style="width:100%"/>
+					</td>
+				</tr>
+				<%-- <tr>
 					<td>订单信息获取方式</td> 
 					<td> 
 						<form:select path="methodToGetOrder">
@@ -170,7 +212,7 @@ function submitForm(){
 								<form:option value="remoteAmz">从亚马逊网站读取</form:option>
 						</form:select>
 					</td>
-				</tr>
+				</tr> --%>
 				<tr>
 					<td>快递单保存地址</td> 
 					<td width="90%"> 

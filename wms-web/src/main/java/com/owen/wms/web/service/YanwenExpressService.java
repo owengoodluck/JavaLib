@@ -128,8 +128,7 @@ public class YanwenExpressService {
 		AmazonOrder orderEntity = this.amazonOrderDao.get(form.getAmazonOrderID().trim());
 		CreateExpressResponseType result = null;
 		if (orderEntity!=null) {
-			
-			ExpressType et = this.convert(orderEntity,form);
+			ExpressType et = this.convert(form);
 			
 			//2.create Yanwen express
 			result = this.yanwenService.createExpress(et);
@@ -200,6 +199,34 @@ public class YanwenExpressService {
 		}
 	}
 	
+	private ExpressType convert(YanwenExpress form) {
+		ExpressType et = new ExpressType();
+		et.setUserid(AppConstant.yanwenUserId);
+		et.setSendDate(form.getSendDate()+"T00:00:00");// 2015-07-09T00:00:00
+		et.setQuantity(form.getQuantity());
+		et.setChannel(form.getChannel());//中文 ， 中邮北京平邮小包
+		String userOrderNumber = form.getAmazonOrderID();
+		if(form.getSequenceNo()!=null && form.getSequenceNo().trim().length()>0){
+			userOrderNumber+="_"+form.getSequenceNo();
+		}
+		et.setUserOrderNumber(userOrderNumber);
+
+		Receiver rc = form.getReceiver();
+		rc.setUserid(AppConstant.yanwenUserId);
+		et.setReceiver(rc);
+
+		GoodsName gn = new GoodsName();
+		et.setGoodsName(gn);
+		gn.setUserid(AppConstant.yanwenUserId);
+		gn.setNameCh(form.getNameChinese());
+		gn.setNameEn(form.getNameEnglish());
+		gn.setDeclaredValue(form.getDeclaredValue());
+		gn.setDeclaredCurrency(form.getDeclaredCurrency());
+		gn.setWeight(form.getWeight());
+
+		this.log.info(JaxbUtil.toXml(et));
+		return et;
+	}
 	private ExpressType convert(AmazonOrder orderEntity, YanwenExpress form) {
 		ExpressType et = new ExpressType();
 		et.setUserid(AppConstant.yanwenUserId);

@@ -24,8 +24,10 @@
 		$('#expressNumber').focus();
 
 		$("#expressNumber").keypress(function(event) {
-			if (event.keyCode == "13") {
+			//alert(event.keyCode);
+			if (event.keyCode == "13" || event.keyCode == "9" ||event.keyCode == 13 || event.keyCode == 9) {
 				//alert($("#expressNumber").val());
+				//alert(event.keyCode);
 				submitForm();
 			}
 		});

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.amazonaws.mws.entity.yanwen.Receiver;
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
 import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.web.dao.Page;
@@ -125,7 +126,6 @@ public class YanwenExpressController {
 		
 		AmazonOrder order = this.amazonOrderService.getByOrderIDWithoutExpress(amazonOrderID);
 		if(order!=null){
-			
 			Set<AmazonOrderItem> orderItems = order.getOrderItemList();
 			if(orderItems.size()>0){
 				AmazonOrderItem[] orderItemArray = orderItems.toArray(new AmazonOrderItem[]{});
@@ -171,9 +171,14 @@ public class YanwenExpressController {
 							express.setNameEnglish("Fashion Clothes Shorts");
 							break;
 						}
+						case "sunglasses":{
+							express.setNameChinese("太阳镜");
+							express.setNameEnglish("sunglasses");
+							break;
+						}
 						default:{
-							express.setNameChinese("时尚简约饰品-XXX");
-							express.setNameEnglish("Fashion Jewelry Accessories-XXX");
+							express.setNameChinese(null);
+							express.setNameEnglish(null);
 							break;
 						}
 						}
@@ -181,8 +186,32 @@ public class YanwenExpressController {
 				}
 			}
 		}
+		
+		Receiver rc = new Receiver();
+		express.setReceiver(rc );
+		rc.setUserid(AppConstant.yanwenUserId);
+		rc.setName(order.getShippingAddressName());
+		rc.setPhone(order.getShippingAddressPhone());
+		rc.setCountry(express.getCountry()); 
+		rc.setState(order.getShippingAddressStateOrRegion());
+		rc.setCity(order.getShippingAddressCity());
+		rc.setAddress1(order.getShippingAddressAddressLine1());
+		rc.setAddress2(order.getShippingAddressAddressLine2());
+		rc.setPostcode(order.getShippingAddressPostalCode());
 		model.addAttribute("express", express);
 		model.addAttribute("currentMenu", "express");
+		
+		Set<AmazonOrderItem> list = order.getOrderItemList();
+		double sum=0;
+		for(AmazonOrderItem i:list){
+			sum+=i.getItemPriceAmount();
+		}
+		if(sum==0){
+			express.setDeclaredValue(9);
+		}else{
+			express.setDeclaredValue(sum);
+		}
+		express.setQuantity(list.size());
 		return "createYanwenExpress";
 	}
 
