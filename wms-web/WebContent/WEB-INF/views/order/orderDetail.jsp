@@ -55,13 +55,14 @@ function submitForm(){
 					<th>订购量</th>
 					<th>库存量</th>
 					<th>Amazon链接</th>
+					<th>进货链接</th>
 					<th>标题</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${order.orderItemList}" var="item" >
 					<tr>
-						<td><img src="/wms-web/img${item.getSellerSKU().getLocalImagePath()}"  height="60" onclick='window.open("/wms-web/img${item.getSellerSKU().getLocalImagePath()}")'></td>
+						<td><img src="/wms-web/img${item.getSellerSKU().getLocalImagePath()}"  height="125" onclick='window.open("/wms-web/img${item.getSellerSKU().getLocalImagePath()}")'></td>
 						<td>
 							<a href='<c:url value="/prod/edit/${item.sellerSKU.itemSku}" />' target="_blank">${item.sellerSKU.itemSku}</a>
 						</td>
@@ -86,6 +87,23 @@ function submitForm(){
 							</c:if>
 						</td>
 						<td><a href='http://www.amazon.com/dp/${item.ASIN}' target="_blank"  class="btn">Amazon链接</a></td>
+						<td>
+							<c:if test="${item.sellerSKU.purchaseUrl1 != null }">
+								<a href='${item.sellerSKU.purchaseUrl1}' target="_blank"  class="btn">进货链接1</a><br>
+							</c:if>
+							<c:if test="${item.sellerSKU.purchaseUrl2 != null && item.sellerSKU.purchaseUrl2.trim().length()>0 }">
+								<a href='${item.sellerSKU.purchaseUrl2}' target="_blank"  class="btn">进货链接2</a><br>
+							</c:if>
+							<c:if test="${item.sellerSKU.purchaseUrl3 != null && item.sellerSKU.purchaseUrl3.trim().length()>0}">
+								<a href='${item.sellerSKU.purchaseUrl3}' target="_blank"  class="btn">进货链接3</a><br>
+							</c:if>
+							<c:if test="${item.sellerSKU.purchaseUrl4 != null && item.sellerSKU.purchaseUrl4.trim().length()>0}">
+								<a href='${item.sellerSKU.purchaseUrl4}' target="_blank"  class="btn">进货链接4</a><br>
+							</c:if>
+							<c:if test="${item.sellerSKU.purchaseUrl5 != null && item.sellerSKU.purchaseUrl5.trim().length()>0}">
+								<a href='${item.sellerSKU.purchaseUrl5}' target="_blank"  class="btn">进货链接5</a><br>
+							</c:if>
+						</td>
 						<td>${item.title}</td>
 					</tr>
 				</c:forEach>

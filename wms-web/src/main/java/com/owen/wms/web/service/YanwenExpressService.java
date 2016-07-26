@@ -129,6 +129,7 @@ public class YanwenExpressService {
 		CreateExpressResponseType result = null;
 		if (orderEntity!=null) {
 			ExpressType et = this.convert(form);
+			form.setAmazonOrder(orderEntity);
 			
 			//2.create Yanwen express
 			result = this.yanwenService.createExpress(et);

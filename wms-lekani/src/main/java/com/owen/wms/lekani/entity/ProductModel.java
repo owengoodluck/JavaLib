@@ -46,7 +46,7 @@ public class ProductModel {
 	private String style;
 
 	@JsonProperty("BarCode")
-	private String barCode;
+	private String barCode;//EAN ?
 
 	@JsonProperty("Price")  
 	private String price;

@@ -48,9 +48,13 @@ public class AmazonOrder implements java.io.Serializable{
 		return profit;
 	}
 	
+	public int daysOfPurchased(){
+		return (new Date().getDate()-this.getPurchaseDate().getDate());
+	}
 	
 	private Boolean isPrinted;
 	private Boolean isScanedConfirmedDeliver;
+	
 	
 	@Id
 	private String amazonOrderId;

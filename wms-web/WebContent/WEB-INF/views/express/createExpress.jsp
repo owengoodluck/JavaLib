@@ -77,6 +77,21 @@ function submitForm(){
 		<c:if test='${ fn:indexOf(createSuccessIndicator, "快递单创建成功")  < 0 }'>
 			<span class="label label-danger">${createSuccessIndicator}</span>
 		</c:if>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>itemSku</th> <th>sizeName</th>  <th>colorName</th> <th>image</th>
+				</tr>
+			</thead>
+			<c:forEach items="${express.amazonOrder.orderItemList}" var="item" >
+				<tr>
+					<td>${item.sellerSKU.itemSku}</td>
+					<td>${item.sellerSKU.sizeName}</td>
+					<td>${item.sellerSKU.colorName}</td>
+					<td><img src="/wms-web/img${item.getSellerSKU().getLocalImagePath()}"  height="60" onclick='window.open("/wms-web/img${item.getSellerSKU().getLocalImagePath()}")'></td>
+				</tr>
+			</c:forEach>
+		</table>
 		<form:form modelAttribute="express" enctype="multipart/form-data" >
 			<table  border="1"  cellspacing="10">
 				<tr>

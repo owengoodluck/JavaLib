@@ -182,6 +182,7 @@ function submitForm(preOrNext){
 												<option value="anklets" <c:if test="${ prod.itemType == 'anklets' }" >selected="true"</c:if> >脚链</option>
 												<option value="dresses" <c:if test="${ prod.itemType == 'dresses' }" >selected="true"</c:if> >dresses</option>
 												<option value="shorts" <c:if test="${ prod.itemType == 'shorts' }" >selected="true"</c:if> >shorts-短裤</option>
+												<option value="music-fan-t-shirts" <c:if test="${ prod.itemType == 'music-fan-t-shirts' }" >selected="true"</c:if> >T恤</option>
 												<option value="sunglasses" <c:if test="${ prod.itemType == 'sunglasses' }" >selected="true"</c:if> >太阳镜</option>
 										</select>
 									</td>
@@ -251,6 +252,7 @@ function submitForm(preOrNext){
 												<option value="anklets" <c:if test="${ prod.itemType == 'anklets' }" >selected="true"</c:if> >脚链</option>
 												<option value="dresses" <c:if test="${ prod.itemType == 'dresses' }" >selected="true"</c:if> >dresses</option>
 												<option value="shorts" <c:if test="${ prod.itemType == 'shorts' }" >selected="true"</c:if> >shorts-短裤</option>
+												<option value="music-fan-t-shirts" <c:if test="${ prod.itemType == 'music-fan-t-shirts' }" >selected="true"</c:if> >T恤</option>
 												<option value="sunglasses" <c:if test="${ prod.itemType == 'sunglasses' }" >selected="true"</c:if> >太阳镜</option>
 										</select>
 									</td>

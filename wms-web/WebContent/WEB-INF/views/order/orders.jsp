@@ -104,6 +104,7 @@ function confirmShipment(){
 					<th >图片</th>
 					<th >订单号</th>
 					<th>购买日期</th>
+					<th>订购天数</th>
 					<th>最后更新时间</th>
 					<th>订单状态</th>
 					<th>利润概览</th>
@@ -119,7 +120,6 @@ function confirmShipment(){
 					<th>shipServiceLevel</th>
 					<!-- <th>shipmentServiceLevelCategory</th> -->
 					<th>latestShipDate</th>
-					<th>earliestShipDate</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -139,6 +139,16 @@ function confirmShipment(){
 						</td>
 						<td align="left"><a href='<c:url value="/order/detail/${order.getAmazonOrderId()}" />' target="_blank" >${order.getAmazonOrderId()}</a></td>
 						<td align="left">${order.getPurchaseDate()}</td>
+						<td>
+							<c:if test="${!order.isScanedConfirmedDeliver }">
+								<c:if test="${ order.getOrderStatus()== 'Shipped' &&  order.daysOfPurchased()>3 && order.daysOfPurchased()<=5}">
+									<span class="label label-warning">${order.daysOfPurchased()}</span>
+								</c:if>
+								<c:if test="${ order.getOrderStatus()== 'Shipped' &&  order.daysOfPurchased()>5}">
+									<span class="label label-danger">${order.daysOfPurchased()}</span>
+								</c:if>
+							</c:if>
+						</td>
 						<td>${order.getLastUpdateDate()}</td>
 						<td>
 							<c:if test="${order.getOrderStatus()== 'Unshipped' || order.getOrderStatus()== 'Shipped'}">
@@ -187,7 +197,7 @@ function confirmShipment(){
 						<td>${order.getShipServiceLevel()}</td>
 						<%-- <td>${order.getShipmentServiceLevelCategory()}</td> --%>
 						<td>${order.getLatestShipDate()}</td>
-						<td>${order.getEarliestShipDate()}</td>
+						
 					</tr>
 				</c:forEach>
 				</form>

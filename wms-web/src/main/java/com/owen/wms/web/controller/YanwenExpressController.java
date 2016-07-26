@@ -128,8 +128,13 @@ public class YanwenExpressController {
 		if(order!=null){
 			Set<AmazonOrderItem> orderItems = order.getOrderItemList();
 			if(orderItems.size()>0){
+				int i =0;
 				AmazonOrderItem[] orderItemArray = orderItems.toArray(new AmazonOrderItem[]{});
 				AmazonOrderItem firstOrderItem = orderItemArray[0];
+				while( firstOrderItem.getQuantityOrdered() < 1 && i<orderItems.size()-1 ){
+					i++;
+					firstOrderItem = orderItemArray[i];
+				}
 				JewelryEntity prod = firstOrderItem.getSellerSKU();
 				if(prod!=null){
 					String itemType = prod.getItemType();
@@ -171,6 +176,11 @@ public class YanwenExpressController {
 							express.setNameEnglish("Fashion Clothes Shorts");
 							break;
 						}
+						case "music-fan-t-shirts":{
+							express.setNameChinese("时尚服饰-T恤");
+							express.setNameEnglish("Fashion Clothes T Shirts");
+							break;
+						}
 						case "sunglasses":{
 							express.setNameChinese("太阳镜");
 							express.setNameEnglish("sunglasses");
@@ -204,7 +214,9 @@ public class YanwenExpressController {
 		Set<AmazonOrderItem> list = order.getOrderItemList();
 		double sum=0;
 		for(AmazonOrderItem i:list){
-			sum+=i.getItemPriceAmount();
+			if(i.getItemPriceAmount()!=null){
+				sum+=i.getItemPriceAmount();
+			}
 		}
 		if(sum==0){
 			express.setDeclaredValue(9);
@@ -228,8 +240,8 @@ public class YanwenExpressController {
 		if(result!=null){
 			if(result.isCallSuccess()){
 				express.setAmazonOrderID(null);
-				express.setChannel(null);
-				express.setNameChinese(null);
+//				express.setChannel(null);
+//				express.setNameChinese(null);
 				model.addAttribute("createSuccessIndicator","订单["+ orderId+"] 快递单创建成功！快递单号 ：" +result.getResp().getEpcode());
 			}else{
 				model.addAttribute("createSuccessIndicator", "快递单创建失败： "+result.getResp().getReasonMessage());

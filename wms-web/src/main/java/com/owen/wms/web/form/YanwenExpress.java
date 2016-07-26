@@ -1,6 +1,7 @@
 package com.owen.wms.web.form;
 
 import com.amazonaws.mws.entity.yanwen.Receiver;
+import com.owen.wms.web.entity.AmazonOrder;
 
 public class YanwenExpress {
 	private String amazonOrderID;
@@ -18,6 +19,7 @@ public class YanwenExpress {
 	private String country;
 	
 	private Receiver receiver;
+	private AmazonOrder amazonOrder;
 	
 	public String getMethodToGetOrder() {
 		return methodToGetOrder;
@@ -102,6 +104,12 @@ public class YanwenExpress {
 	}
 	public void setReceiver(Receiver receiver) {
 		this.receiver = receiver;
+	}
+	public AmazonOrder getAmazonOrder() {
+		return amazonOrder;
+	}
+	public void setAmazonOrder(AmazonOrder amazonOrder) {
+		this.amazonOrder = amazonOrder;
 	}
 	
 	

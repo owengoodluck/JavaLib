@@ -26,7 +26,7 @@ public class UpcServiceTest {
 	
 	@Test
 	public void testLoad(){
-		String excelPath = "C:/Users/owen/Desktop/Amazon/UPC/2016-04-04_192813-neoo_ok-GS1授权UPC码500个/2016-04-04_192813-neoo_ok-GS1授权UPC码500个/UPC-A (USA & Canada)/UPC - Spreadsheet -1 Excel.xls";
+		String excelPath = "C:/Users/owen/Desktop/Amazon/UPC/UPC - Spreadsheet - Excel.xls";
 		this.upcService.loadUPCFromExcel(excelPath );
 	}
 	
