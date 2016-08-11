@@ -184,6 +184,7 @@ function submitForm(preOrNext){
 												<option value="shorts" <c:if test="${ prod.itemType == 'shorts' }" >selected="true"</c:if> >shorts-短裤</option>
 												<option value="music-fan-t-shirts" <c:if test="${ prod.itemType == 'music-fan-t-shirts' }" >selected="true"</c:if> >T恤</option>
 												<option value="sunglasses" <c:if test="${ prod.itemType == 'sunglasses' }" >selected="true"</c:if> >太阳镜</option>
+												<option value="wallets" <c:if test="${ prod.itemType == 'wallets' }" >selected="true"</c:if> >钱包</option>
 										</select>
 									</td>
 									<td width="7%">
@@ -254,6 +255,7 @@ function submitForm(preOrNext){
 												<option value="shorts" <c:if test="${ prod.itemType == 'shorts' }" >selected="true"</c:if> >shorts-短裤</option>
 												<option value="music-fan-t-shirts" <c:if test="${ prod.itemType == 'music-fan-t-shirts' }" >selected="true"</c:if> >T恤</option>
 												<option value="sunglasses" <c:if test="${ prod.itemType == 'sunglasses' }" >selected="true"</c:if> >太阳镜</option>
+												<option value="wallets" <c:if test="${ prod.itemType == 'wallets' }" >selected="true"</c:if> >钱包</option>
 										</select>
 									</td>
 									<td width="7%">

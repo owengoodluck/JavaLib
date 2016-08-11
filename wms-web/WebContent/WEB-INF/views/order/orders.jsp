@@ -102,6 +102,7 @@ function confirmShipment(){
 				<tr >
 					<th >序号</th>
 					<th >图片</th>
+					<th >库存</th>
 					<th >订单号</th>
 					<th>购买日期</th>
 					<th>订购天数</th>
@@ -119,7 +120,7 @@ function confirmShipment(){
 					<th>salesChannel</th> -->
 					<th>shipServiceLevel</th>
 					<!-- <th>shipmentServiceLevelCategory</th> -->
-					<th>latestShipDate</th>
+					<!-- <th>latestShipDate</th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -135,6 +136,12 @@ function confirmShipment(){
 						<td width="9%">
 							<c:forEach items="${order.orderItemList}" var="item" >
 								<img src="/wms-web/img${item.getSellerSKU().getLocalImagePath()}"  height="40" onclick='window.open("/wms-web/img${item.getSellerSKU().getLocalImagePath()}")'>
+								${item.getSellerSKU().sizeName}
+							</c:forEach>
+						</td>
+						<td width="4%">
+							<c:forEach items="${order.orderItemList}" var="item" >
+								${item.getSellerSKU().stockQuantity}
 							</c:forEach>
 						</td>
 						<td align="left"><a href='<c:url value="/order/detail/${order.getAmazonOrderId()}" />' target="_blank" >${order.getAmazonOrderId()}</a></td>
@@ -196,7 +203,7 @@ function confirmShipment(){
 						<%-- <td>${order.getSalesChannel()}</td> --%>
 						<td>${order.getShipServiceLevel()}</td>
 						<%-- <td>${order.getShipmentServiceLevelCategory()}</td> --%>
-						<td>${order.getLatestShipDate()}</td>
+						<%-- <td>${order.getLatestShipDate()}</td> --%>
 						
 					</tr>
 				</c:forEach>

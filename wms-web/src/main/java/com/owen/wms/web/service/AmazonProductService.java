@@ -187,9 +187,9 @@ public class AmazonProductService {
 		}
 		//1. copy excel head from template
 		File templateFile = null;
-		if("dresses".equals(list.get(0).getItemType())||"shorts".equals(list.get(0).getItemType())){
+		if("dresses".equals(list.get(0).getItemType())||"shorts".equals(list.get(0).getItemType())||"music-fan-t-shirts".equals(list.get(0).getItemType())){
 			templateFile =new ClassPathResource("template/ClothesTemplate.xls").getFile();		
-		}else if("sunglasses".equals(list.get(0).getItemType())){
+		}else if("sunglasses".equals(list.get(0).getItemType())||"wallets".equals(list.get(0).getItemType())){
 			templateFile =new ClassPathResource("template/ShoesHandbagsSunglassesTemple.xls").getFile();		
 		}else{
 			templateFile =new ClassPathResource("template/JewelryTemplate.xls").getFile();

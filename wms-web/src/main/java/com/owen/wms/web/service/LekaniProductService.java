@@ -235,7 +235,8 @@ public class LekaniProductService {
 		this.setMetalType(jew, pm);
 		jew.setDepartmentName("womens");//TODO girls ???
 		jew.setUpdateDate(new Date());
-		jew.setPurchaseUrl1("http://www.pfhoo.com/p/"+pm.getProductID()+".html");
+		jew.setPurchaseUrl1("http://www.pfhoo.com/s/"+pm.getProductID().substring(2)+".html");
+		jew.setPurchaseUrl2("http://www.pfhoo.com/p/"+pm.getProductID()+".html");
 		if(!StringUtils.isEmpty(pm.getSKU())){
 			jew.setModel(pm.getSKU());
 		}
@@ -406,6 +407,9 @@ public class LekaniProductService {
 //			itemType = "xxxxxxx";
 		}else if(productModel.getCatName().indexOf("Jewelry Set")>-1){
 			sku ="JS";
+//			itemType = "xxxxxxx";
+		}else if(productModel.getCatName().indexOf("Wallet")>-1){
+			sku ="Wallet";
 //			itemType = "xxxxxxx";
 		}else {
 			sku ="OT";

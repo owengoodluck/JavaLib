@@ -150,6 +150,9 @@ public class LekaniController {
 		if(importForm.getProdID()==null){
 			importForm.setProdID(0);
 		}
+		if(importForm.getSku()!=null){
+			importForm.setSku(importForm.getSku().trim());
+		}
 		ProductModel prod = this.lekaniProductService.loadById(importForm.getProdID(),importForm.getSku());
 		if(prod!=null){
 			return this.prodDetail(model, prod.getProductID());

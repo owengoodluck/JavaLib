@@ -117,6 +117,7 @@ function cleanForm(){
 						<form:option value="245">太阳镜</form:option>
 						<form:option value="247">偏光镜</form:option>
 						<form:option value="244">时尚眼镜</form:option>
+						<form:option value="242">Wallets</form:option>
 						<%-- 
 						<form:option value="104">LEKANI 纯银首饰</form:option>
 						<form:option value="202">耳饰</form:option>
