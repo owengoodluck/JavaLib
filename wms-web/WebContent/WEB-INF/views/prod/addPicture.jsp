@@ -78,7 +78,15 @@ function oppenPicLink(picButton,surfix){
 						<c:forEach items="${productsForm.list}" var="prod" varStatus="status">
 							<tr>
 								<input type="hidden" id="list${status.index}.itemSku" name='list[${status.index}].itemSku'  value="${prod.itemSku}"/>
-								<td width="6%"><b>${prod.itemSku}</b></td>
+								<td width="6%">
+									<b>${prod.itemSku}</b>
+									<c:set value="${ fn:split(prod.itemSku, '-') }" var="skuComponents" />
+									<c:forEach items="${ skuComponents }" var="skuComponent" varStatus="varStatus" >
+										<c:if test="${varStatus.count == 2 }"> <br/>
+										<a href='<c:url value="/lekani/prodDetail/${skuComponent}" />' target="_blank" >LKN详情</a>
+										</c:if>
+									</c:forEach>
+								</td>
 								<td width="5%">
 										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com')>-1 }">
 											<img src="${ prod.mainImageUrl}"  height="100" onclick='window.open("${ prod.mainImageUrl}")'/>
