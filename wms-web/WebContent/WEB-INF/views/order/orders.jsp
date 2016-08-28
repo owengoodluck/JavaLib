@@ -140,8 +140,16 @@ function confirmShipment(){
 							</c:forEach>
 						</td>
 						<td width="4%">
+							<c:if test="${item.getSellerSKU().stockQuantity>0}">
+							
+							</c:if>
 							<c:forEach items="${order.orderItemList}" var="item" >
-								${item.getSellerSKU().stockQuantity}
+								<c:if test="${item.getSellerSKU().stockQuantity>0}">
+									<span class="label label-success">${item.getSellerSKU().stockQuantity}</span>
+								</c:if>
+								<c:if test="${item.getSellerSKU().stockQuantity<1}">
+									0
+								</c:if>
 							</c:forEach>
 						</td>
 						<td align="left"><a href='<c:url value="/order/detail/${order.getAmazonOrderId()}" />' target="_blank" >${order.getAmazonOrderId()}</a></td>

@@ -22,9 +22,11 @@ import com.owen.wms.web.dao.Page;
 import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.entity.AmazonOrderItem;
 import com.owen.wms.web.entity.JewelryEntity;
+import com.owen.wms.web.entity.YanWenExpressEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
 import com.owen.wms.web.form.ExpressScanForm;
 import com.owen.wms.web.form.YanwenExpress;
+import com.owen.wms.web.music.NumberPlayer;
 import com.owen.wms.web.service.AmazonOrderService;
 import com.owen.wms.web.service.YanwenExpressService;
 
@@ -40,6 +42,15 @@ public class YanwenExpressController {
 	@Autowired
 	@Qualifier("amazonOrderService")
 	private AmazonOrderService amazonOrderService ;
+
+	@RequestMapping(value="/expressDetail", method = RequestMethod.GET)
+	public String getExpressDetailByOrderID(Model model,HttpServletRequest request) throws Exception {
+		String orderID =request.getParameter("orderID");
+		YanWenExpressEntity expressEntity = this.service.getByOrderID(orderID);
+		model.addAttribute("expressEntity", expressEntity);
+		model.addAttribute("currentMenu", "express");
+		return "express/expressDetail";
+	}
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String listAll(Model model,HttpServletRequest request) throws Exception {
@@ -68,6 +79,12 @@ public class YanwenExpressController {
 	public String scanPost(Model model,HttpServletRequest request,@ModelAttribute("expressScanForm") ExpressScanForm expressScanForm) throws Exception {
 		if(expressScanForm.getExpressNumber()!=null && expressScanForm.getExpressNumber().trim().length()>0){
 			expressScanForm.setPreviousExpressNumber(expressScanForm.getExpressNumber());
+			NumberPlayer play = new NumberPlayer();
+			if(expressScanForm.getExpressNumber().length()>9){
+				play.playNumber(expressScanForm.getExpressNumber().substring(9));
+			}else{
+				play.playNumber(expressScanForm.getExpressNumber());
+			}
 			expressScanForm.setOrder(null);
 			expressScanForm.setOrderItemSet(null);
 			this.service.scanByExpressNumber(expressScanForm);
@@ -90,6 +107,12 @@ public class YanwenExpressController {
 	public String scanDeliverPost(Model model,HttpServletRequest request,@ModelAttribute("expressScanForm") ExpressScanForm expressScanForm) throws Exception {
 		if(expressScanForm.getExpressNumber()!=null && expressScanForm.getExpressNumber().trim().length()>0){
 			expressScanForm.setPreviousExpressNumber(expressScanForm.getExpressNumber());
+			NumberPlayer play = new NumberPlayer();
+			if(expressScanForm.getExpressNumber().length()>8){
+				play.playNumber(expressScanForm.getExpressNumber().substring(8));
+			}else{
+				play.playNumber(expressScanForm.getExpressNumber());
+			}
 			expressScanForm.setOrder(null);
 			expressScanForm.setOrderItemSet(null);
 			this.service.scanExpressToConfirmDeliver(expressScanForm);

@@ -64,6 +64,10 @@ public class YanwenExpressService {
 	@Qualifier("yanWenExpressDao")
 	private YanWenExpressDao yanWenExpressDao;
 	
+	public YanWenExpressEntity getByOrderID(String orderID){
+		YanWenExpressEntity ent =this.yanWenExpressDao.getByAmazonOrderId(orderID);
+		return ent;
+	}
 	/**
 	 * page query
 	 * @param queryForm
