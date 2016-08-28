@@ -103,14 +103,14 @@ function confirmShipment(){
 					<th >序号</th>
 					<th >图片</th>
 					<th >库存</th>
+					<th>未发</th>
+					<th>已发</th>
 					<th >订单号</th>
 					<th>购买日期</th>
 					<th>订购天数</th>
 					<th>最后更新时间</th>
 					<th>订单状态</th>
 					<th>利润概览</th>
-					<th>发货数量</th>
-					<th>未发货数量</th>
 					<th>是否打印</th>
 					<!-- <th>isBusinessOrder</th>
 					<th>isPremiumOrder</th>
@@ -152,6 +152,20 @@ function confirmShipment(){
 								</c:if>
 							</c:forEach>
 						</td>
+						<td>
+							<c:if test="${order.getNumberOfItemsUnshipped() == 0}">
+								${order.getNumberOfItemsUnshipped()}
+							</c:if>
+							<c:if test="${order.getNumberOfItemsUnshipped() > 0 }">
+								<c:if test="${order.getOrderStatus() == 'Unshipped' || order.getOrderStatus()== 'Shipped'}">
+									<span class="label label-danger">&nbsp;&nbsp;  ${order.getNumberOfItemsUnshipped()} &nbsp;&nbsp;</span>
+								</c:if>
+								<c:if test="${order.getOrderStatus() == 'Pending' || order.getOrderStatus()== 'Canceled'}">
+									${order.getNumberOfItemsUnshipped()}
+								</c:if>
+							</c:if>
+						</td>
+						<td>${order.getNumberOfItemsShipped()}</td>
 						<td align="left"><a href='<c:url value="/order/detail/${order.getAmazonOrderId()}" />' target="_blank" >${order.getAmazonOrderId()}</a></td>
 						<td align="left">${order.getPurchaseDate()}</td>
 						<td>
@@ -174,20 +188,6 @@ function confirmShipment(){
 							</c:if>
 						</td>
 						<td>${order.getProfit()}</td>  
-						<td>${order.getNumberOfItemsShipped()}</td>
-						<td>
-							<c:if test="${order.getNumberOfItemsUnshipped() == 0}">
-								${order.getNumberOfItemsUnshipped()}
-							</c:if>
-							<c:if test="${order.getNumberOfItemsUnshipped() > 0 }">
-								<c:if test="${order.getOrderStatus() == 'Unshipped' || order.getOrderStatus()== 'Shipped'}">
-									<span class="label label-danger">&nbsp;&nbsp;  ${order.getNumberOfItemsUnshipped()} &nbsp;&nbsp;</span>
-								</c:if>
-								<c:if test="${order.getOrderStatus() == 'Pending' || order.getOrderStatus()== 'Canceled'}">
-									${order.getNumberOfItemsUnshipped()}
-								</c:if>
-							</c:if>
-						</td>	
 						<td>
 							<c:if test="${order.isPrinted}">
 								<c:if test="${order.isScanedConfirmedDeliver}">

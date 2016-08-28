@@ -29,6 +29,7 @@ import com.owen.wms.web.form.YanwenExpress;
 import com.owen.wms.web.music.NumberPlayer;
 import com.owen.wms.web.service.AmazonOrderService;
 import com.owen.wms.web.service.YanwenExpressService;
+import com.owen.wms.web.utils.DigitalFormatUtil;
 
 @Controller
 @RequestMapping("/yanwen")
@@ -151,6 +152,7 @@ public class YanwenExpressController {
 		if(order!=null){
 			Set<AmazonOrderItem> orderItems = order.getOrderItemList();
 			if(orderItems.size()>0){
+				express.setQuantity(orderItems.size());
 				int i =0;
 				AmazonOrderItem[] orderItemArray = orderItems.toArray(new AmazonOrderItem[]{});
 				AmazonOrderItem firstOrderItem = orderItemArray[0];
@@ -164,56 +166,66 @@ public class YanwenExpressController {
 					if(itemType!=null){
 						itemType = itemType.toLowerCase();
 						switch (itemType){
-						case "pendant-necklaces":{
-							express.setNameChinese("时尚简约饰品-项链吊坠");
-							express.setNameEnglish("Fashion Jewelry Accessories-Necklace Pendant");
-							break;
-						}
-						case "link-bracelets":{
-							express.setNameChinese("时尚简约饰品-手链手环");
-							express.setNameEnglish("Fashion Jewelry Accessories-Bracelets");
-							break;
-						}
-						case "rings":{
-							express.setNameChinese("时尚简约饰品-指环戒指");
-							express.setNameEnglish("Fashion Jewelry Accessories-Rings");
-							break;
-						}
-						case "earrings":{
-							express.setNameChinese("时尚简约饰品-耳环耳坠");
-							express.setNameEnglish("Fashion Jewelry Accessories-Earrings");
-							break;
-						}
-						case "anklets":{
-							express.setNameChinese("时尚简约饰品-脚踝链");
-							express.setNameEnglish("Fashion Jewelry Accessories-Anklets");
-							break;
-						}
-						case "dresses":{
-							express.setNameChinese("时尚服饰-连衣裙");
-							express.setNameEnglish("Fashion Clothes Dress");
-							break;
-						}
-						case "shorts":{
-							express.setNameChinese("时尚服饰-短裤");
-							express.setNameEnglish("Fashion Clothes Shorts");
-							break;
-						}
-						case "music-fan-t-shirts":{
-							express.setNameChinese("时尚服饰-T恤");
-							express.setNameEnglish("Fashion Clothes T Shirts");
-							break;
-						}
-						case "sunglasses":{
-							express.setNameChinese("太阳镜");
-							express.setNameEnglish("sunglasses");
-							break;
-						}
-						default:{
-							express.setNameChinese(null);
-							express.setNameEnglish(null);
-							break;
-						}
+							case "pendant-necklaces":{
+								express.setNameChinese("时尚简约饰品-项链吊坠");
+								express.setNameEnglish("Fashion Jewelry Accessories-Necklace Pendant");
+								break;
+							}
+							case "link-bracelets":{
+								express.setNameChinese("时尚简约饰品-手链手环");
+								express.setNameEnglish("Fashion Jewelry Accessories-Bracelets");
+								break;
+							}
+							case "rings":{
+								express.setNameChinese("时尚简约饰品-指环戒指");
+								express.setNameEnglish("Fashion Jewelry Accessories-Rings");
+								break;
+							}
+							case "earrings":{
+								express.setNameChinese("时尚简约饰品-耳环耳坠");
+								express.setNameEnglish("Fashion Jewelry Accessories-Earrings");
+								break;
+							}
+							case "anklets":{
+								express.setNameChinese("时尚简约饰品-脚踝链");
+								express.setNameEnglish("Fashion Jewelry Accessories-Anklets");
+								break;
+							}
+							case "dresses":{
+								express.setNameChinese("时尚服饰-连衣裙");
+								express.setNameEnglish("Fashion Clothes Dress");
+								break;
+							}
+							case "shorts":{
+								express.setNameChinese("时尚服饰-短裤");
+								express.setNameEnglish("Fashion Clothes Shorts");
+								break;
+							}
+							case "music-fan-t-shirts":{
+								express.setNameChinese("时尚服饰-T恤");
+								express.setNameEnglish("Fashion Clothes T Shirts");
+								break;
+							}
+							case "sunglasses":{
+								express.setNameChinese("太阳镜");
+								express.setNameEnglish("sunglasses");
+								break;
+							}
+							case "wallets":{
+								express.setNameChinese("女士零钱包");
+								express.setNameEnglish("Fashion Lady Purse");
+								break;
+							}
+							case "fashion-hoodies":{
+								express.setNameChinese("时尚卫衣");
+								express.setNameEnglish("ashion Hoodies");
+								break;
+							}
+							default:{
+								express.setNameChinese(null);
+								express.setNameEnglish(itemType);
+								break;
+							}
 						}
 					}
 				}
@@ -238,13 +250,19 @@ public class YanwenExpressController {
 		double sum=0;
 		for(AmazonOrderItem i:list){
 			if(i.getItemPriceAmount()!=null){
-				sum+=i.getItemPriceAmount();
+				sum += i.getItemPriceAmount();
 			}
 		}
 		if(sum==0){
 			express.setDeclaredValue(9);
+		}else if(sum>10 && sum <=20 ){
+			express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/2, 2));
+		}else if(sum>20 && sum <=50 ){
+			express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
+		}else if(sum>50 && sum <=100 ){
+			express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
 		}else{
-			express.setDeclaredValue(sum);
+			express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(2*sum/3, 2));
 		}
 		express.setQuantity(list.size());
 		return "createYanwenExpress";

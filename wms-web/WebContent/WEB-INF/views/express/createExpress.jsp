@@ -166,10 +166,22 @@ function submitForm(){
 					</td>
 				</tr>
 				<tr>
-					<td>申报价值</td> 
-					<td> 
-						<form:input path="declaredValue" type="text" style="width:100%"/>
-					</td>
+					<c:if test="${express.declaredValue<=20 }">
+						<td> 
+							申报价值
+						</td> 
+						<td> 
+							<form:input path="declaredValue" type="text" style="width:100%;" />
+						</td>
+					</c:if>
+					<c:if test="${express.declaredValue>20 }">
+						<td> 
+							<span class="label label-danger">申报价值>20</span>
+						</td> 
+						<td> 
+							<form:input path="declaredValue" type="text" style="width:100%;color:#FF0000;" />
+						</td>
+					</c:if>
 				</tr>
 				<tr>
 					<td>收件人姓名</td> 

@@ -216,7 +216,7 @@ function submitForm(preOrNext){
 									<td width="4%"><input id="list${status.index}.colorName"  name='list[${status.index}].colorName'  type="text"  style="width:100%" type='text' value="${prod.colorName}"/></td>
 									<td width="4%"><input id="list${status.index}.sizeName"  name='list[${status.index}].sizeName'  type="text"  style="width:100%" type='text' value="${prod.sizeName}"/></td>
 									<td width="4%">
-										<b><input id="list${status.index}.stockQuantity" name='list[${status.index}].stockQuantity' type="text"  style="width:100%" type='text' value="${prod.stockQuantity}" /></b>
+										<b><input id="list${status.index}.stockQuantity" name='list[${status.index}].stockQuantity' type="text"  style="width:100%" <c:if test="${prod.stockQuantity>0} ">style="width:100%;color:#FF0000;"</c:if> type='text' value="${prod.stockQuantity}" /></b>
 									</td>
 									<td width="4%">
 										<b><input id="list${status.index}.purchasePrice" name='list[${status.index}].purchasePrice' type="text"  style="width:100%" type='text' value="${prod.purchasePrice}" /></b>
@@ -289,7 +289,7 @@ function submitForm(preOrNext){
 									<td width="4%"><input                        id="list${status.index}.sizeName"  name='list[${status.index}].sizeName'  type="text"  style="width:100%" type='text' value="${prod.sizeName}"/></td>
 									
 									<td width="4%">
-										<b><input id="list${status.index}.stockQuantity" name='list[${status.index}].stockQuantity' type="text"  style="width:100%" type='text' value="${prod.stockQuantity}" /></b>
+										<b><input id="list${status.index}.stockQuantity" name='list[${status.index}].stockQuantity' type="text" <c:if test="${ prod.stockQuantity >0 }"> style="width:100%;color:#FF0000;"</c:if> style="width:100%;" type='text' value="${prod.stockQuantity}" /></b>
 									</td>
 									<td width="4%">
 										<b><input id="list${status.index}.purchasePrice" name='list[${status.index}].purchasePrice' type="text"  style="width:100%" type='text' value="${prod.purchasePrice}" /></b>
