@@ -42,8 +42,13 @@ import com.owen.wms.web.utils.PdfPrintUtil;
 @Service
 @Transactional
 public class YanwenExpressService {
+
+	private Logger expressLogger = Logger.getLogger(YanwenExpressService.class);
+	
 	@Value("${yanwen.express.pdf.is.print}")
 	private boolean print;
+	@Value("${express.number.log.folder}")
+	private String expressNumberLogFolder;
 	private Logger log = Logger.getLogger(this.getClass());
 	private YanwenService yanwenService = new YanwenService();
 	private GetOrderService getOrderService = new GetOrderService();
@@ -111,6 +116,9 @@ public class YanwenExpressService {
 			}
 			express.setScanedConfirmedDeliver(true);
 			this.yanWenExpressDao.update(express);
+		}else{
+			//record express number
+			this.expressLogger.info(expressScanForm.getExpressNumber().trim());
 		}
 	}
 	/**

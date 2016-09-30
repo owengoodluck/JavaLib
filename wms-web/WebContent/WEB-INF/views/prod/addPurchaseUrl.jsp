@@ -75,7 +75,8 @@ function oppenLink(button,suffix){
 				<thead>
 					<tr>
 						<th>SKU</th> 
-						<th>缩略图</th> 
+						<th>缩略图</th>
+						<th>进货价</th>
 						<th>进货渠道</th>
 					</tr>
 				</thead>
@@ -94,6 +95,9 @@ function oppenLink(button,suffix){
 												<img src="/wms-web/img${prod.getLocalImagePath()}"  height="100" onclick='window.open("/wms-web/img${prod.getLocalImagePath()}")'/> 
 											</c:if>
 										</c:if>
+								</td>
+								<td width="5%">
+									<b><input id="list${status.index}.purchasePrice" name='list[${status.index}].purchasePrice' type="text"  style="width:100%" type='text' value="${prod.purchasePrice}" /></b>
 								</td>
 								<td width="51%">
 									<nobr>

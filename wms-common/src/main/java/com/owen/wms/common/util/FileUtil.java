@@ -190,4 +190,50 @@ public class FileUtil {
 		}
 		return list;
 	}
+	
+	final static void showAllFiles(File dir) throws Exception {
+		File[] fs = dir.listFiles();
+		for (int i = 0; i < fs.length; i++) {
+			if (fs[i].isDirectory()) {
+				try {
+					showAllFiles(fs[i]);
+				} catch (Exception e) { }
+			}else{
+				String newFileName = fs[i].getParent()+"\\"+getNumber(fs[i].getName())+".flv";
+				System.out.println(fs[i].getAbsolutePath()+"====="+newFileName);
+				fs[i].renameTo(new File(newFileName));
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws Exception{
+		File f = new File("D:/乡村爱情2");
+//		showAllFiles(f);
+		addBaseNumber(30,f);
+	}
+	
+	public static String getNumber(String str){
+		if(str == null){
+			return null;
+		}else{
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < str.length(); i++){
+				  if (Character.isDigit(str.charAt(i))){
+					   sb.append(str.charAt(i));
+				  }
+			}
+			return sb.toString();
+		}
+	}
+	
+	public static void addBaseNumber(int num,File dir){
+		File[] fs = dir.listFiles();
+		for (int i = 0; i < fs.length; i++) {
+			if (fs[i].isFile()) {
+				String newFileName = fs[i].getParent()+"\\"+(Integer.valueOf(getNumber(fs[i].getName()))+num)+".flv";
+				System.out.println(fs[i].getAbsolutePath()+"====="+newFileName);
+				fs[i].renameTo(new File(newFileName));
+			}
+		}
+	}
 }

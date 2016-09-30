@@ -109,8 +109,8 @@ public class YanwenExpressController {
 		if(expressScanForm.getExpressNumber()!=null && expressScanForm.getExpressNumber().trim().length()>0){
 			expressScanForm.setPreviousExpressNumber(expressScanForm.getExpressNumber());
 			NumberPlayer play = new NumberPlayer();
-			if(expressScanForm.getExpressNumber().length()>8){
-				play.playNumber(expressScanForm.getExpressNumber().substring(8));
+			if(expressScanForm.getExpressNumber().length()>9){
+				play.playNumber(expressScanForm.getExpressNumber().substring(9));
 			}else{
 				play.playNumber(expressScanForm.getExpressNumber());
 			}
