@@ -139,12 +139,15 @@ public class YanwenExpressService {
 		//1. get Amazon order info
 		AmazonOrder orderEntity = this.amazonOrderDao.get(form.getAmazonOrderID().trim());
 		CreateExpressResponseType result = null;
+		
+		
+		ExpressType et = this.convert(form);
+		//2.create Yanwen express
+		result = this.yanwenService.createExpress(et);
+		
 		if (orderEntity!=null) {
-			ExpressType et = this.convert(form);
 			form.setAmazonOrder(orderEntity);
 			
-			//2.create Yanwen express
-			result = this.yanwenService.createExpress(et);
 			if(result.isCallSuccess()){
 				String epCode=result.getCreatedExpress().getEpcode();
 				et.setEpcode(epCode);
@@ -161,9 +164,8 @@ public class YanwenExpressService {
 				if(form.getSequenceNo()==null || form.getSequenceNo().trim().length()<1){//update only once
 					this.updateStock(orderEntity);
 				}
-				
 			}else{
-				this.log.error("Fail to create Yanwen express:"+result.getResp().getReason()+result.getResp().getReasonMessage());
+				this.log.error("Not related order:"+form.getAmazonOrderID().trim());
 			}
 		}
 		return result;
@@ -176,7 +178,7 @@ public class YanwenExpressService {
 	 * @throws Exception
 	 */
 	public void downloadPrintExpress(CreateExpressResponseType result,String pdfDownloadPath,String amzOrderID) throws Exception {
-		if(result.isCallSuccess()){
+		if(result !=null && result.isCallSuccess()){
 			String epCode=result.getCreatedExpress().getEpcode();
 			//down load pdf to local
 			String pdfFilePath = this.yanwenService.downloadLabel(epCode, pdfDownloadPath,amzOrderID);

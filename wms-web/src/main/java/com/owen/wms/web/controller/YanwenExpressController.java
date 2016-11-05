@@ -235,36 +235,39 @@ public class YanwenExpressController {
 		Receiver rc = new Receiver();
 		express.setReceiver(rc );
 		rc.setUserid(AppConstant.yanwenUserId);
-		rc.setName(order.getShippingAddressName());
-		rc.setPhone(order.getShippingAddressPhone());
+		if(order!=null){
+			rc.setName(order.getShippingAddressName());
+			rc.setPhone(order.getShippingAddressPhone());
+			rc.setState(order.getShippingAddressStateOrRegion());
+			rc.setCity(order.getShippingAddressCity());
+			rc.setAddress1(order.getShippingAddressAddressLine1());
+			rc.setAddress2(order.getShippingAddressAddressLine2());
+			rc.setPostcode(order.getShippingAddressPostalCode());
+			
+			Set<AmazonOrderItem> list = order.getOrderItemList();
+			double sum=0;
+			for(AmazonOrderItem i:list){
+				if(i.getItemPriceAmount()!=null){
+					sum += i.getItemPriceAmount();
+				}
+			}
+			if(sum==0){
+				express.setDeclaredValue(9);
+			}else if(sum>10 && sum <=20 ){
+				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/2, 2));
+			}else if(sum>20 && sum <=50 ){
+				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
+			}else if(sum>50 && sum <=100 ){
+				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
+			}else{
+				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(2*sum/3, 2));
+			}
+			express.setQuantity(list.size());
+		}
 		rc.setCountry(express.getCountry()); 
-		rc.setState(order.getShippingAddressStateOrRegion());
-		rc.setCity(order.getShippingAddressCity());
-		rc.setAddress1(order.getShippingAddressAddressLine1());
-		rc.setAddress2(order.getShippingAddressAddressLine2());
-		rc.setPostcode(order.getShippingAddressPostalCode());
 		model.addAttribute("express", express);
 		model.addAttribute("currentMenu", "express");
 		
-		Set<AmazonOrderItem> list = order.getOrderItemList();
-		double sum=0;
-		for(AmazonOrderItem i:list){
-			if(i.getItemPriceAmount()!=null){
-				sum += i.getItemPriceAmount();
-			}
-		}
-		if(sum==0){
-			express.setDeclaredValue(9);
-		}else if(sum>10 && sum <=20 ){
-			express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/2, 2));
-		}else if(sum>20 && sum <=50 ){
-			express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
-		}else if(sum>50 && sum <=100 ){
-			express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
-		}else{
-			express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(2*sum/3, 2));
-		}
-		express.setQuantity(list.size());
 		return "createYanwenExpress";
 	}
 

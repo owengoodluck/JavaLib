@@ -73,6 +73,9 @@
 							<td colspan="${expressScanForm.orderItemSet.size()+1}">快递单号: ${expressScanForm.previousExpressNumber }</td>
 						</tr>
 						<tr align="left">
+							<td colspan="${expressScanForm.orderItemSet.size()+1}">购买日期: ${ expressScanForm.order.purchaseDate}</td>
+						</tr>
+						<tr align="left">
 							<td width="1%">SKU</td>
 							<c:forEach items="${expressScanForm.orderItemSet}" var="item" varStatus="status" >
 								<td>${ item.getSellerSKU().itemSku}</td>
