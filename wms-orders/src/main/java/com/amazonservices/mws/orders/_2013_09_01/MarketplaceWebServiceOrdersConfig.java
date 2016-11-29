@@ -171,6 +171,11 @@ public class MarketplaceWebServiceOrdersConfig {
         return this;
     }
 
+    public MarketplaceWebServiceOrdersConfig withTimeout(int timeout) {
+        cc.setConnectionTimeout(timeout);
+        cc.setSocketTimeout(timeout);
+        return this;
+    }
     public boolean isSetProxyUsername() {
         return cc.getProxyUsername() != null;
     }

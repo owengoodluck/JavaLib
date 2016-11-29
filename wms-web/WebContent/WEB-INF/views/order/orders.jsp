@@ -102,6 +102,7 @@ function confirmShipment(){
 				<tr >
 					<th >序号</th>
 					<th >图片</th>
+					<th >购买人</th>
 					<th >库存</th>
 					<th>未发</th>
 					<th>已发</th>
@@ -139,6 +140,7 @@ function confirmShipment(){
 								${item.getSellerSKU().sizeName}
 							</c:forEach>
 						</td>
+						<td width="5%">${order.getShippingAddressName()}</td>
 						<td width="4%">
 							<c:if test="${item.getSellerSKU().stockQuantity>0}">
 							

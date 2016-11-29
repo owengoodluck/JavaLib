@@ -40,6 +40,10 @@ public class MarketplaceWebServiceOrdersClient implements MarketplaceWebServiceO
         connection.setApplicationName(applicationName);
         connection.setApplicationVersion(applicationVersion);
         connection.setLibraryVersion(libraryVersion);
+//        connection.setConnectionTimeout(3*60*1000);//default = 50000
+//        connection.setSocketTimeout(3*60*1000);//default = 50000
+        System.out.println("---getConnectionTimeout="+connection.getConnectionTimeout());
+        System.out.println("---getSocketTimeout="+connection.getSocketTimeout());
         servicePath = config.getServicePath();
     }
 
