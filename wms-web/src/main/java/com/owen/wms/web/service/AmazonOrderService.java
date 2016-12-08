@@ -218,21 +218,18 @@ public class AmazonOrderService {
     	FulfillmentData fulfillmentData = new FulfillmentData();
     	//You can use CarrierName instead of CarrierCode if the list of options for CarrierCode (in the base XSD) does not contain the carrier you used.
     	//fulfillmentData.setCarrierCode("China Post");
+    	fulfillmentData.setShipperTrackingNumber(express.getEpcode());
     	String channel = express.getChannel();
-    	switch(channel){
-	    	case "中邮北京平邮小包" : ;
-	    	case "中邮北京挂号小包" : {
-	    		fulfillmentData.setCarrierName("China Post");
-	    		fulfillmentData.setShippingMethod("Standard");
-	    		fulfillmentData.setShipperTrackingNumber(express.getEpcode());
-	    	};break;
-	    	case "中邮北京E邮宝(线下)" : ;
-	    	case "中邮上海E邮宝(线下)" : {
-	    		fulfillmentData.setCarrierName("EUB");
-	    		fulfillmentData.setShippingMethod("Standard");
-	    		fulfillmentData.setShipperTrackingNumber(express.getEpcode());
-	    	};break;
-	    	default:;
+    	if(channel==null){
+    		throw new RuntimeException("channel is null");
+    	}else if(channel.startsWith("中邮") && channel.endsWith("平邮小包")){
+    		fulfillmentData.setCarrierName("China Post");
+    		fulfillmentData.setShippingMethod("Standard");
+    	}else if(channel.startsWith("中邮") && channel.endsWith("E邮宝(线下)")){
+    		fulfillmentData.setCarrierName("EUB");
+    		fulfillmentData.setShippingMethod("Standard");
+    	}else{
+    		throw new RuntimeException("unknow channel :"+channel);
     	}
     	
     	//fulfillmentData.setShippingMethod("");//TODO TBC
