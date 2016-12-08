@@ -109,9 +109,10 @@ function confirmShipment(){
 					<th >订单号</th>
 					<th>购买日期</th>
 					<th>订购天数</th>
-					<th>最后更新时间</th>
+					<!-- <th>最后更新时间</th> -->
 					<th>订单状态</th>
 					<th>利润概览</th>
+					<th>快递费</th>
 					<th>是否打印</th>
 					<!-- <th>isBusinessOrder</th>
 					<th>isPremiumOrder</th>
@@ -180,7 +181,7 @@ function confirmShipment(){
 								</c:if>
 							</c:if>
 						</td>
-						<td>${order.getLastUpdateDate()}</td>
+						<%-- <td>${order.getLastUpdateDate()}</td> --%>
 						<td>
 							<c:if test="${order.getOrderStatus()== 'Unshipped' || order.getOrderStatus()== 'Shipped'}">
 								${order.getOrderStatus()}
@@ -190,6 +191,11 @@ function confirmShipment(){
 							</c:if>
 						</td>
 						<td>${order.getProfit()}</td>  
+						<td>
+							<c:if test="${order.express.feeTotal > 0}">
+								${order.express.feeTotal}
+							</c:if>
+						</td>  
 						<td>
 							<c:if test="${order.isPrinted}">
 								<c:if test="${order.isScanedConfirmedDeliver}">

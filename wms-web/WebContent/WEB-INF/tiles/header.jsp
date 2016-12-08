@@ -72,6 +72,7 @@ function openUrl(str){
             <li><a href="<spring:url value="/yanwen/scan" />">读取快递信息</a> </li>
             <li><a href="<spring:url value="/yanwen/create" />">创建新快递</a> </li>
             <li><a href="<spring:url value="/yanwen/scanConfirmDeliver"/>">扫描快递单确认发货</a> </li>
+            <li><a href="<spring:url value="/yanwen/loadBillGet" />">加载账单文件</a> </li>
           </ul>
         </li>
         

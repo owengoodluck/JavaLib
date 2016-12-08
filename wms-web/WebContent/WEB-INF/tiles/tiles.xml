@@ -107,6 +107,10 @@
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
         <put-attribute name="main"  value="/WEB-INF/views/express/expressDetail.jsp" />
     </definition>
+    <definition name="express/loadBill" extends="baselayout">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="main"  value="/WEB-INF/views/express/loadBill.jsp" />
+    </definition>
     
     <!-- lekani -->
     <definition name="lekani/prodList" extends="baselayout">

@@ -91,6 +91,8 @@ function cleanForm(){
 					<th>电话</th>
 					<th>州</th>
 					<th>城市</th>
+					<th>称重(克)</th>
+					<th>运费</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -112,6 +114,8 @@ function cleanForm(){
 						<td>${express.phone}</td>
 						<td>${express.state}</td>	
 						<td>${express.city}</td>
+						<td>${express.weightByYanwen}</td>
+						<td>${express.feeTotal}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

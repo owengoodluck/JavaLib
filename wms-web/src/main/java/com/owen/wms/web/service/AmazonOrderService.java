@@ -98,6 +98,7 @@ public class AmazonOrderService {
 				if(express != null){
 					o.setIsPrinted(true);
 					o.setIsScanedConfirmedDeliver(express.getScanedConfirmedDeliver());
+					o.setExpress(express);
 				}
 			}
 		}

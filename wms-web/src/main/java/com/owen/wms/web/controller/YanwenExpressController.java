@@ -1,7 +1,9 @@
 package com.owen.wms.web.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.mws.entity.yanwen.Receiver;
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
@@ -44,6 +49,31 @@ public class YanwenExpressController {
 	@Qualifier("amazonOrderService")
 	private AmazonOrderService amazonOrderService ;
 
+	@RequestMapping(value="/loadBillGet", method = RequestMethod.GET)
+	public String loadBillGet(HttpServletRequest request, ModelMap model) throws Exception {
+		return "express/loadBill";
+	}
+	
+	@RequestMapping(value="/loadBill", method = RequestMethod.POST)
+	public String loadBill(@RequestParam(value = "billFile", required = false) MultipartFile billFile, HttpServletRequest request, ModelMap model) throws Exception {
+		String path = request.getSession().getServletContext().getRealPath("tmp");  
+        String fileName = billFile.getOriginalFilename();  
+        File targetFile = new File(path, fileName);  
+        if(!targetFile.exists()){  
+            targetFile.mkdirs();  
+        }  
+  
+        //保存  
+        try {
+        	billFile.transferTo(targetFile);  
+        	List<String[]> list = this.service.loadBill(targetFile);
+        	model.addAttribute("list", list);  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }
+		return "express/loadBill";
+	}
+	
 	@RequestMapping(value="/expressDetail", method = RequestMethod.GET)
 	public String getExpressDetailByOrderID(Model model,HttpServletRequest request) throws Exception {
 		String orderID =request.getParameter("orderID");

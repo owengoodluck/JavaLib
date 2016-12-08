@@ -54,7 +54,8 @@ public class AmazonOrder implements java.io.Serializable{
 	
 	private Boolean isPrinted;
 	private Boolean isScanedConfirmedDeliver;
-	
+	@Transient
+	private YanWenExpressEntity express;
 	
 	@Id
 	private String amazonOrderId;
@@ -97,6 +98,15 @@ public class AmazonOrder implements java.io.Serializable{
 	private String shippingAddressCountryCode;
 	private String shippingAddressPhone;
 	
+	
+	public YanWenExpressEntity getExpress() {
+		return express;
+	}
+
+	public void setExpress(YanWenExpressEntity express) {
+		this.express = express;
+	}
+
 	public Boolean getIsPrinted() {
 		return isPrinted;
 	}

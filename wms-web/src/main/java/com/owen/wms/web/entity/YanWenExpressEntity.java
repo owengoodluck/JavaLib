@@ -40,6 +40,37 @@ public class YanWenExpressEntity {
 	private String address1;
 	private String address2;
 	
+	//load from bill
+	private int weightByYanwen;
+	private double fee;
+	private double feeAfterDiscount;
+	private double feeTotal;
+	
+	
+	public int getWeightByYanwen() {
+		return weightByYanwen;
+	}
+	public void setWeightByYanwen(int weightByYanwen) {
+		this.weightByYanwen = weightByYanwen;
+	}
+	public double getFee() {
+		return fee;
+	}
+	public void setFee(double fee) {
+		this.fee = fee;
+	}
+	public double getFeeAfterDiscount() {
+		return feeAfterDiscount;
+	}
+	public void setFeeAfterDiscount(double feeAfterDiscount) {
+		this.feeAfterDiscount = feeAfterDiscount;
+	}
+	public double getFeeTotal() {
+		return feeTotal;
+	}
+	public void setFeeTotal(double feeTotal) {
+		this.feeTotal = feeTotal;
+	}
 	public String getEpcode() {
 		return epcode;
 	}

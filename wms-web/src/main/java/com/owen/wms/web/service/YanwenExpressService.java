@@ -1,5 +1,6 @@
 package com.owen.wms.web.service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,7 @@ import com.owen.wms.web.entity.YanWenExpressEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
 import com.owen.wms.web.form.ExpressScanForm;
 import com.owen.wms.web.form.YanwenExpress;
+import com.owen.wms.web.utils.ExcelUtil;
 import com.owen.wms.web.utils.PdfPrintThread;
 import com.owen.wms.web.utils.PdfPrintUtil;
 
@@ -81,6 +83,32 @@ public class YanwenExpressService {
 	 */
 	public Page pageQuery(ExpressQueryForm queryForm) throws Exception{
 		return this.yanWenExpressDao.pageListByCriteria(queryForm);
+	}
+	
+	/**
+	 * load bill excel file
+	 * @param billExcelFile
+	 */
+	public List<String[]> loadBill(File billExcelFile){
+		if(billExcelFile == null){
+			throw new RuntimeException("input file is null");
+		}
+		List<String[]> list = ExcelUtil.readExcel(billExcelFile,0,14,1);
+		if(list!=null && list.size()>0){
+			for(String[] row: list){
+				String expressNumber = row[1];
+				if(expressNumber!=null && expressNumber.trim().length()>0){
+					YanWenExpressEntity express = this.yanWenExpressDao.get(expressNumber);
+					if(express!=null){
+						express.setWeightByYanwen(Integer.valueOf(row[6]));
+						express.setFeeTotal(Double.valueOf(row[row.length-1]));
+						this.yanWenExpressDao.update(express);
+					}
+				}
+			}
+		}
+		
+		return list;
 	}
 	
 	public void scanByExpressNumber(ExpressScanForm expressScanForm){
