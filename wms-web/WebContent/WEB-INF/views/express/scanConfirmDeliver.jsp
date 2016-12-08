@@ -113,7 +113,8 @@
 								</c:if>
 								
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								重量自称:<input id="expressWeight" type="text" > <input id="updateBtn" type="button" value="修改" onclick="updateWeight()">
+								重量自称:<input id="expressWeight" type="text" value="${expressScanForm.express.weight }"> <input id="updateBtn" type="button" value="修改" onclick="updateWeight()">
+
 								<span id="updateLabel"></span>
 							</td>
 						</tr>
