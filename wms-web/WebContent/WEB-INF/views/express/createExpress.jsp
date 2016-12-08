@@ -111,6 +111,8 @@ function submitForm(){
 					<td>发货方式</td> 
 					<td> 
 						<form:select path="channel">
+								<form:option value="中邮广州E邮宝(线下)">中邮广州E邮宝(线下)</form:option>
+								<form:option value="中邮广州挂号小包">中邮广州挂号小包</form:option>
 								<form:option value="中邮北京E邮宝(线下)">中邮北京E邮宝(线下)</form:option>
 								<form:option value="中邮北京平邮小包">中邮北京平邮小包</form:option>
 								<form:option value="中邮上海E邮宝(线下)">中邮上海E邮宝(线下)</form:option>
