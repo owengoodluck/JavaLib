@@ -42,7 +42,7 @@ import com.owen.wms.common.constant.AppConstant;
  */
 public class OrderFulfillmentService {
 
-	public static Boolean confirmShipment(File  file) {
+	public static Boolean confirmShipment(File  file,String serviceURL) {
 		if(!file.exists()){
 			return false;
 		}
@@ -58,7 +58,7 @@ public class OrderFulfillmentService {
          * Uncomment to set the appropriate MWS endpoint.
          ************************************************************************/
         // US
-         config.setServiceURL("https://mws.amazonservices.com");
+         config.setServiceURL(serviceURL);
 
         MarketplaceWebService service = new MarketplaceWebServiceClient(
                 accessKeyId, secretAccessKey, appName, appVersion, config);

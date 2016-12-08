@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.mws.entity.yanwen.Receiver;
@@ -82,6 +83,22 @@ public class YanwenExpressController {
 		model.addAttribute("currentMenu", "express");
 		return "express/expressDetail";
 	}
+	
+	@RequestMapping(value="/updateWeight", method = RequestMethod.GET)
+	public @ResponseBody String updateWeight(Model model,HttpServletRequest request) throws Exception {
+		String weight =request.getParameter("weight");
+		String expressNumber = request.getParameter("expressNumber");
+		YanWenExpressEntity express = this.service.getByID(expressNumber.trim());
+		if(express!=null){
+			express.setWeight(Double.valueOf(weight).intValue());
+			this.service.update(express);
+		}else{
+			return "Can't find express with number: "+expressNumber;
+		}
+		
+		return "OK";
+	}
+	
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String listAll(Model model,HttpServletRequest request) throws Exception {
@@ -149,6 +166,8 @@ public class YanwenExpressController {
 			this.service.scanExpressToConfirmDeliver(expressScanForm);
 			if(expressScanForm.getOrder()!=null){
 				model.addAttribute("message", expressScanForm.getExpressNumber()+"扫描发货成功！");
+			}else{
+				model.addAttribute("message", expressScanForm.getExpressNumber()+"新添加快递单成功！");
 			}
 			expressScanForm.setExpressNumber(null);
 		}

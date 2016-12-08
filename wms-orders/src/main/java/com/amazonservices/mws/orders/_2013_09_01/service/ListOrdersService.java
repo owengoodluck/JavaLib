@@ -85,13 +85,14 @@ public class ListOrdersService {
     	Date createdAfterDate= sdf.parse("20151115");
     	Date createdBeforeDate = null;
     	String orderStatus = null;
-    	listOrders(createdAfterDate,createdBeforeDate,orderStatus);
+    	String marketPlaceID = null;
+    	listOrders(createdAfterDate,createdBeforeDate,orderStatus,marketPlaceID);
     }
 
-    public static ArrayList<Order> listOrders(Date createdAfterDate,Date createdBeforeDate,String orderStatus){
+    public static ArrayList<Order> listOrders(Date createdAfterDate,Date createdBeforeDate,String orderStatus,String marketPlaceID){
     	ArrayList<Order> orderList = new ArrayList<Order> ();
     	//1. get ListOrdersResponse base on input parameters
-    	ListOrdersResponse resp = listOrdersResponse( createdAfterDate,createdBeforeDate, orderStatus );
+    	ListOrdersResponse resp = listOrdersResponse( createdAfterDate,createdBeforeDate, orderStatus ,marketPlaceID);
     	if(resp!=null && resp.getListOrdersResult()!=null){
     		ListOrdersResult listOrdersResult = resp.getListOrdersResult();
     		orderList.addAll(listOrdersResult.getOrders());
@@ -110,7 +111,7 @@ public class ListOrdersService {
     	return orderList;
     }
     
-    private static ListOrdersResponse listOrdersResponse(Date createdAfterDate,Date createdBeforeDate,String orderStatus ){
+    private static ListOrdersResponse listOrdersResponse(Date createdAfterDate,Date createdBeforeDate,String orderStatus ,String marketPlaceID){
     	// Get a client connection.
     	// Make sure you've set the variables in MarketplaceWebServiceOrdersSampleConfig.
     	MarketplaceWebServiceOrdersClient client = MarketplaceWebServiceOrdersSampleConfig.getClient();
@@ -127,7 +128,7 @@ public class ListOrdersService {
         request.setSellerId(AppConstant.sellerId);
         
         List<String> marketplaceId = new ArrayList<String>();
-        marketplaceId.add("ATVPDKIKX0DER");//TODO
+        marketplaceId.add(marketPlaceID);//TODO
         request.setMarketplaceId(marketplaceId);
         
         String mwsAuthToken = "example";

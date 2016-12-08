@@ -39,8 +39,18 @@ function submitForm(){
 		<div align="left">
 		
 	  	<form:form modelAttribute="synForm" enctype="multipart/form-data" action="/wms-web/order/synchronzieOrders">
+				MarketPlace
+				
+				<form:select path="marketPlace">
+						<form:option value="US">US</form:option>
+						<form:option value="CA">CA</form:option>
+			    </form:select>
+				
+				<br/>
+				
 				从<form:input path="startDateStr" size="10"/>
 				到<form:input path="endDateStr" size="10"/>
+				
 				<input type="button" id="btnAdd" class="btn btn-primary" value="订单同步"  onclick="submitForm()" />
 		</form:form>
 		</div>

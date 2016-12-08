@@ -26,20 +26,31 @@
 		$("#expressNumber").keypress(function(event) {
 			//alert(event.keyCode);
 			if (event.keyCode == "13" || event.keyCode == "9" ||event.keyCode == 13 || event.keyCode == 9) {
-				//alert($("#expressNumber").val());
-				//alert(event.keyCode);
 				submitForm();
 			}
 		});
 
 		$(window).keypress(function(event) {
+			if(event.target && event.target.id){
+				if("expressWeight" == event.target.id || "previousExpressNumber" == event.target.id || "updateBtn" == event.target.id)
+				return;
+			}
 			getFocus();
 		});
-
+		
+		$(window).mousedown(function(event) {
+			if(event.target && event.target.id){
+				if("expressWeight" == event.target.id || "previousExpressNumber" == event.target.id || "updateBtn" == event.target.id){
+					return;
+				}
+			}
+			event.preventDefault();
+			getFocus();
+			
+		});
 	});
 
 	function getFocus() {
-		//alert($('#expressNumber').val());
 		$('#expressNumber').focus();
 	}
 
@@ -48,6 +59,20 @@
 		if (expressNumber != null && expressNumber.length > 0) {
 			$('#expressScanForm').submit();
 		}
+	}
+	
+	function updateWeight(){
+		var expressNumber = $("#previousExpressNumber").val();
+		var expressWeight = $("#expressWeight").val();
+		$.ajax({url:"/wms-web/yanwen/updateWeight?weight="+expressWeight+"&expressNumber="+expressNumber,
+				success: function(data) {
+					if("OK"==data){
+			         	$("#updateLabel").text("Update success:"+new Date());
+					}else{
+						$("#updateLabel").text("Update faile:"+data);
+					}
+			      }  
+		});
 	}
 </script>
 <title>读取快递单信息</title>
@@ -70,11 +95,16 @@
 				<table class="table table-hover" border="2">
 					<tbody>
 						<tr align="left">
-							<td colspan="${expressScanForm.orderItemSet.size()+1}">快递单号: ${expressScanForm.previousExpressNumber }</td>
+							<td colspan="${expressScanForm.orderItemSet.size()+1}">
+								快递单号: <input id="previousExpressNumber" type="text" value=" ${expressScanForm.previousExpressNumber }">
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								购买日期: ${ expressScanForm.order.purchaseDate}
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								重量自称:<input id="expressWeight" type="text"> <input id="updateBtn" type="button" value="修改" onclick="updateWeight()">
+								<span id="updateLabel"></span>
+							</td>
 						</tr>
-						<tr align="left">
-							<td colspan="${expressScanForm.orderItemSet.size()+1}">购买日期: ${ expressScanForm.order.purchaseDate}</td>
-						</tr>
+						
 						<tr align="left">
 							<td width="1%">SKU</td>
 							<c:forEach items="${expressScanForm.orderItemSet}" var="item" varStatus="status" >

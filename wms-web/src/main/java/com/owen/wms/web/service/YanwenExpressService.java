@@ -2,6 +2,7 @@ package com.owen.wms.web.service;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -75,6 +76,15 @@ public class YanwenExpressService {
 		YanWenExpressEntity ent =this.yanWenExpressDao.getByAmazonOrderId(orderID);
 		return ent;
 	}
+	
+	public YanWenExpressEntity getByID(String expressNumber){
+		YanWenExpressEntity ent =this.yanWenExpressDao.get(expressNumber);
+		return ent;
+	}
+	
+	public void update(YanWenExpressEntity entity ){
+		this.yanWenExpressDao.update(entity);
+	}
 	/**
 	 * page query
 	 * @param queryForm
@@ -114,6 +124,7 @@ public class YanwenExpressService {
 	public void scanByExpressNumber(ExpressScanForm expressScanForm){
 		YanWenExpressEntity express = this.yanWenExpressDao.getByID(expressScanForm.getExpressNumber().trim());
 		if(express != null){
+			expressScanForm.setExpress(express);
 			AmazonOrder order = this.amazonOrderDao.getByOrderID(express.getUserOrderNumber());
 			if(order!=null){
 				expressScanForm.setOrder(order);
@@ -129,8 +140,11 @@ public class YanwenExpressService {
 	}
 	
 	public void scanExpressToConfirmDeliver(ExpressScanForm expressScanForm){
-		YanWenExpressEntity express = this.yanWenExpressDao.getByID(expressScanForm.getExpressNumber().trim());
+		String expressNumber = expressScanForm.getExpressNumber().trim();
+		
+		YanWenExpressEntity express = this.yanWenExpressDao.getByID(expressNumber);
 		if(express != null){
+			expressScanForm.setExpress(express);
 			AmazonOrder order = this.amazonOrderDao.getByOrderID(express.getUserOrderNumber());
 			if(order!=null){
 				expressScanForm.setOrder(order);
@@ -144,10 +158,19 @@ public class YanwenExpressService {
 			}
 			express.setScanedConfirmedDeliver(true);
 			this.yanWenExpressDao.update(express);
+		}else if(expressNumber.length()==13 || expressNumber.length() ==11 ){//LS459138813CN // LT587794923CN //11738272055
+			YanWenExpressEntity expressNew = new YanWenExpressEntity();
+			expressNew.setEpcode(expressNumber);
+			expressNew.setScanedConfirmedDeliver(true);
+			expressNew.setName("HaiFang");
+			expressNew.setSendDate(new Date());
+			this.yanWenExpressDao.save(expressNew);
+			expressScanForm.setExpress(expressNew);
 		}else{
 			//record express number
 			this.expressLogger.info(expressScanForm.getExpressNumber().trim());
 		}
+			
 	}
 	/**
 	 * list all

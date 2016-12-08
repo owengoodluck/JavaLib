@@ -59,7 +59,7 @@ public class AmazonOrderServiceTest {
 		Date createdAfterDate = this.sdf.parse("20151207");//not include this day ??
 		Date createdBeforeDate= this.sdf.parse("20151209");//include this day ??
 		String orderStatus = null; 
-		this.amazonOrderService.synchronizeOrderToLocalDB(createdAfterDate,createdBeforeDate,orderStatus);
+		this.amazonOrderService.synchronizeOrderToLocalDB(createdAfterDate,createdBeforeDate,orderStatus,null);
 	}
 	
 	

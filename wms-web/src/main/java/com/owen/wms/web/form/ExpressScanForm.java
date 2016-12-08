@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.entity.AmazonOrderItem;
+import com.owen.wms.web.entity.YanWenExpressEntity;
 
 public class ExpressScanForm {
 	
@@ -11,6 +12,16 @@ public class ExpressScanForm {
 	private String previousExpressNumber;
 	private AmazonOrder order;
 	private Set<AmazonOrderItem> orderItemSet;
+	private YanWenExpressEntity express;
+
+	
+	public YanWenExpressEntity getExpress() {
+		return express;
+	}
+
+	public void setExpress(YanWenExpressEntity express) {
+		this.express = express;
+	}
 
 	public String getExpressNumber() {
 		return expressNumber;

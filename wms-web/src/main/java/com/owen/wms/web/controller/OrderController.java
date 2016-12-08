@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.owen.wms.common.util.DateUtil;
+import com.owen.wms.web.constants.WMSConstants;
 import com.owen.wms.web.dao.Page;
 import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.form.OrderQueryForm;
@@ -59,7 +60,7 @@ public class OrderController {
 			this.amazonOrderService.confirmShipFulfillment(amazonOrderIds, tmpFolder);
 			//2. synchronize orders
 			Thread.sleep(1*60*1000);//1 minute
-			amazonOrderService.synchronizeOrderToLocalDB(DateUtil.getDaysBefor(3), null, null);
+			amazonOrderService.synchronizeOrderToLocalDB(DateUtil.getDaysBefor(3), null, null,"");
 		}
 		
 		return listOrder(model) ;//TODO
@@ -133,7 +134,13 @@ public class OrderController {
 			createdBeforeDate= this.sdf.parse(synForm.getEndDateStr());//include this day ??
 		}
 		String orderStatus = null; 
-		amazonOrderService.synchronizeOrderToLocalDB(createdAfterDate, createdBeforeDate, orderStatus);
+		String marketPlaceID = WMSConstants.marketPlaceIDUS;
+		if("CA".equalsIgnoreCase(synForm.getMarketPlace())){
+			marketPlaceID = WMSConstants.marketPlaceIDCA;
+		}else{
+			//TODO
+		}
+		amazonOrderService.synchronizeOrderToLocalDB(createdAfterDate, createdBeforeDate, orderStatus,marketPlaceID);
 		
 		//2. get order list and return 
 		return this.listOrder(model);

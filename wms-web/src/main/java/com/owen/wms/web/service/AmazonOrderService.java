@@ -37,6 +37,7 @@ import com.amazonservices.mws.orders._2013_09_01.util.XMLGregorianCalendarUtil;
 import com.owen.htmlparser.util.FileUtil;
 import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.common.util.DateUtil;
+import com.owen.wms.web.constants.WMSConstants;
 import com.owen.wms.web.dao.AmazonOrderDao;
 import com.owen.wms.web.dao.AmazonOrderItemDao;
 import com.owen.wms.web.dao.Page;
@@ -111,9 +112,9 @@ public class AmazonOrderService {
 		return orderList;
 	}
 	
-	public void synchronizeOrderToLocalDB(Date createdAfterDate, Date createdBeforeDate, String orderStatus) {
+	public void synchronizeOrderToLocalDB(Date createdAfterDate, Date createdBeforeDate, String orderStatus,String marketPlaceID) {
 		// 1. get order list
-		ArrayList<Order> orderList = ListOrdersService.listOrders(createdAfterDate, createdBeforeDate, orderStatus);
+		ArrayList<Order> orderList = ListOrdersService.listOrders(createdAfterDate, createdBeforeDate, orderStatus,marketPlaceID);
 		if (orderList != null && !orderList.isEmpty()) {
 			// 2.get order items
 			for (Order od : orderList) {
@@ -181,7 +182,7 @@ public class AmazonOrderService {
 		FileUtil.write2File(xmlString, file);
 		
 		//5.submit to Amazon
-		OrderFulfillmentService.confirmShipment(file);
+		OrderFulfillmentService.confirmShipment(file,WMSConstants.endpointUS);//TODO 
 	}
 	
 	

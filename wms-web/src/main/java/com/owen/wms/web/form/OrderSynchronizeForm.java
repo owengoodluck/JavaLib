@@ -2,6 +2,7 @@ package com.owen.wms.web.form;
 
 public class OrderSynchronizeForm {
 
+	private String marketPlace;
 	private String startDateStr;
 	private String endDateStr;
 	
@@ -16,6 +17,12 @@ public class OrderSynchronizeForm {
 	}
 	public void setStartDateStr(String startDateStr) {
 		this.startDateStr = startDateStr;
+	}
+	public String getMarketPlace() {
+		return marketPlace;
+	}
+	public void setMarketPlace(String marketPlace) {
+		this.marketPlace = marketPlace;
 	}
 	
 }

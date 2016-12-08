@@ -91,6 +91,7 @@ function cleanForm(){
 					<th>电话</th>
 					<th>州</th>
 					<th>城市</th>
+					<th>自量(克)</th>
 					<th>称重(克)</th>
 					<th>运费</th>
 				</tr>
@@ -112,9 +113,21 @@ function cleanForm(){
 						<td>${express.channel}</td>
 						<td>${express.name}</td>
 						<td>${express.phone}</td>
-						<td>${express.state}</td>	
+						<td>${express.state}</td>
 						<td>${express.city}</td>
-						<td>${express.weightByYanwen}</td>
+						<td>
+							<c:if test='${express.weight!=50 }'>
+								${express.weight}
+							</c:if>
+						</td>
+						<td>
+							<c:if test='${express.weight!=50 && express.weightByYanwen - express.weight >10 }'>
+								<span class="label label-danger">${express.weightByYanwen}</span>
+							</c:if>
+							<c:if test='${express.weightByYanwen - express.weight <=10 }'>
+								${express.weightByYanwen}
+							</c:if>
+						</td>
 						<td>${express.feeTotal}</td>
 					</tr>
 				</c:forEach>

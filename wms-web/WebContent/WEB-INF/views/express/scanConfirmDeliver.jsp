@@ -24,16 +24,35 @@
 		$('#expressNumber').focus();
 
 		$("#expressNumber").keypress(function(event) {
-			if (event.keyCode == "13") {
-				//alert($("#expressNumber").val());
+			if (event.keyCode == "13"|| event.keyCode == "9" ||event.keyCode == 13 || event.keyCode == 9) {
 				submitForm();
 			}
 		});
-
+		
+		$("#expressWeight").keypress(function(event) {
+			if (event.keyCode == "13"|| event.keyCode == "9" ||event.keyCode == 13 || event.keyCode == 9) {
+				updateWeight();
+			}
+		});
+		
 		$(window).keypress(function(event) {
+			if(event.target && event.target.id){
+				if("expressWeight" == event.target.id || "previousExpressNumber" == event.target.id || "updateBtn" == event.target.id)
+				return;
+			}
 			getFocus();
 		});
-
+		
+		$(window).mousedown(function(event) {
+			if(event.target && event.target.id){
+				if("expressWeight" == event.target.id || "previousExpressNumber" == event.target.id || "updateBtn" == event.target.id){
+					return;
+				}
+			}
+			event.preventDefault();
+			getFocus();
+			
+		});
 	});
 
 	function getFocus() {
@@ -46,6 +65,21 @@
 		if (expressNumber != null && expressNumber.length > 0) {
 			$('#expressScanForm').submit();
 		}
+	}
+	
+	function updateWeight(){
+		var expressNumber = $("#previousExpressNumber").val();
+		var expressWeight = $("#expressWeight").val();
+		$.ajax({url:"/wms-web/yanwen/updateWeight?weight="+expressWeight+"&expressNumber="+expressNumber,
+				success: function(data) {
+					if("OK"==data){
+			         	$("#updateLabel").text("Update success:"+new Date());
+					}else{
+						$("#updateLabel").text("Update faile:"+data);
+					}
+			      }  
+		});
+		$('#expressNumber').focus();
 	}
 </script>
 <title>扫描快递单确认发货</title>
@@ -69,13 +103,18 @@
 					<tbody>
 						<tr align="left">
 							<td colspan="${expressScanForm.orderItemSet.size()+1}">
-							快递单号: ${expressScanForm.previousExpressNumber }
-							<c:if test='${ message != null }'>
-								<h2><span class="label label-success">${message}</span></h2>
-							</c:if>
-							<c:if test='${ message == null }'>
-								<span class="label label-danger">未找到快递信息</span>
-							</c:if>
+								快递单号: <input id="previousExpressNumber" type="text" value=" ${expressScanForm.previousExpressNumber }">
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<c:if test='${ message != null }'>
+									<h2><span class="label label-success">${message}</span></h2>
+								</c:if>
+								<c:if test='${ message == null }'>
+									<span class="label label-danger">未找到快递信息</span>
+								</c:if>
+								
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								重量自称:<input id="expressWeight" type="text" > <input id="updateBtn" type="button" value="修改" onclick="updateWeight()">
+								<span id="updateLabel"></span>
 							</td>
 						</tr>
 						<tr align="left">
@@ -84,6 +123,7 @@
 								<td>${ item.getSellerSKU().itemSku}</td>
 							</c:forEach>
 						</tr>
+						
 						<tr align="center">
 							<td width="1%" align="left">图片</td>
 							<c:forEach items="${expressScanForm.orderItemSet}" var="item" varStatus="status" >
