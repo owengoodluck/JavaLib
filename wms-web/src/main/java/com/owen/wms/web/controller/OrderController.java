@@ -60,7 +60,7 @@ public class OrderController {
 			this.amazonOrderService.confirmShipFulfillment(amazonOrderIds, tmpFolder);
 			//2. synchronize orders
 			Thread.sleep(1*60*1000);//1 minute
-			amazonOrderService.synchronizeOrderToLocalDB(DateUtil.getDaysBefor(3), null, null,"");
+			amazonOrderService.synchronizeOrderToLocalDB(DateUtil.getDaysBefor(1), null, null,"");
 		}
 		
 		return listOrder(model) ;//TODO
@@ -112,7 +112,7 @@ public class OrderController {
 	
 	private void setSynchronizeForm(Model model){
 		OrderSynchronizeForm synForm = new OrderSynchronizeForm();
-		synForm.setStartDateStr(this.sdf.format(DateUtil.getDaysBefor(3)));
+		synForm.setStartDateStr(this.sdf.format(DateUtil.getDaysBefor(1)));
 		model.addAttribute("synForm",synForm);
 	}
 	

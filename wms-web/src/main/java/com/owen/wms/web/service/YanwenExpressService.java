@@ -1,9 +1,12 @@
 package com.owen.wms.web.service;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -56,6 +59,7 @@ public class YanwenExpressService {
 	private YanwenService yanwenService = new YanwenService();
 	private GetOrderService getOrderService = new GetOrderService();
 	private SimpleDateFormat sdf  =new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private SimpleDateFormat sdfYYYYMMDD  =new SimpleDateFormat("yyyy-MM-dd");
 	@Autowired
 	@Qualifier("amazonOrderDao")
 	private AmazonOrderDao amazonOrderDao;
@@ -103,22 +107,100 @@ public class YanwenExpressService {
 		if(billExcelFile == null){
 			throw new RuntimeException("input file is null");
 		}
-		List<String[]> list = ExcelUtil.readExcel(billExcelFile,0,14,1);
+		List<String[]> list = ExcelUtil.readExcel(billExcelFile,0,16,0);
+		 Map<String,Integer> headerMap = this.parseHeader(list.get(0));
 		if(list!=null && list.size()>0){
-			for(String[] row: list){
-				String expressNumber = row[1];
+			for(int i=1;i<list.size()-1;i++){//start from line 1
+				String[] row = list.get(i);
+				String expressNumber = row[headerMap.get("快递单号")];
+				String orderNumber = row[headerMap.get("订单号")];
+				String country = row[headerMap.get("目的地")];
+				String weight = row[headerMap.get("重量")];
+				String sendDate = row[headerMap.get("快递单日期")];
+				String channel = null;
+				if(headerMap.containsKey("产品名称")){
+					channel = row[headerMap.get("产品名称")];
+				}else if(headerMap.containsKey("渠道名称")){
+					channel = row[headerMap.get("渠道名称")];
+				}
+				String feeTotal = row[headerMap.get("汇总金额")];
+				
 				if(expressNumber!=null && expressNumber.trim().length()>0){
 					YanWenExpressEntity express = this.yanWenExpressDao.get(expressNumber);
-					if(express!=null){
-						express.setWeightByYanwen(Integer.valueOf(row[6]));
-						express.setFeeTotal(Double.valueOf(row[row.length-1]));
-						this.yanWenExpressDao.update(express);
+					if(express==null){
+						express = new YanWenExpressEntity();
+						express.setEpcode(expressNumber);
 					}
+					try {
+						express.setSendDate(sdfYYYYMMDD.parse(sendDate));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					//set value
+					if(weight!=null){
+						express.setWeightByYanwen(Integer.valueOf(weight));
+					}
+					if(feeTotal!=null){
+						express.setFeeTotal(Double.valueOf(feeTotal));
+					}
+
+					if(channel!=null){
+						express.setChannel(channel);
+					}
+					if(country!=null){
+						express.setCountry(country);
+					}
+					if(orderNumber!=null){
+						express.setUserOrderNumber(orderNumber);
+					}
+					//save or update
+					this.yanWenExpressDao.saveOrUpdate(express);
+				}else{
+					break;
 				}
 			}
 		}
-		
 		return list;
+	}
+	
+	//0			1		2
+	//快递单日期	快递单号	订单号	转单号	参考号	目的地	重量	产品名称	资费	折后资费	附加费	汇总金额
+	//2016-10-15	LT287515886CN	105-0619207-7864203	LT287515886CN	LT287515886CN	美国	40	中邮北京线下E邮宝	13.0000	11.7000	0.0000	11.7000
+	private Map<String,Integer> parseHeader(String[] header){
+		Map<String,Integer> map = new HashMap();
+		if(header == null || header.length<1){
+			return map;
+		}
+		for(int i =0;i<header.length;i++){
+			String value = header[i].trim();
+			if("快递单日期".equals(value) || "快递单号".equals(value) || "转单号".equals(value)|| "参考号".equals(value)
+					|| "订单号".equals(value)|| "目的地".equals(value) || "渠道名称".equals(value)
+					|| "重量".equals(value)|| "产品名称".equals(value)|| "资费".equals(value)|| "折后资费".equals(value)
+					|| "附加费".equals(value)
+					|| "汇总金额".equals(value)){
+				map.put(value, i);
+			}
+		}
+		
+		return map;
+	}
+	
+	
+	public void loadYanwenBill(File folder){
+		if(folder ==null){
+			this.log.warn("Folder is null");
+		}else if(folder.isFile()){
+			this.log.info(folder.getAbsolutePath()+" is not a directory !");
+		}else{
+			File[] files = folder.listFiles();
+			for(File f : files){
+				if(f.isFile() && f.getName().endsWith(".xls")){
+					this.loadBill(f);
+				}else{
+					this.log.warn(f.getAbsolutePath() +" is not bill file");
+				}
+			}
+		}
 	}
 	
 	public void scanByExpressNumber(ExpressScanForm expressScanForm){

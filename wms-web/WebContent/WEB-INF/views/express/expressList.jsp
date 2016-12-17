@@ -121,12 +121,14 @@ function cleanForm(){
 							</c:if>
 						</td>
 						<td>
-							<c:if test='${express.weight!=50 && express.weightByYanwen - express.weight >10 }'>
-								<span class="label label-danger">${express.weightByYanwen}</span>
-							</c:if>
-							<c:if test='${express.weightByYanwen - express.weight <=10 }'>
-								${express.weightByYanwen}
-							</c:if>
+							<c:choose>
+								<c:when test="${express.weight!=50 &&express.weight!=0 && express.weightByYanwen - express.weight >10 }">
+									<span class="label label-danger">${express.weightByYanwen}</span>
+								</c:when>
+								<c:otherwise>
+									${express.weightByYanwen}
+								</c:otherwise>
+							</c:choose>
 						</td>
 						<td>${express.feeTotal}</td>
 					</tr>

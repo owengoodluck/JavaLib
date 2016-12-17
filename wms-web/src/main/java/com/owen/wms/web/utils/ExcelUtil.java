@@ -28,9 +28,10 @@ public class ExcelUtil {
 			
 			//2. get columns name
 			Sheet st = book.getSheet(sheetNumber);
-			if(totalColumns == null || totalColumns == 0){
-				totalColumns= st.getColumns();
-			}
+//			if(totalColumns == null || totalColumns == 0){
+//				totalColumns= st.getColumns();
+//			}
+			totalColumns= st.getColumns();
 			if(ignoreHeadRows == null  ){
 				ignoreHeadRows =0;
 			}

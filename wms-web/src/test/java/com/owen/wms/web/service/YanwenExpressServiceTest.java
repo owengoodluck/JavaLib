@@ -1,5 +1,6 @@
 package com.owen.wms.web.service;
 
+import java.io.File;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -19,7 +20,7 @@ import com.owen.wms.web.form.YanwenExpress;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration("classpath:test_config.xml")
-@Transactional
+//@Transactional
 public class YanwenExpressServiceTest {
 
 	@Autowired
@@ -46,4 +47,11 @@ public class YanwenExpressServiceTest {
 			}
 		}
 	}
+	
+	@Test
+	public void loadAllBills(){
+		File root = new File("C:/Users/owen/Desktop/tmp/yanwen");
+		this.service.loadYanwenBill(root);
+	}
+	
 }

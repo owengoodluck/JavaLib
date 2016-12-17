@@ -172,6 +172,7 @@ public class YanwenExpressController {
 			expressScanForm.setExpressNumber(null);
 		}
 		model.addAttribute("currentMenu", "express");
+		model.addAttribute("scanDone", "ok");
 		return "express/scanConfirmDeliver";
 	}
 

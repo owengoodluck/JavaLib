@@ -21,7 +21,11 @@
 <script src='<c:url value="/resource/js/jquery-ui.min.js"/>'></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#expressNumber').focus();
+		if($('#scanDoneIndicator').val()=="ok"){
+			$('#expressWeight').focus();
+		}else{
+			$('#expressNumber').focus();
+		}
 
 		$("#expressNumber").keypress(function(event) {
 			if (event.keyCode == "13"|| event.keyCode == "9" ||event.keyCode == 13 || event.keyCode == 9) {
@@ -68,8 +72,14 @@
 	}
 	
 	function updateWeight(){
-		var expressNumber = $("#previousExpressNumber").val();
 		var expressWeight = $("#expressWeight").val();
+		var expressNumber = $("#previousExpressNumber").val();
+		
+		if( expressWeight == null || expressWeight =="" ){	
+			alert("重量不能为空" + expressWeight);
+			$('#expressWeight').focus();
+			return ;
+		}
 		$.ajax({url:"/wms-web/yanwen/updateWeight?weight="+expressWeight+"&expressNumber="+expressNumber,
 				success: function(data) {
 					if("OK"==data){
@@ -85,6 +95,7 @@
 <title>扫描快递单确认发货</title>
 </head>
 <body>
+<input id="scanDoneIndicator" type="hidden" value="${scanDone }">
 	<section class="container">
 		<div>
 			<ol class="breadcrumb" align="left">
@@ -113,7 +124,14 @@
 								</c:if>
 								
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								重量自称:<input id="expressWeight" type="text" value="${expressScanForm.express.weight }"> <input id="updateBtn" type="button" value="修改" onclick="updateWeight()">
+								重量自称:
+								<c:if test="${expressScanForm.express.weight ==50 || expressScanForm.express.weight ==0}">
+									<input id="expressWeight" type="text">
+								</c:if>
+								 <c:if test="${expressScanForm.express.weight !=50 && expressScanForm.express.weight != 0}">
+									<input id="expressWeight" type="text" value="${expressScanForm.express.weight }">
+								</c:if>
+								<input id="updateBtn" type="button" value="修改" onclick="updateWeight()">
 
 								<span id="updateLabel"></span>
 							</td>
