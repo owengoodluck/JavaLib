@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
+import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.common.util.DateUtil;
 import com.owen.wms.web.constants.WMSConstants;
 import com.owen.wms.web.dao.Page;
@@ -24,7 +26,9 @@ import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.form.OrderQueryForm;
 import com.owen.wms.web.form.OrderStatisticEntity;
 import com.owen.wms.web.form.OrderSynchronizeForm;
+import com.owen.wms.web.form.YanwenExpress;
 import com.owen.wms.web.service.AmazonOrderService;
+import com.owen.wms.web.service.YanwenExpressService;
 
 @Controller
 @RequestMapping("/order")
@@ -35,6 +39,11 @@ public class OrderController {
 	@Autowired
 	@Qualifier("amazonOrderService")
 	private AmazonOrderService amazonOrderService ;
+
+	@Autowired
+	private YanwenExpressService expressService;
+	String marketPlaceID  = WMSConstants.marketPlaceIDUS;
+	
 	private int defaultPageSize = 20;
 	
 	@RequestMapping(value="/statistics", method = RequestMethod.GET)
@@ -64,6 +73,28 @@ public class OrderController {
 		}
 		
 		return listOrder(model) ;//TODO
+	}
+	
+	@RequestMapping(value = "/batchPrint", method = RequestMethod.POST)
+	public String batchPrint(Model model,HttpServletRequest request) throws Exception{
+		String[] amazonOrderIds = request.getParameterValues("amazonOrderIds");
+		String expressChannel = request.getParameter("expressChannel");
+		if(amazonOrderIds!=null && amazonOrderIds.length>0){
+			for(String amazonOrderID : amazonOrderIds){
+				YanwenExpress express = this.expressService.convertToExpress(amazonOrderID);
+				express.setChannel(expressChannel);
+				CreateExpressResponseType result = this.expressService.createExpress( express);
+				if(result!=null){
+					if(result.isCallSuccess()){
+						this.expressService.downloadPrintExpress(result, AppConstant.defaultPdfDownloadPath, express.getAmazonOrderID());
+					}else{
+						String error = "快递单创建失败： "+result.getResp().getReasonMessage();
+					}
+				}
+			}
+		}
+		
+		return listOrder(model) ;
 	}
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
@@ -134,11 +165,13 @@ public class OrderController {
 			createdBeforeDate= this.sdf.parse(synForm.getEndDateStr());//include this day ??
 		}
 		String orderStatus = null; 
-		String marketPlaceID = WMSConstants.marketPlaceIDUS;
-		if("CA".equalsIgnoreCase(synForm.getMarketPlace())){
+		
+		if(WMSConstants.MARKET_CODE_CA.equalsIgnoreCase(synForm.getMarketPlace())){
 			marketPlaceID = WMSConstants.marketPlaceIDCA;
+		}else if(WMSConstants.MARKET_CODE_US.equalsIgnoreCase(synForm.getMarketPlace())){
+			marketPlaceID = WMSConstants.marketPlaceIDUS;
 		}else{
-			//TODO
+			throw new RuntimeException("Unknow market place ID");
 		}
 		amazonOrderService.synchronizeOrderToLocalDB(createdAfterDate, createdBeforeDate, orderStatus,marketPlaceID);
 		

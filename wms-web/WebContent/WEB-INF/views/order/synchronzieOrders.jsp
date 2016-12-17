@@ -39,11 +39,10 @@ function submitForm(){
 		<div align="left">
 		
 	  	<form:form modelAttribute="synForm" enctype="multipart/form-data" action="/wms-web/order/synchronzieOrders">
-				MarketPlace
-				
+				市场 ： 
 				<form:select path="marketPlace">
-						<form:option value="US">US</form:option>
-						<form:option value="CA">CA</form:option>
+						<form:option value="US">Amazon-美国</form:option>
+						<form:option value="CA">Amazon-加拿大</form:option>
 			    </form:select>
 				
 				<br/>

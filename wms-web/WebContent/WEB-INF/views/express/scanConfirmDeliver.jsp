@@ -80,7 +80,7 @@
 			$('#expressWeight').focus();
 			return ;
 		}
-		$.ajax({url:"/wms-web/yanwen/updateWeight?weight="+expressWeight+"&expressNumber="+expressNumber,
+		$.ajax({url:"/wms-web/express/updateWeight?weight="+expressWeight+"&expressNumber="+expressNumber,
 				success: function(data) {
 					if("OK"==data){
 			         	$("#updateLabel").text("Update success:"+new Date());
@@ -103,7 +103,7 @@
 			</ol>
 		</div>
 		<div class="row">
-			<form:form modelAttribute="expressScanForm" method="post" action="/wms-web/yanwen/scanConfirmDeliver" >
+			<form:form modelAttribute="expressScanForm" method="post" action="/wms-web/express/scanConfirmDeliver" >
 				<table class="table table-hover" border="2">
 					<tr>
 						<td>快递单号</td>

@@ -64,7 +64,6 @@ public class YanwenExpressController {
 		return "express/expressStatic";
 	}
 	
-	
 	@RequestMapping(value = "/expressStatic", method = RequestMethod.POST)
 	public String synchronize(@ModelAttribute("expressStaticForm") ExpressStatisticForm expressStaticForm,Model model) throws Exception{
 		//1.synchronize orders
@@ -225,133 +224,7 @@ public class YanwenExpressController {
 	@RequestMapping(value="/create", method = RequestMethod.GET)
 	public String preCreateExpress(Model model,HttpServletRequest request) {
 		String amazonOrderID = request.getParameter("amazonOrderID");
-		YanwenExpress express = new YanwenExpress();
-		express.setAmazonOrderID(amazonOrderID);
-		express.setDeclaredCurrency("USD");
-		express.setQuantity(1);
-		express.setDeclaredValue(9);
-		express.setWeight(50);
-		express.setSendDate(sdf.format(new Date()));
-		express.setDownloadPath(AppConstant.defaultPdfDownloadPath);
-		express.setCountry("美国");
-		
-		AmazonOrder order = this.amazonOrderService.getByOrderIDWithoutExpress(amazonOrderID);
-		if(order!=null){
-			Set<AmazonOrderItem> orderItems = order.getOrderItemList();
-			if(orderItems.size()>0){
-				express.setQuantity(orderItems.size());
-				int i =0;
-				AmazonOrderItem[] orderItemArray = orderItems.toArray(new AmazonOrderItem[]{});
-				AmazonOrderItem firstOrderItem = orderItemArray[0];
-				while( firstOrderItem.getQuantityOrdered() < 1 && i<orderItems.size()-1 ){
-					i++;
-					firstOrderItem = orderItemArray[i];
-				}
-				JewelryEntity prod = firstOrderItem.getSellerSKU();
-				if(prod!=null){
-					String itemType = prod.getItemType();
-					if(itemType!=null){
-						itemType = itemType.toLowerCase();
-						switch (itemType){
-							case "pendant-necklaces":{
-								express.setNameChinese("时尚简约饰品-项链吊坠");
-								express.setNameEnglish("Fashion Jewelry Accessories-Necklace Pendant");
-								break;
-							}
-							case "link-bracelets":{
-								express.setNameChinese("时尚简约饰品-手链手环");
-								express.setNameEnglish("Fashion Jewelry Accessories-Bracelets");
-								break;
-							}
-							case "rings":{
-								express.setNameChinese("时尚简约饰品-指环戒指");
-								express.setNameEnglish("Fashion Jewelry Accessories-Rings");
-								break;
-							}
-							case "earrings":{
-								express.setNameChinese("时尚简约饰品-耳环耳坠");
-								express.setNameEnglish("Fashion Jewelry Accessories-Earrings");
-								break;
-							}
-							case "anklets":{
-								express.setNameChinese("时尚简约饰品-脚踝链");
-								express.setNameEnglish("Fashion Jewelry Accessories-Anklets");
-								break;
-							}
-							case "dresses":{
-								express.setNameChinese("时尚服饰-连衣裙");
-								express.setNameEnglish("Fashion Clothes Dress");
-								break;
-							}
-							case "shorts":{
-								express.setNameChinese("时尚服饰-短裤");
-								express.setNameEnglish("Fashion Clothes Shorts");
-								break;
-							}
-							case "music-fan-t-shirts":{
-								express.setNameChinese("时尚服饰-T恤");
-								express.setNameEnglish("Fashion Clothes T Shirts");
-								break;
-							}
-							case "sunglasses":{
-								express.setNameChinese("太阳镜");
-								express.setNameEnglish("sunglasses");
-								break;
-							}
-							case "wallets":{
-								express.setNameChinese("女士零钱包");
-								express.setNameEnglish("Fashion Lady Purse");
-								break;
-							}
-							case "fashion-hoodies":{
-								express.setNameChinese("时尚卫衣");
-								express.setNameEnglish("ashion Hoodies");
-								break;
-							}
-							default:{
-								express.setNameChinese(null);
-								express.setNameEnglish(itemType);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		Receiver rc = new Receiver();
-		express.setReceiver(rc );
-		rc.setUserid(AppConstant.yanwenUserId);
-		if(order!=null){
-			rc.setName(order.getShippingAddressName());
-			rc.setPhone(order.getShippingAddressPhone());
-			rc.setState(order.getShippingAddressStateOrRegion());
-			rc.setCity(order.getShippingAddressCity());
-			rc.setAddress1(order.getShippingAddressAddressLine1());
-			rc.setAddress2(order.getShippingAddressAddressLine2());
-			rc.setPostcode(order.getShippingAddressPostalCode());
-			
-			Set<AmazonOrderItem> list = order.getOrderItemList();
-			double sum=0;
-			for(AmazonOrderItem i:list){
-				if(i.getItemPriceAmount()!=null){
-					sum += i.getItemPriceAmount();
-				}
-			}
-			if(sum==0){
-				express.setDeclaredValue(9);
-			}else if(sum>10 && sum <=20 ){
-				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/2, 2));
-			}else if(sum>20 && sum <=50 ){
-				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
-			}else if(sum>50 && sum <=100 ){
-				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
-			}else{
-				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(2*sum/3, 2));
-			}
-			express.setQuantity(list.size());
-		}
-		rc.setCountry(express.getCountry()); 
+		YanwenExpress express = this.service.convertToExpress(amazonOrderID);
 		model.addAttribute("express", express);
 		model.addAttribute("currentMenu", "express");
 		
@@ -371,8 +244,6 @@ public class YanwenExpressController {
 		if(result!=null){
 			if(result.isCallSuccess()){
 				express.setAmazonOrderID(null);
-//				express.setChannel(null);
-//				express.setNameChinese(null);
 				model.addAttribute("createSuccessIndicator","订单["+ orderId+"] 快递单创建成功！快递单号 ：" +result.getResp().getEpcode());
 			}else{
 				model.addAttribute("createSuccessIndicator", "快递单创建失败： "+result.getResp().getReasonMessage());

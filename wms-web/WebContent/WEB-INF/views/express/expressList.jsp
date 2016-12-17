@@ -53,7 +53,7 @@ function cleanForm(){
 	
 	<div class="container-fluid">
 	   <div class="row">
-	      	<form:form modelAttribute="expressQueryForm" enctype="multipart/form-data" action="/wms-web/yanwen/pageQuery">
+	      	<form:form modelAttribute="expressQueryForm" enctype="multipart/form-data" action="/wms-web/express/pageQuery">
 		      	<div align="left">
 			      	快递单号:<form:input path="expressID" size="10"/>
 			      	订单号:<form:input path="orderID" size="10"/>

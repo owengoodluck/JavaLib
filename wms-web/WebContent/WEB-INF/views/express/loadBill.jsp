@@ -32,7 +32,7 @@
 			</ol>
 		</div>
 		<div class="row">
-			<form method="post" action="/wms-web/yanwen/loadBill" enctype="multipart/form-data">
+			<form method="post" action="/wms-web/express/loadBill" enctype="multipart/form-data">
 				<table class="table table-hover" border="2">
 					<tr>
 						<td>账单文件</td>

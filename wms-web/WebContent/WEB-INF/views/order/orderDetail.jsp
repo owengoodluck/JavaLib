@@ -31,12 +31,12 @@ function submitForm(){
 	<div align="left">
 		<c:if test="${order.isPrinted}">
 			<p class="bg-success">订单已打印
-			<a class="btn btn-primary" href="<spring:url value='/yanwen/create?amazonOrderID=${order.amazonOrderId}' />" role="button" target="_blank">重新打印</a>
-			<a class="btn btn-primary" href="<spring:url value='/yanwen/expressDetail?orderID=${order.amazonOrderId}' />" role="button" target="_blank">查看快递详情</a>
+			<a class="btn btn-primary" href="<spring:url value='/express/create?amazonOrderID=${order.amazonOrderId}' />" role="button" target="_blank">重新打印</a>
+			<a class="btn btn-primary" href="<spring:url value='/express/expressDetail?orderID=${order.amazonOrderId}' />" role="button" target="_blank">查看快递详情</a>
 			</p>          
 		</c:if>
 		<c:if test="${!order.isPrinted && (order.orderStatus=='Shipped' || order.orderStatus=='Unshipped' )}">
-			<a class="btn btn-primary" href="<spring:url value='/yanwen/create?amazonOrderID=${order.amazonOrderId}' />" role="button" target="_blank">打印订单</a>
+			<a class="btn btn-primary" href="<spring:url value='/express/create?amazonOrderID=${order.amazonOrderId}' />" role="button" target="_blank">打印订单</a>
 		</c:if>
 	</div>
 	

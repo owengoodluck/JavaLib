@@ -56,6 +56,25 @@ function confirmShipment(){
 	});
 	if(isAnyChecked){
 		$('#confirmButton').attr('disabled',"true");
+		$('#batchPrintButton').attr('disabled',"true");
+		$('#confirmShipmentForm').submit();
+	}else{
+		alert("请选择至少一条未发货记录。");	
+	}
+}
+
+function batchPrint(){
+	var isAnyChecked  = false;
+	$('[name=amazonOrderIds]').each(function(){
+		if($(this).is(':checked')){     
+			isAnyChecked = true;
+		}
+	});
+	if(isAnyChecked){
+		$('#confirmButton').attr('disabled',"true");
+		$('#batchPrintButton').attr('disabled',"true");
+		$("#confirmShipmentForm").attr("action", "/wms-web/order/batchPrint");
+		$("#expressChannel").val( $("#expressChannelSelect").val() )
 		$('#confirmShipmentForm').submit();
 	}else{
 		alert("请选择至少一条未发货记录。");	
@@ -71,6 +90,15 @@ function confirmShipment(){
 	      		<div class="col-md-3" align="left">
 		      		<input type="checkbox" onchange="selectAll(this.checked)"/>全选未发货
 		      		<input id="confirmButton" type="button" value="确认发货" class="btn btn-primary" onclick="confirmShipment()"/>
+		      		<select id="expressChannelSelect" name ="expressChannelSelect" >
+		      				<option value="中邮广州E邮宝(线下)">中邮广州E邮宝(线下)</option>
+							<option value="中邮广州挂号小包">中邮广州挂号小包</option>
+							<option value="中邮北京E邮宝(线下)">中邮北京E邮宝(线下)</option>
+							<option value="中邮北京平邮小包">中邮北京平邮小包</option>
+							<option value="中邮上海E邮宝(线下)">中邮上海E邮宝(线下)</option>
+							<option value="中邮北京挂号小包">中邮北京挂号小包</option>
+		      		</select>
+		      		<input id="batchPrintButton" type="button" value="批量打印" class="btn btn-primary" onclick="batchPrint()"/>
 				</div>
 		      	<div class="col-md-9" align="right">
 			      	订单号:<form:input path="queryOrderID" size="10"/>
@@ -127,6 +155,7 @@ function confirmShipment(){
 			</thead>
 			<tbody>
 				<form id="confirmShipmentForm" enctype="multipart/form-data" action="/wms-web/order/confirmShipment" method="post">
+				<input id="expressChannel" name="expressChannel" type="hidden" />
 				<c:forEach items="${page.list}" var="order" varStatus="status">
 					<tr align="left">
 						<td>

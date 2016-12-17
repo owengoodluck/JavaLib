@@ -260,9 +260,24 @@ public class AmazonOrderService {
 		return localDBOrderList;
 	}
 
+	
+	private String getCountryCodeByMarketPlaceID(String marketPlaceID){
+		if(WMSConstants.marketPlaceIDCA.equals(marketPlaceID)){
+			return WMSConstants.MARKET_CODE_CA;
+		}else if(WMSConstants.marketPlaceIDUS.equals(marketPlaceID)){
+			return WMSConstants.MARKET_CODE_US;
+		}else{
+			throw new RuntimeException("Unknow marketPlaceID : "+marketPlaceID);
+		}
+	}
+	
 	private AmazonOrder converOrder(Order od) {
-		AmazonOrder ao = new AmazonOrder();
 		if (od != null) {
+			AmazonOrder ao = this.dao.get(od.getAmazonOrderId());
+			if(ao==null){
+				ao = new AmazonOrder();
+			}
+			
 			ao.setAmazonOrderId(od.getAmazonOrderId());
 			ao.setPurchaseDate(xmlDate2Date(od.getPurchaseDate()));
 			ao.setPurchaseDate(xmlDate2Date(od.getPurchaseDate()));
@@ -297,8 +312,11 @@ public class AmazonOrderService {
 			if(od.getOrderItems() !=null && !od.getOrderItems().isEmpty()){
 				ao.setOrderItemList(new HashSet(this.converOrderItemList(ao,od.getOrderItems())));
 			}
+			return ao;
+		}else{
+			throw new RuntimeException("Amazon order is null");
 		}
-		return ao;
+		
 	}
 
 	private List<AmazonOrderItem> converOrderItemList(AmazonOrder ao,List<OrderItem> orderList) {

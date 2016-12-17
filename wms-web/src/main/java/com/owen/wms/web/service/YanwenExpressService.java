@@ -29,6 +29,7 @@ import com.amazonservices.mws.orders._2013_09_01.model.Order;
 import com.amazonservices.mws.orders._2013_09_01.service.GetOrderService;
 import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.web.constants.AmazonOrderStatus;
+import com.owen.wms.web.constants.WMSConstants;
 import com.owen.wms.web.dao.AmazonJewelryDao;
 import com.owen.wms.web.dao.AmazonOrderDao;
 import com.owen.wms.web.dao.AmazonOrderItemDao;
@@ -41,6 +42,7 @@ import com.owen.wms.web.entity.YanWenExpressEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
 import com.owen.wms.web.form.ExpressScanForm;
 import com.owen.wms.web.form.YanwenExpress;
+import com.owen.wms.web.utils.DigitalFormatUtil;
 import com.owen.wms.web.utils.ExcelUtil;
 import com.owen.wms.web.utils.PdfPrintThread;
 import com.owen.wms.web.utils.PdfPrintUtil;
@@ -268,22 +270,21 @@ public class YanwenExpressService {
 	
 	/**
 	 * 
-	 * @param form
+	 * @param express
 	 * @return
 	 * @throws Exception
 	 */
-	public CreateExpressResponseType createExpress(YanwenExpress form) throws Exception {
+	public CreateExpressResponseType createExpress(YanwenExpress express) throws Exception {
 		//1. get Amazon order info
-		AmazonOrder orderEntity = this.amazonOrderDao.get(form.getAmazonOrderID().trim());
+		AmazonOrder orderEntity = this.amazonOrderDao.get(express.getAmazonOrderID().trim());
 		CreateExpressResponseType result = null;
 		
-		
-		ExpressType et = this.convert(form);
+		ExpressType et = this.convert(express);
 		//2.create Yanwen express
 		result = this.yanwenService.createExpress(et);
 		
 		if (orderEntity!=null) {
-			form.setAmazonOrder(orderEntity);
+			express.setAmazonOrder(orderEntity);
 			
 			if(result.isCallSuccess()){
 				String epCode=result.getCreatedExpress().getEpcode();
@@ -298,12 +299,14 @@ public class YanwenExpressService {
 				this.amazonOrderDao.update(orderEntity);
 				
 				//3. update product stock
-				if(form.getSequenceNo()==null || form.getSequenceNo().trim().length()<1){//update only once
+				if(express.getSequenceNo()==null || express.getSequenceNo().trim().length()<1){//update only once
 					this.updateStock(orderEntity);
 				}
 			}else{
-				this.log.error("Not related order:"+form.getAmazonOrderID().trim());
+				this.log.error("Create Express fail with error :"+result.getResp().getReasonMessage());
 			}
+		}else{
+			this.log.error("Not related order:"+express.getAmazonOrderID().trim());
 		}
 		return result;
 	}
@@ -538,4 +541,145 @@ public class YanwenExpressService {
 		}
 		return e;
 	}
+	
+	public YanwenExpress convertToExpress(String amazonOrderID){
+		YanwenExpress express = new YanwenExpress();
+		express.setAmazonOrderID(amazonOrderID);
+		express.setDeclaredCurrency("USD");
+		express.setQuantity(1);
+		express.setDeclaredValue(9);
+		express.setWeight(50);
+		express.setSendDate(sdf.format(new Date()));
+		express.setDownloadPath(AppConstant.defaultPdfDownloadPath);
+		express.setCountry("美国");//default
+		
+		AmazonOrder order = this.amazonOrderDao.getByOrderID(amazonOrderID);
+		if(order!=null){
+			express.setAmazonOrder(order);
+			if(WMSConstants.marketPlaceIDCA.equals(order.getMarketplaceId())){
+				express.setCountry("加拿大");
+			}else if(WMSConstants.marketPlaceIDUS.equals(order.getMarketplaceId())){
+				express.setCountry("美国");
+			}else{
+				throw new RuntimeException ("Unknow market place ID ");
+			}
+			Set<AmazonOrderItem> orderItems = order.getOrderItemList();
+			if(orderItems.size()>0){
+				express.setQuantity(orderItems.size());
+				int i =0;
+				AmazonOrderItem[] orderItemArray = orderItems.toArray(new AmazonOrderItem[]{});
+				AmazonOrderItem firstOrderItem = orderItemArray[0];
+				while( firstOrderItem.getQuantityOrdered() < 1 && i<orderItems.size()-1 ){
+					i++;
+					firstOrderItem = orderItemArray[i];
+				}
+				JewelryEntity prod = firstOrderItem.getSellerSKU();
+				if(prod!=null){
+					String itemType = prod.getItemType();
+					if(itemType!=null){
+						itemType = itemType.toLowerCase();
+						switch (itemType){
+							case "pendant-necklaces":{
+								express.setNameChinese("时尚简约饰品-项链吊坠");
+								express.setNameEnglish("Fashion Jewelry Accessories-Necklace Pendant");
+								break;
+							}
+							case "link-bracelets":{
+								express.setNameChinese("时尚简约饰品-手链手环");
+								express.setNameEnglish("Fashion Jewelry Accessories-Bracelets");
+								break;
+							}
+							case "rings":{
+								express.setNameChinese("时尚简约饰品-指环戒指");
+								express.setNameEnglish("Fashion Jewelry Accessories-Rings");
+								break;
+							}
+							case "earrings":{
+								express.setNameChinese("时尚简约饰品-耳环耳坠");
+								express.setNameEnglish("Fashion Jewelry Accessories-Earrings");
+								break;
+							}
+							case "anklets":{
+								express.setNameChinese("时尚简约饰品-脚踝链");
+								express.setNameEnglish("Fashion Jewelry Accessories-Anklets");
+								break;
+							}
+							case "dresses":{
+								express.setNameChinese("时尚服饰-连衣裙");
+								express.setNameEnglish("Fashion Clothes Dress");
+								break;
+							}
+							case "shorts":{
+								express.setNameChinese("时尚服饰-短裤");
+								express.setNameEnglish("Fashion Clothes Shorts");
+								break;
+							}
+							case "music-fan-t-shirts":{
+								express.setNameChinese("时尚服饰-T恤");
+								express.setNameEnglish("Fashion Clothes T Shirts");
+								break;
+							}
+							case "sunglasses":{
+								express.setNameChinese("太阳镜");
+								express.setNameEnglish("sunglasses");
+								break;
+							}
+							case "wallets":{
+								express.setNameChinese("女士零钱包");
+								express.setNameEnglish("Fashion Lady Purse");
+								break;
+							}
+							case "fashion-hoodies":{
+								express.setNameChinese("时尚卫衣");
+								express.setNameEnglish("ashion Hoodies");
+								break;
+							}
+							default:{
+								express.setNameChinese(null);
+								express.setNameEnglish(itemType);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		Receiver rc = new Receiver();
+		express.setReceiver(rc );
+		rc.setUserid(AppConstant.yanwenUserId);
+		if(order!=null){
+			rc.setName(order.getShippingAddressName());
+			rc.setPhone(order.getShippingAddressPhone());
+			rc.setState(order.getShippingAddressStateOrRegion());
+			rc.setCity(order.getShippingAddressCity());
+			rc.setAddress1(order.getShippingAddressAddressLine1());
+			rc.setAddress2(order.getShippingAddressAddressLine2());
+			rc.setPostcode(order.getShippingAddressPostalCode());
+			
+			Set<AmazonOrderItem> list = order.getOrderItemList();
+			double sum=0;
+			for(AmazonOrderItem i:list){
+				if(i.getItemPriceAmount()!=null){
+					sum += i.getItemPriceAmount();
+				}
+			}
+			if(sum==0){
+				express.setDeclaredValue(9);
+			}else if(sum>10 && sum <=20 ){
+				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/2, 2));
+			}else if(sum>20 && sum <=50 ){
+				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
+			}else if(sum>50 && sum <=100 ){
+				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(sum/3, 2));
+			}else{
+				express.setDeclaredValue(DigitalFormatUtil.getFormatedDouble(2*sum/3, 2));
+			}
+			express.setQuantity(list.size());
+		}
+		rc.setCountry(express.getCountry()); 
+		
+		return express;
+	}
+	
 }

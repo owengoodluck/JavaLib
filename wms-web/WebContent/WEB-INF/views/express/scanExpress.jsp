@@ -64,7 +64,7 @@
 	function updateWeight(){
 		var expressNumber = $("#previousExpressNumber").val();
 		var expressWeight = $("#expressWeight").val();
-		$.ajax({url:"/wms-web/yanwen/updateWeight?weight="+expressWeight+"&expressNumber="+expressNumber,
+		$.ajax({url:"/wms-web/express/updateWeight?weight="+expressWeight+"&expressNumber="+expressNumber,
 				success: function(data) {
 					if("OK"==data){
 			         	$("#updateLabel").text("Update success:"+new Date());
