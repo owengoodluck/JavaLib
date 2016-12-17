@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,6 +44,9 @@ public class OrderController {
 	@Autowired
 	private YanwenExpressService expressService;
 	String marketPlaceID  = WMSConstants.marketPlaceIDUS;
+
+	@Value("${yanwen.express.pdf.is.print}")
+	private boolean print;
 	
 	private int defaultPageSize = 20;
 	
@@ -69,7 +73,7 @@ public class OrderController {
 			this.amazonOrderService.confirmShipFulfillment(amazonOrderIds, tmpFolder);
 			//2. synchronize orders
 			Thread.sleep(1*60*1000);//1 minute
-			amazonOrderService.synchronizeOrderToLocalDB(DateUtil.getDaysBefor(1), null, null,"");
+			amazonOrderService.synchronizeOrderToLocalDB(DateUtil.getDaysBefor(1), null, null,this.marketPlaceID);
 		}
 		
 		return listOrder(model) ;//TODO
@@ -87,6 +91,10 @@ public class OrderController {
 				if(result!=null){
 					if(result.isCallSuccess()){
 						this.expressService.downloadPrintExpress(result, AppConstant.defaultPdfDownloadPath, express.getAmazonOrderID());
+
+						if(this.print){
+							Thread.sleep(1000*6);
+						}
 					}else{
 						String error = "快递单创建失败： "+result.getResp().getReasonMessage();
 					}

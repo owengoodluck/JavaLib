@@ -64,6 +64,10 @@ function confirmShipment(){
 }
 
 function batchPrint(){
+
+	 if(!confirm("确定要批量打印？")){
+	 	return ;
+	 }
 	var isAnyChecked  = false;
 	$('[name=amazonOrderIds]').each(function(){
 		if($(this).is(':checked')){     
