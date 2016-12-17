@@ -76,6 +76,10 @@ public class YanwenExpressService {
 	@Qualifier("yanWenExpressDao")
 	private YanWenExpressDao yanWenExpressDao;
 	
+	public Map<String, Object> statisticExpress(Date start ,Date end){
+		return this.yanWenExpressDao.statisticExpress(start, end);
+	}
+	
 	public YanWenExpressEntity getByOrderID(String orderID){
 		YanWenExpressEntity ent =this.yanWenExpressDao.getByAmazonOrderId(orderID);
 		return ent;

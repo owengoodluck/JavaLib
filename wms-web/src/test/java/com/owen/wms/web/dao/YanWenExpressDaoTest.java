@@ -57,5 +57,10 @@ public class YanWenExpressDaoTest {
 		Assert.assertNotNull(this.dao.getByAmazonOrderId("104-1073592-2461824"));
 	}
 	
+	@Test
+	public void statisticExpressTest(){
+		this.dao.statisticExpress(null, null);
+	}
+	
 	
 }

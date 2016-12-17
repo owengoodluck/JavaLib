@@ -4,10 +4,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.mws.entity.yanwen.Receiver;
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
 import com.owen.wms.common.constant.AppConstant;
+import com.owen.wms.common.util.DateUtil;
+import com.owen.wms.web.constants.WMSConstants;
 import com.owen.wms.web.dao.Page;
 import com.owen.wms.web.entity.AmazonOrder;
 import com.owen.wms.web.entity.AmazonOrderItem;
@@ -31,6 +35,8 @@ import com.owen.wms.web.entity.JewelryEntity;
 import com.owen.wms.web.entity.YanWenExpressEntity;
 import com.owen.wms.web.form.ExpressQueryForm;
 import com.owen.wms.web.form.ExpressScanForm;
+import com.owen.wms.web.form.ExpressStatisticForm;
+import com.owen.wms.web.form.OrderSynchronizeForm;
 import com.owen.wms.web.form.YanwenExpress;
 import com.owen.wms.web.music.NumberPlayer;
 import com.owen.wms.web.service.AmazonOrderService;
@@ -38,7 +44,7 @@ import com.owen.wms.web.service.YanwenExpressService;
 import com.owen.wms.web.utils.DigitalFormatUtil;
 
 @Controller
-@RequestMapping("/yanwen")
+@RequestMapping("/express")
 public class YanwenExpressController {
 	private Logger log = Logger.getLogger(this.getClass());
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -50,6 +56,37 @@ public class YanwenExpressController {
 	@Qualifier("amazonOrderService")
 	private AmazonOrderService amazonOrderService ;
 
+	@RequestMapping(value = "/expressStatic", method = RequestMethod.GET)
+	public String preSynchronize(Model model) throws Exception{
+		ExpressStatisticForm expressStaticForm = new ExpressStatisticForm();
+		model.addAttribute("expressStaticForm",expressStaticForm);
+		model.addAttribute("currentMenu", "express");
+		return "express/expressStatic";
+	}
+	
+	
+	@RequestMapping(value = "/expressStatic", method = RequestMethod.POST)
+	public String synchronize(@ModelAttribute("expressStaticForm") ExpressStatisticForm expressStaticForm,Model model) throws Exception{
+		//1.synchronize orders
+		Date startDate =null;
+		Date endDate = null;
+		
+		if (!StringUtils.isBlank(expressStaticForm.getStartDateStr())) {  
+			startDate = DateUtil.parse(expressStaticForm.getStartDateStr(), DateUtil.MONTH_FORMAT);
+	    }  
+		
+		if (!StringUtils.isBlank(expressStaticForm.getEndDateStr())) {  
+			endDate = DateUtil.parse(expressStaticForm.getEndDateStr(), DateUtil.MONTH_FORMAT);
+	    }  
+	
+		Map<String, Object> statisResult= this.service.statisticExpress(startDate, endDate);
+		model.addAttribute("statisResult", statisResult);
+	
+		return "express/expressStatic";
+	}
+	
+	
+	
 	@RequestMapping(value="/loadBillGet", method = RequestMethod.GET)
 	public String loadBillGet(HttpServletRequest request, ModelMap model) throws Exception {
 		return "express/loadBill";

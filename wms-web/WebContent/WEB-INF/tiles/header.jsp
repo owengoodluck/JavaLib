@@ -66,13 +66,14 @@ function openUrl(str){
         
         <li <c:if test="${currentMenu == 'express' }">class="dropdown active"</c:if> 
         	<c:if test="${currentMenu != 'express' }">class="dropdown"</c:if>>
-          <a class="dropdown-toggle" data-toggle="dropdown" href="<spring:url value="/yanwen/list" />" onclick="openUrl('<c:url value="/yanwen/list" />')">快递管理 <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="<spring:url value="/express/list" />" onclick="openUrl('<c:url value="/express/list" />')">快递管理 <span class="caret"></span></a>
           <ul class="dropdown-menu" >
-            <li><a href="<spring:url value="/yanwen/list" />">所有快递</a> </li>
-            <li><a href="<spring:url value="/yanwen/scan" />">读取快递信息</a> </li>
-            <li><a href="<spring:url value="/yanwen/create" />">创建新快递</a> </li>
-            <li><a href="<spring:url value="/yanwen/scanConfirmDeliver"/>">扫描快递单确认发货</a> </li>
-            <li><a href="<spring:url value="/yanwen/loadBillGet" />">加载账单文件</a> </li>
+            <li><a href="<spring:url value="/express/list" />">所有快递</a> </li>
+            <li><a href="<spring:url value="/express/scan" />">读取快递信息</a> </li>
+            <li><a href="<spring:url value="/express/create" />">创建新快递</a> </li>
+            <li><a href="<spring:url value="/express/scanConfirmDeliver"/>">扫描快递单确认发货</a> </li>
+            <li><a href="<spring:url value="/express/loadBillGet" />">加载账单文件</a> </li>
+            <li><a href="<spring:url value="/express/expressStatic" />">快递统计</a> </li>
           </ul>
         </li>
         

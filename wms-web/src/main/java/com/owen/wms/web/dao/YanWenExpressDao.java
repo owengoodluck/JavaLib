@@ -1,6 +1,7 @@
 package com.owen.wms.web.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,33 @@ import com.owen.wms.web.form.ExpressQueryForm;
 public class YanWenExpressDao extends BaseHibernateDao<YanWenExpressEntity,String>{
 
 	private SimpleDateFormat sdf  =new SimpleDateFormat("yyyy-MM-dd");
+	
+	public Map<String,Object> statisticExpress(Date start ,Date end){
+		String hql = "select  count(*) as totalCount , sum(feeTotal) as totalFee from YanWenExpressEntity where 1=1 ";
+		if(start !=null){
+			hql += " and sendDate >= :start";
+		}
+		if(end !=null){
+			hql += " and sendDate <= :end";
+		}
+		Query query = this.getSession().createQuery(hql);
+		if(start !=null){
+			query.setDate("start", start);
+		}
+		
+		if(end !=null){
+			query.setDate("end", end);
+		}
+		
+		List list = query.list();
+		Object[] rs = (Object[])list.get(0);
+		Long totalCount =(Long) rs[0];
+		Double totalFee =(Double) rs[1];
+		Map<String,Object> result = new HashMap();
+		result.put("快递总数", totalCount);
+		result.put("运费总计", totalFee);
+		return result;
+	}
 	
 	public List<YanWenExpressEntity> listAll(){
 		Query query = this.getSession().createQuery("from YanWenExpressEntity e order by sendDate desc");
