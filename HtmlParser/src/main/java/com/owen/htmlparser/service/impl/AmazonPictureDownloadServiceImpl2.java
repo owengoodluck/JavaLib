@@ -57,4 +57,10 @@ public class AmazonPictureDownloadServiceImpl2 implements PictureDownloadService
 
 	}
 
+	@Override
+	public List<String> pareseAmazonUrlToGetPictureUrlList(String url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -147,5 +147,11 @@ public class AlibabaGroupPictureDownloadServiceImpl implements PictureDownloadSe
 		}
 		return lazyLoadDetailDescURL;
 	}
+
+	@Override
+	public List<String> pareseAmazonUrlToGetPictureUrlList(String url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
