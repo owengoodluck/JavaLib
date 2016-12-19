@@ -21,12 +21,26 @@
 <script src='<c:url value="/resource/js/jquery-ui.min.js"/>'></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		if($('#scanDoneIndicator').val()=="ok"){
+		if($('#scanDoneIndicator').val()=="ok"&& $("#checkWeight1").is(':checked')){
 			$('#expressWeight').focus();
 		}else{
 			$('#expressNumber').focus();
 		}
 
+		if($("#checkWeight1").is(':checked')){
+			$("#expressWeight").removeAttr("disabled");
+		}else{
+			$("#expressWeight").attr("disabled","disabled");
+		}
+		
+		$("#checkWeight1").change(function (){
+			if($("#checkWeight1").is(':checked')){
+				$("#expressWeight").removeAttr("disabled");
+			}else{
+				$("#expressWeight").attr("disabled","disabled");
+			}
+		});
+		
 		$("#expressNumber").keypress(function(event) {
 			if (event.keyCode == "13"|| event.keyCode == "9" ||event.keyCode == 13 || event.keyCode == 9) {
 				submitForm();
@@ -74,6 +88,7 @@
 	function updateWeight(){
 		var expressWeight = $("#expressWeight").val();
 		var expressNumber = $("#previousExpressNumber").val();
+		var isCheckWeight = $("#isCheckWeightCheckbox").val();
 		
 		if( expressWeight == null || expressWeight =="" ){	
 			alert("重量不能为空" + expressWeight);
@@ -95,7 +110,7 @@
 <title>扫描快递单确认发货</title>
 </head>
 <body>
-<input id="scanDoneIndicator" type="hidden" value="${scanDone }">
+	<input id="scanDoneIndicator" type="hidden" value="${scanDone }">
 	<section class="container">
 		<div>
 			<ol class="breadcrumb" align="left">
@@ -123,6 +138,8 @@
 									<span class="label label-danger">未找到快递信息</span>
 								</c:if>
 								
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								是否称重<form:checkbox path="checkWeight"  />  
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								重量自称:
 								<c:if test="${expressScanForm.express.weight ==50 || expressScanForm.express.weight ==0}">

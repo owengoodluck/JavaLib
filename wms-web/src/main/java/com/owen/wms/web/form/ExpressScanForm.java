@@ -13,8 +13,16 @@ public class ExpressScanForm {
 	private AmazonOrder order;
 	private Set<AmazonOrderItem> orderItemSet;
 	private YanWenExpressEntity express;
+	private boolean checkWeight;
 
-	
+	public boolean isCheckWeight() {
+		return checkWeight;
+	}
+
+	public void setCheckWeight(boolean checkWeight) {
+		this.checkWeight = checkWeight;
+	}
+
 	public YanWenExpressEntity getExpress() {
 		return express;
 	}
