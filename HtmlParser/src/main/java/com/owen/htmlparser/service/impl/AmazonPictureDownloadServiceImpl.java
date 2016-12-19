@@ -114,14 +114,16 @@ public class AmazonPictureDownloadServiceImpl implements PictureDownloadService 
 		}
 		
 		//no sub items
-		if(jsonDataOfPics.trim().length()<=2){
+		if(jsonDataOfPics==null || jsonDataOfPics.trim().length()<=2){
 			originalLabel = " 'colorImages':";
 			endLabel = "'colorToAsin':";
 			indexStart = htmlContent.indexOf(originalLabel);
 			indexEnd = htmlContent.indexOf(endLabel);
-			jsonDataOfPics = htmlContent.substring(indexStart+originalLabel.length(), indexEnd-1).trim();
-			if(jsonDataOfPics.endsWith(",")){
-				jsonDataOfPics = jsonDataOfPics.substring(0, jsonDataOfPics.length()-1);
+			if(indexStart!=-1 && indexEnd!=-1){
+				jsonDataOfPics = htmlContent.substring(indexStart+originalLabel.length(), indexEnd-1).trim();
+				if(jsonDataOfPics.endsWith(",")){
+					jsonDataOfPics = jsonDataOfPics.substring(0, jsonDataOfPics.length()-1);
+				}
 			}
 		}
 		
@@ -135,7 +137,12 @@ public class AmazonPictureDownloadServiceImpl implements PictureDownloadService 
 	 * @param jsonString
 	 */
 	private Map<String,List<String>> parseSubitemsPic(String jsonString) {
+		
 		Map<String,List<String>> urlMap = new HashMap<String,List<String>>();
+		
+		if(jsonString==null || jsonString.trim().length()<1){
+			return urlMap;
+		}
 		
 		JSONObject jsonObject = (JSONObject) JSONSerializer.toJSON(jsonString);
 		Map<String, ArrayList> map = (Map) JSONObject.toBean(jsonObject, Map.class);
