@@ -273,10 +273,12 @@ public class AmazonOrderService {
 	
 	private AmazonOrder converOrder(Order od) {
 		if (od != null) {
-			AmazonOrder ao = this.dao.get(od.getAmazonOrderId());
-			if(ao==null){
-				ao = new AmazonOrder();
-			}
+			AmazonOrder ao = new AmazonOrder();
+			//below will cause the NonUniqueObjectException
+//			this.dao.get(od.getAmazonOrderId());
+//			if(ao==null){
+//				ao = new AmazonOrder();
+//			}
 			
 			ao.setAmazonOrderId(od.getAmazonOrderId());
 			ao.setPurchaseDate(xmlDate2Date(od.getPurchaseDate()));

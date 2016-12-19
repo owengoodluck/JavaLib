@@ -70,7 +70,7 @@ public class PictureProcessController {
 			if(url!=null && url.getUrl().trim().length()>0){
 				this.log.info(url.getUrl());
 				if(url.getUrl().indexOf("www.amazon.com")>-1){
-					this.amazonPictureDownloadService.downloadPictue(url.getUrl(), picPackage.getDownloadPath(),picPackage.getPicSize());
+					picList = this.amazonPictureDownloadService.pareseAmazonUrlToGetPictureUrlList(url.getUrl());
 				}else{
 					picList = this.alibabaPictureDownloadService.getPicReviewList(url.getUrl());
 				}
