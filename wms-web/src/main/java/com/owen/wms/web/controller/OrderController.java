@@ -1,11 +1,12 @@
 package com.owen.wms.web.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.amazonaws.mws.entity.yanwen.resp.CreateExpressResponseType;
+import com.amazonaws.mws.service.GetFeedSubmissionResultService;
 import com.owen.wms.common.constant.AppConstant;
 import com.owen.wms.common.util.DateUtil;
 import com.owen.wms.web.constants.WMSConstants;
@@ -49,6 +51,27 @@ public class OrderController {
 	private boolean print;
 	
 	private int defaultPageSize = 20;
+	
+
+	
+	@RequestMapping(value="/feedResult", method = RequestMethod.GET)
+	public String getSubmittedFeedResultGet(Model model,HttpServletRequest request,HttpServletResponse resp) {
+		model.addAttribute("currentMenu", "order");
+		return "order/feedResult";
+	}
+	
+	@RequestMapping(value="/feedResult", method = RequestMethod.POST)
+	public String getSubmittedFeedResultPost(Model model,HttpServletRequest request,HttpServletResponse resp) {
+		ByteArrayOutputStream bout = new ByteArrayOutputStream();
+		
+		String feedSubmissionId = request.getParameter("feedSubmissionId");
+		GetFeedSubmissionResultService.getResult(feedSubmissionId , bout);
+		String result = bout.toString();
+		model.addAttribute("currentMenu", "order");
+		model.addAttribute("result", result);
+		model.addAttribute("feedSubmissionId", feedSubmissionId);
+		return "order/feedResult";
+	}
 	
 	@RequestMapping(value="/statistics", method = RequestMethod.GET)
 	public String orderStatistics(Model model,HttpServletRequest request) {

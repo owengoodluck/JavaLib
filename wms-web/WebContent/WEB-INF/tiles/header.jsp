@@ -51,6 +51,7 @@ function openUrl(str){
             <li><a href="<spring:url value="/order/list" />">所有订单</a> </li>
             <li><a href="<spring:url value="/order/synchronzieOrders" />">订单同步</a> </li>
             <li><a href="<spring:url value="/order/statistics" />">销售统计</a> </li>
+            <li><a href="<spring:url value="/order/feedResult" />">feedResult</a> </li>
           </ul>
         </li>
         

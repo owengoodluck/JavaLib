@@ -47,7 +47,7 @@ public class GetFeedSubmissionResultService {
      *
      * @param args unused
      */
-    public static void main(String... args) {
+    public static void getResult(String feedSubmissionId,OutputStream os) {
 
         /************************************************************************
          * Access Key ID and Secret Access Key ID, obtained from:
@@ -110,29 +110,14 @@ public class GetFeedSubmissionResultService {
          * Marketplace Web Service calls.
          ***********************************************************************/
         final String merchantId = AppConstant.sellerId;//"<Your Merchant ID>";
-        final String sellerDevAuthToken = "<Merchant Developer MWS Auth Token>";
 
         GetFeedSubmissionResultRequest request = new GetFeedSubmissionResultRequest();
         request.setMerchant( merchantId );
         //request.setMWSAuthToken(sellerDevAuthToken);
         
-        request.setFeedSubmissionId( "50271016858" );
+        request.setFeedSubmissionId( feedSubmissionId );
 
-        // Note that depending on the size of the feed sent in, and the number of errors and warnings,
-        // the result can reach sizes greater than 1GB. For this reason we recommend that you _always_ 
-        // program to MWS in a streaming fashion. Otherwise, as your business grows you may silently reach
-        // the in-memory size limit and have to re-work your solution.
-        //
-         OutputStream processingResult=null;
-		try {
-			String path = "C:/Users/owen/git/wms-feeds/target/";
-			File f = new File(path+ "feedSubmissionResult_"+request.getFeedSubmissionId()+".xml" );
-			System.out.println(f.getAbsoluteFile());
-			processingResult = new FileOutputStream(f);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-         request.setFeedSubmissionResultOutputStream( processingResult );
+         request.setFeedSubmissionResultOutputStream( os );
 
          invokeGetFeedSubmissionResult(service, request);
     }
