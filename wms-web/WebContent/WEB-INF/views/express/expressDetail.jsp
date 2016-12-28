@@ -74,7 +74,8 @@ function submitForm(){
 				<tr>
 					<td>快递单号</td> 
 					<td width="90%"> 
-						${expressEntity.epcode }
+						${expressEntity.epcode } 
+						<a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=${expressEntity.epcode }" target="_blank">查看跟踪信息</a>
 					</td>
 				</tr>
 				<tr>
