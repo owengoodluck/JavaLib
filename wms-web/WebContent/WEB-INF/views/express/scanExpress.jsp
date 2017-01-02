@@ -8,17 +8,6 @@
 <!Doctype html>
 <html>
 <head>
-<link rel="stylesheet"
-	href='<c:url value="/resource/css/bootstrap.min.css" />'
-	type="text/css"
-/>
-<script src='<c:url value="/resource/js/jquery.min.js"/>'></script>
-<script src='<c:url value="/resource/js/bootstrap.min.js"/>'></script>
-<link rel="stylesheet"
-	href='<c:url value="/resource/css/jquery-ui.min.css" />'
-	type="text/css"
-/>
-<script src='<c:url value="/resource/js/jquery-ui.min.js"/>'></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#expressNumber').focus();
@@ -85,7 +74,7 @@
 			</ol>
 		</div>
 		<div class="row">
-			<form:form modelAttribute="expressScanForm" method="post" action="/wms-web/yanwen/scan" >
+			<form:form modelAttribute="expressScanForm" method="post" action="/wms-web/express/scan" >
 				<table class="table table-hover" border="2">
 					<tr>
 						<td>快递单号</td>

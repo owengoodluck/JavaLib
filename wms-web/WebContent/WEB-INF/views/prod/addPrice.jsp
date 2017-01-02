@@ -10,13 +10,6 @@
 <%@ page import = "com.owen.wms.common.constant.AppConstant" %>
 <!Doctype html>
 <html>
-<link rel="stylesheet"
-	href='<c:url value="/resource/css/bootstrap.min.css" />'
-	type="text/css"
-/>
-<script src='<c:url value="/resource/js/jquery.min.js"/>'></script>
-<script src='<c:url value="/resource/js/bootstrap.min.js"/>'></script>
-<script src='<c:url value="/resource/js/owen.js"/>'></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	

@@ -5,10 +5,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href='<c:url value="/resource/css/bootstrap.min.css" />' type="text/css"/>
-<script src='<c:url value="/resource/js/jquery.min.js"/>'></script>
-<script src='<c:url value="/resource/js/bootstrap.min.js"/>'></script>
-<script src='<c:url value="/resource/js/owen.js"/>'></script>
 <head>
 </head>
 

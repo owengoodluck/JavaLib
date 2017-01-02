@@ -6,9 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
->
 <title>Welcome</title>
 </head>
 <body>
@@ -23,7 +20,7 @@
 	<div class="container">
 		<a href="<spring:url value="picture/download" />" class="btn btn-success btn-mini pull-left" >图片下载</a> 
 		<br/><hr/>
-		<a href="<spring:url value="yanwen/create" />" class="btn btn-success btn-mini pull-left" >快递管理</a> 
+		<a href="<spring:url value="express/create" />" class="btn btn-success btn-mini pull-left" >快递管理</a> 
 		<br/><hr/>
 		<a href="<spring:url value="order/list" />" class="btn btn-success btn-mini pull-left" >订单管理</a> 
 		<br/><hr/>

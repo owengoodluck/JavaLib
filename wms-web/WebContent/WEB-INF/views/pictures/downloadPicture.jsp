@@ -8,10 +8,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="<c:url value="/resource/css/styles.css" />" type="text/css">
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> -->
-<script src="<c:url value="/resource/js/scripts.js" />"type="text/javascript"></script>
 <script type="text/javascript">
 
 function submitForm(){
