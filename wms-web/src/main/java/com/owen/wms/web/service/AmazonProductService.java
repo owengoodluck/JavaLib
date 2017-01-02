@@ -4,11 +4,11 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,20 +47,20 @@ public class AmazonProductService {
 		omitColumnNames4Parent.add("quantity");
 		omitColumnNames4Parent.add("currency");
 		omitColumnNames4Parent.add("list_price");
-		omitColumnNames4Parent.add("bullet_point2");
-		omitColumnNames4Parent.add("bullet_point3");
-		omitColumnNames4Parent.add("bullet_point4");
-		omitColumnNames4Parent.add("bullet_point5");
+//		omitColumnNames4Parent.add("bullet_point2");
+//		omitColumnNames4Parent.add("bullet_point3");
+//		omitColumnNames4Parent.add("bullet_point4");
+//		omitColumnNames4Parent.add("bullet_point5");
 		omitColumnNames4Parent.add("generic_keywords1");
 		omitColumnNames4Parent.add("generic_keywords2");
 		omitColumnNames4Parent.add("generic_keywords3");
 		omitColumnNames4Parent.add("generic_keywords4");
 		omitColumnNames4Parent.add("generic_keywords5");
-		omitColumnNames4Parent.add("other_image_url1");
-		omitColumnNames4Parent.add("other_image_url2");
-		omitColumnNames4Parent.add("other_image_url3");
-		omitColumnNames4Parent.add("other_image_url4");
-		omitColumnNames4Parent.add("other_image_url5");
+//		omitColumnNames4Parent.add("other_image_url1");
+//		omitColumnNames4Parent.add("other_image_url2");
+//		omitColumnNames4Parent.add("other_image_url3");
+//		omitColumnNames4Parent.add("other_image_url4");
+//		omitColumnNames4Parent.add("other_image_url5");
 		omitColumnNames4Parent.add("parent_sku");
 		omitColumnNames4Parent.add("relationship_type");
 		omitColumnNames4Parent.add("color_name");
@@ -94,6 +94,11 @@ public class AmazonProductService {
 	public List<JewelryEntity> getJewelryList(){
 		List<JewelryEntity> list = this.amazonJewelryDao.list("itemSku", true);
 		return list;
+	}
+	
+	
+	public void batchDelete(Collection<String> ids){
+		this.amazonJewelryDao.batchDetlete(ids);
 	}
 	
 	public List<JewelryEntity> findBySKUWithChild(String sku){

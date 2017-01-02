@@ -89,6 +89,14 @@ public abstract class BaseHibernateDao<T, PK extends java.io.Serializable> {
 		getSession().delete(this.get(id));
 
 	}
+	
+	public void batchDetlete(Collection<PK> ids){
+		if(ids!=null){
+			for(PK id:ids){
+				delete(id); 
+			}
+		}
+	}
 
 	/*
 	 * 删除PO

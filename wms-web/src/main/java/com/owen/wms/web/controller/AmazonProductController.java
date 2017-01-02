@@ -5,6 +5,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -72,6 +73,7 @@ public class AmazonProductController {
 		model.addAttribute("currentMenu", "prod");
 		return "prod/productList";
 	}
+	
 
 	@RequestMapping(value="/queryProd", method = RequestMethod.POST)
 	public String queryProd(Model model,@ModelAttribute("prodQueryForm") ProdQueryForm prodQueryForm) throws Exception {
@@ -247,7 +249,27 @@ public class AmazonProductController {
 			String excelFilePath = this.defaultPathToExportExcel+"/"+list.get(0).getItemSku()+".xls";
 			this.amazonProductService.write2Excel(list, excelFilePath);
 		}
-		return "prod/addPurchaseUrl";
+		return "prod/addTitle";
+	}
+	
+	@RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
+	public String batchDelete(Model model,@ModelAttribute("productsForm") JewelryEntityListPackageForm productsForm,HttpServletRequest request) throws Exception{
+		String[] skuList = request.getParameterValues("skuList");
+		if(skuList!=null){
+			this.amazonProductService.batchDelete(java.util.Arrays.asList(skuList));
+			ArrayList<JewelryEntity> list = productsForm.getList();
+			Iterator<JewelryEntity> it = list.iterator();
+			while(it.hasNext()){
+				JewelryEntity x = it.next();
+			    for(String sku : skuList){
+			    	if(x.getItemSku().equals(sku)){
+			    		it.remove();
+			    		break;
+			    	}
+			    }
+			}
+		}
+		return "prod/addTitle";
 	}
 	
 	private void saveOrUpate(JewelryEntityListPackageForm productsForm) throws Exception{

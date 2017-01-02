@@ -91,6 +91,14 @@ function exportExcel(){
 	$("#productsForm").attr("action", "/wms-web/prod/export2Excel");
 	$('#productsForm').submit();
 }
+
+function batchDelete(){
+	if(confirm("确定删除指定选项 ？")){
+		$("#productsForm").attr("action", "/wms-web/prod/batchDelete");
+		$('#productsForm').submit();
+	}
+}
+
 function submitForm(preOrNext){
 	if(nullCheck('.itemSkuClass') ){
 		return;
@@ -132,12 +140,14 @@ function submitForm(preOrNext){
 				<caption>
 					<input type="button" id="btnAdd" class="btn btn-primary" value="保存"  onclick="submitFormAndGoTo()" />
 					<input type="button" id="btnAdd" class="btn btn-primary" value="导出Exce"  onclick="exportExcel()" />
+					<button id="deleteChildBtn"    type="button" class="btn btn-primary" onclick="batchDelete()">删除</button>
 					<button id="addChildBtn"    type="button" class="btn btn-primary">添加子产品</button>
 					<button id="deleteChildBtn" type="button" class="btn btn-primary">删除最后一个子产品</button>
 					<input type="checkbox" id="synchronizeBox" >同步更新后续子产品</input>
 				</caption>
 				<thead>
 					<tr>
+						<th ></th>
 						<th >缩略图</th>
 						<th >SKU</th>
 						<th >父SKU</th>
@@ -156,6 +166,7 @@ function submitForm(preOrNext){
 						<c:forEach items="${productsForm.list}" var="prod" varStatus="status">
 							<c:if test="${ status.index == 0}">
 								<tr id="firstItem">
+									<td><input name="skuList" id="skuList" type="checkbox" value="${prod.itemSku}"/></td>
 									<td width="4%">
 										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com')>-1 }">
 											<img src="${ prod.mainImageUrl}"  height="50" onclick='window.open("${ prod.mainImageUrl}")'/>
@@ -229,6 +240,7 @@ function submitForm(preOrNext){
 							</c:if>
 							<c:if test="${ status.index > 0}">
 								<tr>
+									<td><input name="skuList" id="skuList" type="checkbox" value="${prod.itemSku}"/></td>
 									<td width="4%">
 										<c:if test="${fn:indexOf(prod.mainImageUrl,'pfhoo.com')>-1 }">
 											<img src="${ prod.mainImageUrl}"  height="50" onclick='window.open("${ prod.mainImageUrl}")'/>
